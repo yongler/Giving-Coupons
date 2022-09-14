@@ -2,6 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+1. Create `.env` file with `DATABASE_URL`
+2. `yarn`
+
 First, run the development server:
 
 ```bash
@@ -15,6 +18,25 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+For prisma:
+To create tables in database after creating schema, run
+
+```bsh
+npx prisma db push
+```
+
+After updating database, run
+
+```bash
+npx prisma generate
+```
+
+To view db GUI, run
+
+```bash
+npx prisma studio
+```
 
 ## Learn More
 
