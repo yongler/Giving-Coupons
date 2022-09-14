@@ -5,7 +5,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 1. Create `.env` file with `DATABASE_URL`
 2. `yarn`
 
-First, run the development server:
+Then, run the development server:
 
 ```bash
 yarn dev
