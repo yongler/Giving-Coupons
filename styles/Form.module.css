@@ -9,13 +9,33 @@
     margin-top: 3vh;
     margin-left: 3vw;
     margin-right: 3vw;
+    margin-bottom: 3vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .heading {
-    margin-left: 3vw;
-    margin-right: 3vw;
-    font-weight: bold;
+    margin-top: 3vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.contact {
+    margin-bottom: 0.5vh;
+    margin-top: 3vh;
+}
+
+.submit {
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}
+
+.error {
+    color: red;
+    margin-bottom: -0.5vh;
+}
+
+.completed {
+    margin-bottom: 2.5vh;
 }

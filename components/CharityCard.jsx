@@ -20,7 +20,7 @@ export default function CharityCard(props) {
 
   return (
     <Card className={styles.charityCard}>
-      <CardMedia component="img" height="140" image={image} alt={id} />
+      <CardMedia component="img" height={140} image={image} alt={id} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}
