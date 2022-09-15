@@ -57,7 +57,7 @@ export default function VoucherForm() {
       name: "Food from the Heart",
       description:
         "Food from the Heart is a IPC-status food charity that feeds the needy in Singapore. Our food distribution programmes are run with sustainable charity in mind. This means that we are committed to providing continued food security to our beneficiaries for as long as they need it.",
-      image: "../../../images/FoodFromTheHeart.png",
+      image: "../../../images/FoodFromTheHeart.jpeg",
       link: "https://www.foodfromtheheart.sg/",
     },
   ];
