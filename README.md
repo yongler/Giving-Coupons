@@ -38,6 +38,11 @@ To view db GUI, run
 npx prisma studio
 ```
 
+## Resources
+
+https://www.youtube.com/watch?v=ARNN_zmrwcw
+https://medium.com/geekculture/how-to-make-a-next-js-app-a-pwa-a5e2b13da548
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

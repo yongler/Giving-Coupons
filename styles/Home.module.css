@@ -10,6 +10,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url('../images/homebackground.jpg');
+  background-size: cover;
+}
+
+.logo {
+  color: black;
+  font-size: large;
 }
 
 .footer {
@@ -108,14 +115,17 @@
   margin-left: 0.5rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .grid {
     width: 100%;
     flex-direction: column;
   }
+  .main {
+    background-size: contain;
+  }
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   .card,
   .footer {
     border-color: #222;
@@ -126,4 +136,4 @@
   .logo img {
     filter: invert(1);
   }
-}
+} */
