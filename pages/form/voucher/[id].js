@@ -95,7 +95,7 @@ export default function VoucherForm() {
               render={({ field }) => (
                 <FormControl>
                   <FormLabel id="demo-radio-buttons-group-label">
-                    Charity
+                    I would like to donate the voucher to:
                   </FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
