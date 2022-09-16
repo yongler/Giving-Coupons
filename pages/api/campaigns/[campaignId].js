@@ -4,7 +4,6 @@ export default async function handler(req, res) {
   try {
     const httpMethod = req.method;
     const campaignId = req.query.campaignId;
-    const { vouchers } = req.body;
 
     if (httpMethod === "GET") {
       const campaign = await prisma.campaign.findFirst({
