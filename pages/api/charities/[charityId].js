@@ -2,21 +2,32 @@ export default async function handler(req, res) {
   try {
     const httpMethod = req.method;
     const charityId = req.query.charityId;
+    const payload = req.body;
 
     if (httpMethod === "GET") {
-      res.status(200).json({
-        id: charityId,
-        name: "Autism Association (Singapore)",
-        description:
-          "The Autism Association (Singapore) is a Social Service Organisation in Singapore, dedicated to supporting and serving individuals with autism towards maximising their potential, helping them lead meaningful and quality lives in society.",
-        image: null,
+      const charity = await prisma.charity.findFirst({
+        where: {
+          id: charityId,
+        },
       });
+      res.status(200).json(charity);
+    } else if (httpMethod === "PATCH") {
+      const charity = await prisma.charity.update({
+        where: {
+          id: charityId,
+        },
+        data: payload,
+      });
+      res.status(200).json(charity);
     } else if (httpMethod === "DELETE") {
-      res.status(200).json({
-        charityId,
+      const charity = await prisma.charityId.delete({
+        where: {
+          id: charityId,
+        },
       });
+      res.status(200).json(charity);
     } else {
-      res.setHeader("Allow", ["GET"]);
+      res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
       res.status(405).end(`Method ${httpMethod} Not Allowed`);
     }
   } catch (err) {

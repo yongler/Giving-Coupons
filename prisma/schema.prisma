@@ -36,7 +36,7 @@ model Campaign {
   startDate   DateTime
   EndDate     DateTime
 
-  vouchers  Voucher[]
+  vouchers               Voucher[]
   charitiesChosenByDonor Charity[]
 
   @@map("campaigns")

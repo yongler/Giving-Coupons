@@ -1,33 +1,37 @@
+import prisma from "../../../lib/prisma";
+
 export default async function handler(req, res) {
   try {
     const httpMethod = req.method;
     const campaignId = req.query.campaignId;
+    const { vouchers } = req.body;
 
     if (httpMethod === "GET") {
-      res.status(200).json({
-        id: campaignId,
-        donor: "Ally Tan",
-        totalAmount: 100,
-        vouchers: [
-          {
-            voucherId: "7d1818c8-af20-4ace-963b-ed796ae23bdd",
-            campaignId: campaignId,
-            amount: 10,
-            deadline: "2023-03-01T15:59:59.000Z",
-            status: "not redeemed",
-            charityId: null,
-            amountAdded: null,
-          },
-        ],
-        startDate: "2022-12-31T16:00:00.000Z",
-        endDate: "2023-03-01T15:59:59.000Z",
+      const campaign = await prisma.campaign.findFirst({
+        where: {
+          id: campaignId,
+        },
       });
+      res.status(200).json(campaign);
+    } else if (httpMethod === "PATCH") {
+      const campaign = await prisma.campaign.update({
+        where: {
+          id: campaignId,
+        },
+        data: {
+          vouchers,
+        },
+      });
+      res.status(200).json(campaign);
     } else if (httpMethod === "DELETE") {
-      res.status(200).json({
-        campaignId,
+      const campaign = await prisma.campaign.delete({
+        where: {
+          id: campaignId,
+        },
       });
+      res.status(200).json(campaign);
     } else {
-      res.setHeader("Allow", ["GET", "DELETE"]);
+      res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
       res.status(405).end(`Method ${httpMethod} Not Allowed`);
     }
   } catch (err) {
