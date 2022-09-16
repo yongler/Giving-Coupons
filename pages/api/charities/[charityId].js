@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       });
       res.status(200).json(charity);
     } else if (httpMethod === "DELETE") {
-      const charity = await prisma.charityId.delete({
+      const charity = await prisma.charity.delete({
         where: {
           id: charityId,
         },

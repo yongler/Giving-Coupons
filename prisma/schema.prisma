@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Voucher {
-  id String @id
+  id String @id @default(cuid())
 
   campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
   campaignId String
@@ -25,7 +25,6 @@ model Voucher {
 
   amountAdded Int?
 
-  @@index([campaignId])
   @@map("vouchers")
 }
 
@@ -34,7 +33,7 @@ model Campaign {
   donor       String
   totalAmount Int
   startDate   DateTime
-  EndDate     DateTime
+  endDate     DateTime
 
   vouchers               Voucher[]
   charitiesChosenByDonor Charity[]

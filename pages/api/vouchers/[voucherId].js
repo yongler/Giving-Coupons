@@ -20,7 +20,11 @@ export default async function handler(req, res) {
         },
         data: {
           status,
-          charityId,
+          charity: {
+            connect: {
+              id: charityId,
+            },
+          },
           amountAdded,
         },
       });
