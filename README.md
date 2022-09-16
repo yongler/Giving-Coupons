@@ -1,3 +1,15 @@
+# Giving Vouchers
+
+URL of application: https://2022-a3-2022-a3-group-1.vercel.app/
+
+List of group members:
+
+- Lee Yong Ler (A0219859J)
+
+Contributions:
+
+- Lee Yong Ler:
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
