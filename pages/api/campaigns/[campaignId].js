@@ -20,23 +20,6 @@ export default async function handler(req, res) {
         campaign.charities = charities;
       }
       res.status(200).json(campaign);
-    } else if (httpMethod === "PATCH") {
-      const campaign = await prisma.campaign.update({
-        where: {
-          id: campaignId,
-        },
-        data: {
-          vouchers,
-        },
-        include: {
-          vouchers: true,
-        },
-      });
-      if (campaign.charitiesChosenByDonor == null) {
-        const charities = await prisma.charity.findMany();
-        campaign.charities = charities;
-      }
-      res.status(200).json(campaign);
     } else if (httpMethod === "DELETE") {
       const campaign = await prisma.campaign.delete({
         where: {
@@ -52,7 +35,7 @@ export default async function handler(req, res) {
       }
       res.status(200).json(campaign);
     } else {
-      res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
+      res.setHeader("Allow", ["GET", "DELETE"]);
       res.status(405).end(`Method ${httpMethod} Not Allowed`);
     }
   } catch (err) {
