@@ -11,15 +11,6 @@ export default function CampaignCard(props) {
   // const { id, name, donorName, description, images, timeLeft, tags } = props;
   const { id, name, description, donor, timeLeft } = props;
 
-  // const openInNewTab = (url) => {
-  //   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
-  //   if (newWindow) newWindow.opener = null;
-  // };
-
-  // const openLink = () => {
-  //   openInNewTab(link);
-  // };
-
   return (
     <Card className={styles.charityCard}>
       <Link href={"/campaigns/" + id} key={id}>
