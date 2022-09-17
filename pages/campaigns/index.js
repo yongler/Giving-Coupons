@@ -13,37 +13,40 @@ import styles from "../../styles/Form.module.css";
 // };
 
 // export default function campaignList({ campaigns }) {
-export default function campaignList() {
+export default function campaignList({ data }) {
   // list of campaigns, query the backend for the campaign data
-  const campaigns = [
-    {
-      id: 1,
-      name: "Campaign underprivileged",
-      donorName: "Big Daddy",
-      description: "Hi all, this is a campaign for underprivileged people",
-      timeLeft: "2 days",
-      image: "../../../images/AutismAssociationSG.png",
-      link: "https://www.autismlinks.org.sg/",
-    },
-    {
-      id: 2,
-      name: "Campaign special needs",
-      donorName: "Big Daddy",
-      description: "Hi all, this is a campaign for people with special needs",
-      timeLeft: "3 days",
-      image: "../../../images/Make-A-Wish-SG.png",
-      link: "https://makeawish.org.sg/",
-    },
-    {
-      id: 3,
-      name: "Campaign elderlies",
-      donorName: "Big Daddy",
-      description: "Hi all, this is a campaign for elderlies",
-      timeLeft: "4 days",
-      image: "../../../images/FoodFromTheHeart.png",
-      link: "https://www.foodfromtheheart.sg/",
-    },
-  ];
+  const campaigns = data;
+  //   [
+  //   {
+  //     id: 1,
+  //     name: "Campaign underprivileged",
+  //     donorName: "Big Daddy",
+  //     description: "Hi all, this is a campaign for underprivileged people",
+  //     timeLeft: "2 days",
+  //     image: "../../../images/AutismAssociationSG.png",
+  //     link: "https://www.autismlinks.org.sg/",
+  //     charities: [],
+  //     vouchers: [],
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Campaign special needs",
+  //     donorName: "Big Daddy",
+  //     description: "Hi all, this is a campaign for people with special needs",
+  //     timeLeft: "3 days",
+  //     image: "../../../images/Make-A-Wish-SG.png",
+  //     link: "https://makeawish.org.sg/",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Campaign elderlies",
+  //     donorName: "Big Daddy",
+  //     description: "Hi all, this is a campaign for elderlies",
+  //     timeLeft: "4 days",
+  //     image: "../../../images/FoodFromTheHeart.png",
+  //     link: "https://www.foodfromtheheart.sg/",
+  //   },
+  // ];
 
   return (
     <div className={styles.formpage}>
@@ -52,14 +55,21 @@ export default function campaignList() {
           <CampaignCard
             key={campaign.id}
             id={campaign.id}
-            name={campaign.name}
-            description={campaign.description}
-            timeLeft={campaign.timeLeft}
-            image={campaign.image}
-            link={campaign.link}
+            // name={campaign.name}
+            // description={campaign.description}
+            donor={campaign.donor}
+            timeLeft={campaign.endDate}
+            // image={campaign.image}
+            // link={campaign.link}
           />
         ))}
       </Paper>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(`http:/localhost:3000/api/campaigns`);
+  const data = await res.json();
+  return { props: { data } };
 }

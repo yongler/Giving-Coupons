@@ -9,3 +9,47 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Voucher {
+  id String @id @default(cuid())
+
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignId String
+
+  amount   Int
+  deadline DateTime
+  status   Int
+
+  charity   Charity? @relation(fields: [charityId], references: [id], onDelete: SetNull)
+  charityId String?
+
+  amountAdded Int?
+
+  @@map("vouchers")
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  donor       String
+  totalAmount Int
+  startDate   DateTime
+  endDate     DateTime
+
+  vouchers               Voucher[]
+  charitiesChosenByDonor Charity[]
+
+  @@map("campaigns")
+}
+
+model Charity {
+  id          String  @id @default(cuid())
+  name        String
+  description String
+  image       String?
+  link        String
+
+  vouchers  Voucher[]
+  campaigns Campaign[]
+
+  @@map("charities")
+}

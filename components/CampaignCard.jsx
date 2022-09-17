@@ -8,39 +8,40 @@ import styles from "../styles/CharityCard.module.css";
 import Link from "next/link";
 
 export default function CampaignCard(props) {
-  const { id, name, donorName, description, images, timeLeft, tags } = props;
+  // const { id, name, donorName, description, images, timeLeft, tags } = props;
+  const { id, donor, timeLeft } = props;
 
-  const openInNewTab = (url) => {
-    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = null;
-  };
+  // const openInNewTab = (url) => {
+  //   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+  //   if (newWindow) newWindow.opener = null;
+  // };
 
-  const openLink = () => {
-    openInNewTab(link);
-  };
+  // const openLink = () => {
+  //   openInNewTab(link);
+  // };
 
-  return (  
+  return (
     <Card className={styles.charityCard}>
       <Link href={"/campaigns/" + id} key={id}>
         {/* <CardMedia component="img" height="140" image={image} alt={id} /> */}
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          {/* <Typography gutterBottom variant="h5" component="div">
             {name}
-          </Typography>
+          </Typography> */}
           <Typography gutterBottom variant="h5" component="div">
-            {donorName}
+            {donor}
           </Typography>
           <Typography gutterBottom variant="h5" component="div">
             {`${timeLeft} left`}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          {/* <Typography variant="body2" color="text.secondary">
             {description}
-          </Typography>
+          </Typography> */}
         </CardContent>
       </Link>
       <CardActions>
-        <Button size="small" onClick={openLink}>
-          Learn More
+        <Button size="small">
+          <Link href={"/campaigns/" + id}>Learn More</Link>
         </Button>
       </CardActions>
     </Card>
