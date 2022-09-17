@@ -55,8 +55,8 @@ export default function campaignList({ data }) {
           <CampaignCard
             key={campaign.id}
             id={campaign.id}
-            // name={campaign.name}
-            // description={campaign.description}
+            name={campaign.name}
+            description={campaign.description}
             donor={campaign.donor}
             timeLeft={campaign.endDate}
             // image={campaign.image}

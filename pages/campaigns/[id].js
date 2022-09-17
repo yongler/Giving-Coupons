@@ -82,26 +82,26 @@ export default function Campaign({ data }) {
 
   const campaign = data;
 
-  console.log(campaign.charities);
+  console.log(campaign.charitiesChosenByDonor);
   console.log(campaign);
 
   return (
     <div className={styles.formpage}>
       <Paper className={styles.form} elevation={0}>
-        {/* <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div">
           {`Campaign Name: ${campaign.name}`}
-        </Typography> */}
+        </Typography>
         <Typography gutterBottom variant="h5" component="div">
           {`Donor: ${campaign.donor}`}
         </Typography>
         <Typography gutterBottom variant="h5" component="div">
           {`${campaign.endDate} left`}
         </Typography>
-        {/* <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary">
           {`Description: ${campaign.description}`}
-        </Typography> */}
+        </Typography>
 
-        {campaign.charities.map((charity) => (
+        {campaign.charitiesChosenByDonor.map((charity) => (
           <CharityCard
             key={charity.id}
             id={charity.id}

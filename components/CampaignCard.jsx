@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function CampaignCard(props) {
   // const { id, name, donorName, description, images, timeLeft, tags } = props;
-  const { id, donor, timeLeft } = props;
+  const { id, name, description, donor, timeLeft } = props;
 
   // const openInNewTab = (url) => {
   //   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
@@ -25,18 +25,18 @@ export default function CampaignCard(props) {
       <Link href={"/campaigns/" + id} key={id}>
         {/* <CardMedia component="img" height="140" image={image} alt={id} /> */}
         <CardContent>
-          {/* <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div">
             {name}
-          </Typography> */}
+          </Typography>
           <Typography gutterBottom variant="h5" component="div">
             {donor}
           </Typography>
           <Typography gutterBottom variant="h5" component="div">
             {`${timeLeft} left`}
           </Typography>
-          {/* <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary">
             {description}
-          </Typography> */}
+          </Typography>
         </CardContent>
       </Link>
       <CardActions>

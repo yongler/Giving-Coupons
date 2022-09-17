@@ -11,7 +11,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function VoucherForm({ data }) {
   const [submitted, setSubmitted] = useState(false);
@@ -170,7 +170,7 @@ export async function getServerSideProps(context) {
     "http:/localhost:3000/api/campaigns/" + voucher.campaignId
   );
   const campaign = await charityRes.json();
-  const data = campaign.charities;
+  const data = campaign.charitiesChosenByDonor;
   // Pass data to the page via props
   // const data = [
   //   {
