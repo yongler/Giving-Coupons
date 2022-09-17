@@ -12,12 +12,17 @@ export default async function handler(req, res) {
         },
         include: {
           vouchers: true,
+          charitiesChosenByDonor: true,
         },
       });
-      if (campaign.charitiesChosenByDonor == null) {
-        const charities = await prisma.charity.findMany();
-        campaign.charities = charities;
-      }
+
+      const charitiesChosenByDonor = campaign.charitiesChosenByDonor;
+      const charities =
+        charitiesChosenByDonor.length != 0
+          ? charitiesChosenByDonor
+          : await prisma.charity.findMany();
+      campaign.charitiesChosenByDonor = charities;
+
       res.status(200).json(campaign);
     } else if (httpMethod === "DELETE") {
       const campaign = await prisma.campaign.delete({
@@ -26,12 +31,17 @@ export default async function handler(req, res) {
         },
         include: {
           vouchers: true,
+          charitiesChosenByDonor: true,
         },
       });
-      if (campaign.charitiesChosenByDonor == null) {
-        const charities = await prisma.charity.findMany();
-        campaign.charities = charities;
-      }
+
+      const charitiesChosenByDonor = campaign.charitiesChosenByDonor;
+      const charities =
+        charitiesChosenByDonor.length != 0
+          ? charitiesChosenByDonor
+          : await prisma.charity.findMany();
+      campaign.charitiesChosenByDonor = charities;
+
       res.status(200).json(campaign);
     } else {
       res.setHeader("Allow", ["GET", "DELETE"]);

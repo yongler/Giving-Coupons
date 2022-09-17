@@ -30,6 +30,8 @@ model Voucher {
 
 model Campaign {
   id          String   @id @default(cuid())
+  name        String
+  description String
   donor       String
   totalAmount Int
   startDate   DateTime

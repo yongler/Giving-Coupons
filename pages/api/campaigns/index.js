@@ -3,14 +3,21 @@ import prisma from "../../../lib/prisma";
 export default async function handler(req, res) {
   try {
     const httpMethod = req.method;
-    const { donor, totalAmount, startDate, endDate, charitiesChosenByDonor } =
-      req.body;
+    const {
+      name,
+      description,
+      donor,
+      totalAmount,
+      startDate,
+      endDate,
+      charitiesChosenByDonor,
+    } = req.body;
 
     if (httpMethod === "GET") {
       const campaigns = await prisma.campaign.findMany({
         include: {
-          charitiesChosenByDonor: true,
           vouchers: true,
+          charitiesChosenByDonor: true,
         },
       });
 
@@ -22,14 +29,16 @@ export default async function handler(req, res) {
           charitiesChosenByDonor.length != 0
             ? charitiesChosenByDonor
             : allCharities;
-        delete campaign.charitiesChosenByDonor;
-        return { ...campaign, charities };
+        campaign.charitiesChosenByDonor = charities;
+        return campaign;
       });
 
       res.status(200).json(campaignsWithCharities);
     } else if (httpMethod === "POST") {
       const campaign = await prisma.campaign.create({
         data: {
+          name,
+          description,
           donor,
           totalAmount,
           startDate,
@@ -43,8 +52,8 @@ export default async function handler(req, res) {
           },
         },
         include: {
-          charitiesChosenByDonor: true,
           vouchers: true,
+          charitiesChosenByDonor: true,
         },
       });
 
@@ -52,8 +61,9 @@ export default async function handler(req, res) {
         charitiesChosenByDonor.length != 0
           ? charitiesChosenByDonor
           : await prisma.charity.findMany();
+      campaign.charitiesChosenByDonor = charities;
 
-      res.status(200).json({ ...campaign, charities });
+      res.status(200).json(campaign);
     } else {
       res.setHeader("Allow", ["POST", "GET"]);
       res.status(405).end(`Method ${httpMethod} Not Allowed`);
