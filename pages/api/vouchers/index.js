@@ -5,11 +5,21 @@ export default async function handler(req, res) {
   try {
     const httpMethod = req.method;
     const { campaignId, amount, deadline } = req.body;
+    const cookies = req.cookies;
+    const jwt = cookies.GivingCouponsJWT;
 
     if (httpMethod === "GET") {
+      if (!jwt) {
+        res.status(401).json({ message: "Not Authorized" });
+      }
+
       const vouchers = await prisma.voucher.findMany();
       res.status(200).json(vouchers);
     } else if (httpMethod === "POST") {
+      if (!jwt) {
+        res.status(401).json({ message: "Not Authorized" });
+      }
+
       const voucher = await prisma.voucher.create({
         data: {
           campaign: {

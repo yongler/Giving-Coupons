@@ -5,6 +5,8 @@ export default async function handler(req, res) {
     const httpMethod = req.method;
     const voucherId = req.query.voucherId;
     const { status, charityId, amountAdded } = req.body;
+    const cookies = req.cookies;
+    const jwt = cookies.GivingCouponsJWT;
 
     if (httpMethod === "GET") {
       const voucher = await prisma.voucher.findFirst({
@@ -30,6 +32,10 @@ export default async function handler(req, res) {
       });
       res.status(200).json(voucher);
     } else if (httpMethod === "DELETE") {
+      if (!jwt) {
+        res.status(401).json({ message: "Not Authorized" });
+      }
+
       const voucher = await prisma.voucher.delete({
         where: {
           id: voucherId,

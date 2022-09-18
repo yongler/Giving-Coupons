@@ -12,6 +12,8 @@ export default async function handler(req, res) {
       endDate,
       charitiesChosenByDonor,
     } = req.body;
+    const cookies = req.cookies;
+    const jwt = cookies.GivingCouponsJWT;
 
     if (httpMethod === "GET") {
       const campaigns = await prisma.campaign.findMany({
@@ -35,6 +37,10 @@ export default async function handler(req, res) {
 
       res.status(200).json(campaignsWithCharities);
     } else if (httpMethod === "POST") {
+      if (!jwt) {
+        res.status(401).json({ message: "Not Authorized" });
+      }
+
       const campaign = await prisma.campaign.create({
         data: {
           name,

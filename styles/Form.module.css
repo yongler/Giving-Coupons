@@ -1,41 +1,41 @@
 .formpage {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .form {
-    min-width: 70vw;
-    margin-top: 3vh;
-    margin-left: 3vw;
-    margin-right: 3vw;
-    margin-bottom: 3vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  min-width: 70vw;
+  margin-top: 3vh;
+  margin-left: 3vw;
+  margin-right: 3vw;
+  margin-bottom: 3vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .heading {
-    margin-top: 3vh;
-    margin-left: 5vw;
-    margin-right: 5vw;
+  margin-top: 3vh;
+  margin-left: 5vw;
+  margin-right: 5vw;
 }
 
 .contact {
-    margin-bottom: 0.5vh;
-    margin-top: 3vh;
+  margin-bottom: 0.5vh;
+  margin-top: 3vh;
 }
 
 .submit {
-    margin-top: 3vh;
-    margin-bottom: 3vh;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
 }
 
 .error {
-    color: red;
-    margin-bottom: -0.5vh;
+  color: red;
+  margin-bottom: -0.5vh;
 }
 
 .completed {
-    margin-bottom: 2.5vh;
+  margin-bottom: 2.5vh;
 }
