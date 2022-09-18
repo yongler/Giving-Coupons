@@ -16,7 +16,9 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function VoucherForm({ charities, voucher }) {
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(
+    voucher.status == 1 || voucher.status == 2
+  );
   const { query } = useRouter();
   const { id } = query;
   // TODO: After getting id, check whether its a valid voucher code or not
@@ -68,17 +70,37 @@ export default function VoucherForm({ charities, voucher }) {
             link={charity.link}
           />
         ))}
-        {submitted ? (
-          <Typography variant="h6" className={styles.completed}>
-            We have received your submission :)
-          </Typography>
-        ) : (
-          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              rules={{ required: "Please choose a charity to donate to" }}
-              name="selectedCharity"
-              control={control}
-              render={({ field }) => (
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            rules={{ required: "Please choose a charity to donate to" }}
+            name="selectedCharity"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <FormControl>
+                  <FormLabel id="demo-radio-buttons-group-label">
+                    I would like to donate the voucher to:
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    name="radio-buttons-group"
+                    defaultValue={voucher.charityId}
+                    {...field}
+                  >
+                    {charities.map((charity) => {
+                      return (
+                        <FormControlLabel
+                          disabled
+                          key={charity.id}
+                          value={charity.id}
+                          control={<Radio />}
+                          label={charity.name}
+                        />
+                      );
+                    })}
+                  </RadioGroup>
+                </FormControl>
+              ) : (
                 <FormControl>
                   <FormLabel id="demo-radio-buttons-group-label">
                     I would like to donate the voucher to:
@@ -100,21 +122,38 @@ export default function VoucherForm({ charities, voucher }) {
                     })}
                   </RadioGroup>
                 </FormControl>
-              )}
-            />
-            {errors.selectcharity && (
-              <p className={styles.error}>{errors.selectcharity?.message}</p>
-            )}
-            {/* <Our hope donor hopes you would consider donating your money directly to these charities as well> */}
-            <Typography variant="subtitle1" className={styles.heading}>
-              Our hope donor hopes you would consider donating your money
-              directly to the charitie selected as well. You can do so by
-              filling in the Amount field below, and it is purely optional :)
-            </Typography>
-            <Controller
-              name="amount"
-              control={control}
-              render={({ field }) => (
+              )
+            }
+          />
+          {errors.selectcharity && (
+            <p className={styles.error}>{errors.selectcharity?.message}</p>
+          )}
+          {/* <Our hope donor hopes you would consider donating your money directly to these charities as well> */}
+          <Typography variant="subtitle1" className={styles.heading}>
+            Our hope donor hopes you would consider donating your money directly
+            to the charitie selected as well. You can do so by filling in the
+            Amount field below, and it is purely optional :)
+          </Typography>
+          <Controller
+            name="amount"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <TextField
+                  {...field}
+                  label="Amount"
+                  disabled
+                  className={styles.contact}
+                  id="outlined-start-adornment"
+                  defaultValue={voucher.amountAdded}
+                  sx={{ m: 1, width: 300 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">SGD$</InputAdornment>
+                    ),
+                  }}
+                />
+              ) : (
                 <TextField
                   {...field}
                   label="Amount"
@@ -127,17 +166,29 @@ export default function VoucherForm({ charities, voucher }) {
                     ),
                   }}
                 />
-              )}
-            />
-            <Typography variant="subtitle1" className={styles.heading}>
-              Please let us know if you have any feedback regarding this
-              project, if you like to join us or if you want us to provide proof
-              of the donations, do leave your contact details here.
-            </Typography>
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => (
+              )
+            }
+          />
+          <Typography variant="subtitle1" className={styles.heading}>
+            Please let us know if you have any feedback regarding this project,
+            if you like to join us or if you want us to provide proof of the
+            donations, do leave your contact details here.
+          </Typography>
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <TextField
+                  {...field}
+                  disabled
+                  className={styles.contact}
+                  id="outlined-basic"
+                  label="Name"
+                  variant="outlined"
+                  sx={{ width: 300 }}
+                />
+              ) : (
                 <TextField
                   {...field}
                   className={styles.contact}
@@ -146,12 +197,24 @@ export default function VoucherForm({ charities, voucher }) {
                   variant="outlined"
                   sx={{ width: 300 }}
                 />
-              )}
-            />
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
+              )
+            }
+          />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <TextField
+                  {...field}
+                  disabled
+                  className={styles.contact}
+                  id="outlined-basic"
+                  label="Email"
+                  variant="outlined"
+                  sx={{ width: 300 }}
+                />
+              ) : (
                 <TextField
                   {...field}
                   className={styles.contact}
@@ -160,12 +223,25 @@ export default function VoucherForm({ charities, voucher }) {
                   variant="outlined"
                   sx={{ width: 300 }}
                 />
-              )}
-            />
-            <Controller
-              name="message"
-              control={control}
-              render={({ field }) => (
+              )
+            }
+          />
+          <Controller
+            name="message"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <TextField
+                  {...field}
+                  className={styles.contact}
+                  id="outlined-basic"
+                  label="Message"
+                  disabled
+                  variant="outlined"
+                  multiline
+                  sx={{ width: 300 }}
+                />
+              ) : (
                 <TextField
                   {...field}
                   className={styles.contact}
@@ -175,15 +251,15 @@ export default function VoucherForm({ charities, voucher }) {
                   multiline
                   sx={{ width: 300 }}
                 />
-              )}
-            />
+              )
+            }
+          />
+          {!submitted && (
             <Button className={styles.submit} variant="contained" type="submit">
               Submit
             </Button>
-          </form>
-        )}
-        {/* <* Yes! I intend to donate money to these charities> */}
-        {/* <No> */}
+          )}
+        </form>
       </Paper>
     </div>
   );
