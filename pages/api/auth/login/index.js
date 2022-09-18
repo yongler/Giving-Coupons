@@ -1,4 +1,4 @@
-import { sign } from "jsonwebtoken";
+import { SignJWT } from "jose";
 import { serialize } from "cookie";
 
 export default async function handler(req, res) {
@@ -7,13 +7,11 @@ export default async function handler(req, res) {
 
   if (username == "Admin" && password == "Admin") {
     const tokenLifeTime = 60 * 20; // 20 minutes
-    const token = sign(
-      {
-        exp: Math.floor(Date.now() / 1000) + tokenLifeTime,
-        username: username,
-      },
-      secret
-    );
+    const token = await new SignJWT({ userId: username })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime(tokenLifeTime + "s")
+      .sign(new TextEncoder().encode(secret));
 
     const serializedCookie = serialize("GivingCouponsJWT", token, {
       httpOnly: true,
@@ -26,6 +24,6 @@ export default async function handler(req, res) {
     res.setHeader("Set-Cookie", serializedCookie);
     res.status(200).json({ message: "Successfully logged in" });
   } else {
-    res.json({ message: "Not Authorized" });
+    res.status(401).json({ message: "Not Authorized" });
   }
 }
