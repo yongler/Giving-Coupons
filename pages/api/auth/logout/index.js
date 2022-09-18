@@ -1,8 +1,8 @@
 import { serialize } from "cookie";
+import { jwtExtractor } from "../../../../util/functions/jwtHelpers";
 
 export default async function handler(req, res) {
-  const cookies = res.cookies;
-  const jwt = cookies.GivingCouponsJWT;
+  const jwt = jwtExtractor(req);
 
   if (!jwt) {
     res.statusCode(400).json({ message: "Already logged out" });

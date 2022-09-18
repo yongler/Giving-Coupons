@@ -1,12 +1,12 @@
 import prisma from "../../../lib/prisma";
+import { jwtExtractor } from "../../../util/functions/jwtHelpers";
 
 export default async function handler(req, res) {
   try {
     const httpMethod = req.method;
     const campaignId = req.query.campaignId;
-    const cookies = req.cookies;
-    const jwt = cookies.GivingCouponsJWT;
-
+    const jwt = jwtExtractor(req);
+    console.log("HERE JWT: " + jwt);
     if (httpMethod === "GET") {
       const campaign = await prisma.campaign.findFirst({
         where: {

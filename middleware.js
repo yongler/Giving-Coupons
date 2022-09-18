@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
+import { jwtExtractor } from "/util/functions/jwtHelpers";
 
 export default async function middleware(req) {
   const secret = process.env.SECRET;
   const url = process.env.URL;
 
-  const cookies = req.cookies;
-  const jwt = cookies.get("GivingCouponsJWT");
+  const jwt = jwtExtractor(req);
   const path = req.nextUrl.pathname;
 
   if (path.includes("/admin")) {

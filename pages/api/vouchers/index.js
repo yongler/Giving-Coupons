@@ -1,12 +1,12 @@
 import prisma from "../../../lib/prisma";
 import { unredeemed } from "../../../util/constants/voucherStatus";
+import { jwtExtractor } from "../../../util/functions/jwtHelpers";
 
 export default async function handler(req, res) {
   try {
     const httpMethod = req.method;
     const { campaignId, amount, deadline } = req.body;
-    const cookies = req.cookies;
-    const jwt = cookies.GivingCouponsJWT;
+    const jwt = jwtExtractor(req);
 
     if (httpMethod === "GET") {
       if (!jwt) {

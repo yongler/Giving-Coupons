@@ -1,10 +1,12 @@
+import prisma from "../../../lib/prisma";
+import { jwtExtractor } from "../../../util/functions/jwtHelpers";
+
 export default async function handler(req, res) {
   try {
     const httpMethod = req.method;
     const charityId = req.query.charityId;
     const payload = req.body;
-    const cookies = req.cookies;
-    const jwt = cookies.GivingCouponsJWT;
+    const jwt = jwtExtractor(req);
 
     if (httpMethod === "GET") {
       const charity = await prisma.charity.findFirst({
