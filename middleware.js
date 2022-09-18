@@ -22,9 +22,18 @@ export default async function middleware(req) {
     }
   }
 
+  if (path.includes("/login")) {
+    if (!jwt) {
+      return NextResponse.next();
+    }
+
+    try {
+      await jwtVerify(jwt, new TextEncoder().encode(secret));
+      return NextResponse.redirect(url.concat("/admin"));
+    } catch (err) {
+      return NextResponse.next();
+    }
+  }
+
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: "/admin/:path*",
-};
