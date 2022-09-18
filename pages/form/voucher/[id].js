@@ -11,6 +11,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import InputAdornment from "@mui/material/InputAdornment";
 import { useState } from "react";
 
 export default function VoucherForm({ data }) {
@@ -34,7 +35,6 @@ export default function VoucherForm({ data }) {
     setSubmitted(true);
   };
 
-  // list of charities, query the backend for the charity data from getServerSideProps
   const charities = data;
 
   return (
@@ -46,7 +46,6 @@ export default function VoucherForm({ data }) {
           sponsored by an anonymous donor, and the donor would like you to
           choose a charity from the list below for the money to go to!
         </Typography>
-        {/* <Charity 1-6 with a few sentences each + link> */}
         {charities.map((charity) => (
           <CharityCard
             key={charity.id}
@@ -95,12 +94,29 @@ export default function VoucherForm({ data }) {
               <p className={styles.error}>{errors.selectcharity?.message}</p>
             )}
             {/* <Our hope donor hopes you would consider donating your money directly to these charities as well> */}
-            {/* <Typography variant="subtitle1" className={styles.heading}>
-            Our hope donor hopes you would consider donating your money directly
-            to these charities as well
-          </Typography> */}
-
-            {/* <Please let us know if you have any feedback regarding this project, or if you like to join us, if you want us to provide proof of the donations, do leave your contact details here> */}
+            <Typography variant="subtitle1" className={styles.heading}>
+              Our hope donor hopes you would consider donating your money
+              directly to the charitie selected as well. You can do so by
+              filling in the Amount field below, and it is purely optional :)
+            </Typography>
+            <Controller
+              name="Amount"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Amount"
+                  className={styles.contact}
+                  id="outlined-start-adornment"
+                  sx={{ m: 1, width: 300 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">SGD$</InputAdornment>
+                    ),
+                  }}
+                />
+              )}
+            />
             <Typography variant="subtitle1" className={styles.heading}>
               Please let us know if you have any feedback regarding this
               project, if you like to join us or if you want us to provide proof
