@@ -8,7 +8,12 @@ List of group members:
 
 Contributions:
 
-- Lee Yong Ler:
+- Lee Yong Ler (Frontend developer):
+  - MUI integration for better and uniform styling
+  - PWA setup and UIUX testing on mobile end
+  - Setup offline functionalities
+  - HTTPS setup and redirecting HTTP to HTTPS for secure browsing
+  -
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
