@@ -1,0 +1,65 @@
+.coupon{
+    width:149mm;
+    height:69mm;
+    display: flex;
+    border: 0.5px;
+    border-style: solid;
+    text-align: center;
+}
+
+.couponLeft{
+    width:100mm;
+    height:69mm;
+    color: white;
+    background-color: #C41140;
+}
+
+.description {
+    margin: 8px;
+}
+
+.smallText {
+    font-size: 11px;
+    line-height: 1.25;
+}
+
+.title {
+    margin-top: 40px;
+    font-weight: 900;
+    font-size: 120px;
+    line-height: 1;
+}
+
+.subtitle{
+    margin-top: 3px;
+    margin-bottom: 12px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.couponRight{
+    width:49mm;
+    height:69mm;
+}
+
+.instructions{
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.instructionPart{
+    font-size: 12px;
+    line-height: 1.25;
+    font-weight: 500;
+}
+
+.link{
+    font-size: 9px;
+}
+
+.expiry{
+    margin-top: 40px;
+    margin-right: 5px;
+    font-size: 11px;
+    text-align: right;
+}
