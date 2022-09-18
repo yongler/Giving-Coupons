@@ -13,7 +13,6 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useState } from "react";
-import axios from "axios";
 
 export default function VoucherForm({ charities, voucher }) {
   const [submitted, setSubmitted] = useState(
@@ -254,7 +253,11 @@ export default function VoucherForm({ charities, voucher }) {
               )
             }
           />
-          {!submitted && (
+          {submitted ? (
+            <Typography variant="h6" className={styles.submit}>
+              Thank you for filling in this form.
+            </Typography>
+          ) : (
             <Button className={styles.submit} variant="contained" type="submit">
               Submit
             </Button>
