@@ -11,7 +11,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function VoucherForm({ data }) {
   const [submitted, setSubmitted] = useState(false);
