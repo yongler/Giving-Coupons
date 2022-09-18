@@ -13,8 +13,9 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useState } from "react";
+import axios from "axios";
 
-export default function VoucherForm({ data }) {
+export default function VoucherForm({ charities, voucher }) {
   const [submitted, setSubmitted] = useState(false);
   const { query } = useRouter();
   const { id } = query;
@@ -33,9 +34,20 @@ export default function VoucherForm({ data }) {
   const onSubmit = (data) => {
     console.log(data);
     setSubmitted(true);
+    fetch("/api/vouchers/" + data.voucherId, {
+      method: "PATCH",
+      body: JSON.stringify({
+        status: 1,
+        charityId: data.selectedCharity,
+        amountAdded: data.amount ? parseInt(data.amount) : 0,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
   };
-
-  const charities = data;
 
   return (
     <div className={styles.formpage}>
@@ -64,7 +76,7 @@ export default function VoucherForm({ data }) {
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <Controller
               rules={{ required: "Please choose a charity to donate to" }}
-              name="selectcharity"
+              name="selectedCharity"
               control={control}
               render={({ field }) => (
                 <FormControl>
@@ -80,7 +92,7 @@ export default function VoucherForm({ data }) {
                       return (
                         <FormControlLabel
                           key={charity.id}
-                          value={charity.name}
+                          value={charity.id}
                           control={<Radio />}
                           label={charity.name}
                         />
@@ -100,7 +112,7 @@ export default function VoucherForm({ data }) {
               filling in the Amount field below, and it is purely optional :)
             </Typography>
             <Controller
-              name="Amount"
+              name="amount"
               control={control}
               render={({ field }) => (
                 <TextField
@@ -186,7 +198,7 @@ export async function getServerSideProps(context) {
     process.env.URL + "/api/campaigns/" + voucher.campaignId
   );
   const campaign = await charityRes.json();
-  const data = campaign.charitiesChosenByDonor;
+  const charities = campaign.charitiesChosenByDonor;
   // Pass data to the page via props
   // const data = [
   //   {
@@ -214,5 +226,5 @@ export async function getServerSideProps(context) {
   //     link: "https://www.foodfromtheheart.sg/",
   //   },
   // ];
-  return { props: { data } };
+  return { props: { charities, voucher } };
 }
