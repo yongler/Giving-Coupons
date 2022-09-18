@@ -13,7 +13,6 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Link from "next/link";
-import { makeStyles } from "@material-ui/core";
 import { useTheme } from "@mui/material/styles";
 
 const pages = [
@@ -24,15 +23,7 @@ const pages = [
 ];
 const settings = ["Profile", "Settings", "Logout"];
 
-// const useStyles = makeStyles((theme) => {
-//   return {
-//     palette: theme.palette,
-//   };
-// });
-
 const ResponsiveAppBar = () => {
-  // const styles = useStyles();
-  const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
