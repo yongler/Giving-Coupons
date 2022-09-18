@@ -1,18 +1,8 @@
-import { useRouter } from "next/router";
 import Paper from "@mui/material/Paper";
+import { env } from "process";
 import CampaignCard from "../../components/CampaignCard";
 import styles from "../../styles/Form.module.css";
 
-// export const getStaticProps = async () => {
-//   const res = await fetch("");
-//   const data = await res.json();
-
-//   return {
-//     props: { campaigns: data },
-//   };
-// };
-
-// export default function campaignList({ campaigns }) {
 export default function campaignList({ data }) {
   // list of campaigns, query the backend for the campaign data
   const campaigns = data;
@@ -69,7 +59,7 @@ export default function campaignList({ data }) {
 }
 
 export async function getServerSideProps() {
-  const res = await fetch(`http:/localhost:3000/api/campaigns`);
+  const res = await fetch(process.env.URL + `/api/campaigns`);
   const data = await res.json();
   return { props: { data } };
 }

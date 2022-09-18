@@ -119,7 +119,7 @@ export default function Campaign({ data }) {
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
-  const res = await fetch(`http:/localhost:3000/api/campaigns/` + id);
+  const res = await fetch(process.env.URL + `/api/campaigns/` + id);
   const data = await res.json();
   return { props: { data } };
 }

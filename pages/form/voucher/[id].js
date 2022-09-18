@@ -164,10 +164,10 @@ export default function VoucherForm({ data }) {
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const id = context.params.id;
-  const res = await fetch(`http:/localhost:3000/api/vouchers/` + id);
+  const res = await fetch(process.env.URL + `/api/vouchers/` + id);
   const voucher = await res.json();
   const charityRes = await fetch(
-    "http:/localhost:3000/api/campaigns/" + voucher.campaignId
+    process.env.URL + "/api/campaigns/" + voucher.campaignId
   );
   const campaign = await charityRes.json();
   const data = campaign.charitiesChosenByDonor;
