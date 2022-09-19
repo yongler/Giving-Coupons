@@ -16,7 +16,6 @@ model Voucher {
   campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
   campaignId Int
 
-  amount   Int
   status   Int
 
   charity   Charity? @relation(fields: [charityId], references: [id], onDelete: SetNull)

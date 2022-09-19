@@ -3,7 +3,7 @@ import prisma from '../../../lib/prisma'
 export default async function handler (req, res) {
   try {
     const httpMethod = req.method
-    const campaignId = req.query.campaignId
+    const campaignId = parseInt(req.query.campaignId)
 
     if (httpMethod === 'GET') {
       const campaign = await prisma.campaign.findFirst({
@@ -16,13 +16,6 @@ export default async function handler (req, res) {
         }
       })
 
-      const charitiesChosenByDonor = campaign.charitiesChosenByDonor
-      const charities =
-        charitiesChosenByDonor.length != 0
-          ? charitiesChosenByDonor
-          : await prisma.charity.findMany()
-      campaign.charitiesChosenByDonor = charities
-
       res.status(200).json(campaign)
     } else if (httpMethod === 'DELETE') {
       const campaign = await prisma.campaign.delete({
@@ -34,13 +27,6 @@ export default async function handler (req, res) {
           charitiesChosenByDonor: true
         }
       })
-
-      const charitiesChosenByDonor = campaign.charitiesChosenByDonor
-      const charities =
-        charitiesChosenByDonor.length != 0
-          ? charitiesChosenByDonor
-          : await prisma.charity.findMany()
-      campaign.charitiesChosenByDonor = charities
 
       res.status(200).json(campaign)
     } else {

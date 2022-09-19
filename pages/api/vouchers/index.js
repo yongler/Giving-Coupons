@@ -4,7 +4,7 @@ import { unredeemed } from '../../../util/constants/voucherStatus'
 export default async function handler (req, res) {
   try {
     const httpMethod = req.method
-    const { campaignId, amount, deadline } = req.body
+    const { campaignId } = req.body
 
     if (httpMethod === 'GET') {
       const vouchers = await prisma.voucher.findMany()
@@ -17,8 +17,6 @@ export default async function handler (req, res) {
               id: campaignId
             }
           },
-          amount: amount,
-          deadline: deadline,
           status: unredeemed
         }
       })
