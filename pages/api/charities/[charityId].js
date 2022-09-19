@@ -5,35 +5,34 @@ export default async function handler(req, res) {
     const httpMethod = req.method;
     const charityId = req.query.charityId;
     const payload = req.body;
-    const jwt = jwtExtractor(req);
 
-    if (httpMethod === "GET") {
+    if (httpMethod === 'GET') {
       const charity = await prisma.charity.findFirst({
         where: {
-          id: charityId,
-        },
-      });
-      res.status(200).json(charity);
-    } else if (httpMethod === "PATCH") {
+          id: charityId
+        }
+      })
+      res.status(200).json(charity)
+    } else if (httpMethod === 'PATCH') {
       const charity = await prisma.charity.update({
         where: {
-          id: charityId,
+          id: charityId
         },
-        data: payload,
-      });
-      res.status(200).json(charity);
-    } else if (httpMethod === "DELETE") {
+        data: payload
+      })
+      res.status(200).json(charity)
+    } else if (httpMethod === 'DELETE') {
       const charity = await prisma.charity.delete({
         where: {
-          id: charityId,
-        },
-      });
-      res.status(200).json(charity);
+          id: charityId
+        }
+      })
+      res.status(200).json(charity)
     } else {
-      res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
-      res.status(405).end(`Method ${httpMethod} Not Allowed`);
+      res.setHeader('Allow', ['GET', 'PATCH', 'DELETE'])
+      res.status(405).end(`Method ${httpMethod} Not Allowed`)
     }
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json(err.toString())
   }
 }

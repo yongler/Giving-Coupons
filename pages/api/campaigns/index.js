@@ -1,74 +1,76 @@
-import prisma from "../../../lib/prisma";
+import prisma from '../../../lib/prisma'
+import { unredeemed } from '../../../util/constants/voucherStatus'
 
-export default async function handler(req, res) {
+export default async function handler (req, res) {
   try {
-    const httpMethod = req.method;
-    const {
+    const httpMethod = req.method
+    if (httpMethod === 'GET') {
+      await handleRead(req, res)
+    } else if (httpMethod === 'POST') {
+      await handleAdd(req, res)
+    } else {
+      res.setHeader('Allow', ['POST', 'GET'])
+      res.status(405).end(`Method ${httpMethod} Not Allowed`)
+    }
+  } catch (err) {
+    res.status(500).json(err.toString())
+  }
+}
+
+async function handleRead (req, res) {
+  const campaigns = await prisma.campaign.findMany({
+    include: {
+      vouchers: true,
+      charitiesChosenByDonor: true
+    }
+  })
+
+  res.status(200).json(campaigns)
+}
+
+async function handleAdd (req, res) {
+  const {
+    name,
+    description,
+    donor,
+    voucherAmount,
+    numVouchers,
+    endDate,
+    charitiesChosenByDonor
+  } = req.body
+  const campaign = await prisma.campaign.create({
+    data: {
       name,
       description,
       donor,
-      totalAmount,
-      startDate,
+      voucherAmount,
+      numVouchers,
       endDate,
-      charitiesChosenByDonor,
-    } = req.body;
-
-    if (httpMethod === "GET") {
-      const campaigns = await prisma.campaign.findMany({
-        include: {
-          vouchers: true,
-          charitiesChosenByDonor: true,
-        },
-      });
-
-      const allCharities = await prisma.charity.findMany();
-
-      const campaignsWithCharities = campaigns.map((campaign) => {
-        const charitiesChosenByDonor = campaign.charitiesChosenByDonor;
-        const charities =
-          charitiesChosenByDonor.length != 0
-            ? charitiesChosenByDonor
-            : allCharities;
-        campaign.charitiesChosenByDonor = charities;
-        return campaign;
-      });
-
-      res.status(200).json(campaignsWithCharities);
-    } else if (httpMethod === "POST") {
-      const campaign = await prisma.campaign.create({
-        data: {
-          name,
-          description,
-          donor,
-          totalAmount,
-          startDate,
-          endDate,
-          charitiesChosenByDonor: {
-            connect: charitiesChosenByDonor.map((x) => {
-              return {
-                id: x.id,
-              };
-            }),
-          },
-        },
-        include: {
-          vouchers: true,
-          charitiesChosenByDonor: true,
-        },
-      });
-
-      const charities =
-        charitiesChosenByDonor.length != 0
-          ? charitiesChosenByDonor
-          : await prisma.charity.findMany();
-      campaign.charitiesChosenByDonor = charities;
-
-      res.status(200).json(campaign);
-    } else {
-      res.setHeader("Allow", ["POST", "GET"]);
-      res.status(405).end(`Method ${httpMethod} Not Allowed`);
+      charitiesChosenByDonor: {
+        connect: charitiesChosenByDonor.map(x => ({ id: x }))
+      }
     }
-  } catch (err) {
-    res.status(500).json({ message: err });
+  })
+  const voucherIds = genVoucherIds(campaign.id, numVouchers)
+  const vouchers = voucherIds.map(id => ({
+    id: id,
+    campaignId: campaign.id,
+    status: unredeemed
+  }))
+  await prisma.voucher.createMany({ data: vouchers })
+  res.status(200).json(campaign)
+}
+
+// Generates voucher codes
+function genVoucherIds (campaignId, numVouchers) {
+  const voucherIds = []
+  for (let i = 0; i < numVouchers; i++) {
+    // Generate random suffix to prevent guessing
+    const suffix = Math.random()
+      .toString(36)
+      .slice(2, 4)
+      .toUpperCase()
+    voucherIds.push(campaignId + '-' + String(i).padStart(2, '0') + suffix)
   }
+  return voucherIds
 }
