@@ -11,6 +11,9 @@ export default async function handler(req, res) {
         where: {
           id: voucherId,
         },
+        include: {
+          campaign: true,
+        },
       });
       res.status(200).json(voucher);
     } else if (httpMethod === "PATCH") {
