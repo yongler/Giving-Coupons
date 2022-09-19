@@ -5,7 +5,6 @@ export default async function handler(req, res) {
     const httpMethod = req.method;
     const voucherId = req.query.voucherId;
     const { status, charityId, amountAdded } = req.body;
-    const jwt = jwtExtractor(req);
 
     if (httpMethod === "GET") {
       const voucher = await prisma.voucher.findFirst({

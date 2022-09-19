@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import styles from "../styles/CharityCard.module.css";
 import Link from "next/link";
-import axios from "axios";
+
 export default function CampaignCard(props) {
   // const { id, name, donorName, description, images, timeLeft, tags } = props;
   const { id, name, description, donor, timeLeft } = props;
@@ -33,15 +33,6 @@ export default function CampaignCard(props) {
       <CardActions>
         <Button size="small">
           <Link href={"/campaigns/" + id}>Learn More</Link>
-        </Button>
-        <Button
-          size="small"
-          onClick={async (e) => {
-            e.preventDefault();
-            await axios.delete("/api/campaigns/" + id, {withCredentials: true});
-          }}
-        >
-          Delete
         </Button>
       </CardActions>
     </Card>

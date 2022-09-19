@@ -1,28 +1,34 @@
-import axios from "axios";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import { Button, FormControl, InputLabel, Input } from "@mui/material";
 import styles from "../../styles/Form.module.css";
+import { getFirebaseApp } from "../../firebase/firebaseApp";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function adminLogIn() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+  const app = getFirebaseApp();
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
   const router = useRouter();
+  const [user, loading] = useAuthState(auth);
 
-  const handleSubmit = async (e) => {
+  if (loading) {
+    return <h4 style={{ margin: 3 }}>Loading... Please wait...</h4>;
+  }
+
+  if (user) {
+    router.push("/admin");
+    return <h4 style={{ margin: 3 }}>Loading... Please wait...</h4>;
+  }
+
+  const signIn = async (e) => {
     e.preventDefault();
 
-    try {
-      const credentials = { username, password };
-      const user = await axios.post("/api/auth/login", credentials);
-      if (user.status == 200) {
-        router.push("/admin");
-      }
-    } catch (err) {
-      toast.error("Unable to log in", { autoClose: 3000 });
-    }
+    await signInWithPopup(auth, provider).catch((error) => {
+      toast.error("There was an error logging in", { autoClose: 2000 });
+      router.push("/login");
+    });
   };
 
   return (
@@ -32,7 +38,7 @@ export default function adminLogIn() {
         height: "100vh",
       }}
       className={styles.formpage}
-      onSubmit={handleSubmit}
+      onSubmit={signIn}
     >
       <h1>Log In</h1>
       <FormControl sx={{ m: 1 }}>

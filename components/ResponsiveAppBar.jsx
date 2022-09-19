@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,7 +12,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
-import { useTheme } from "@mui/material/styles";
+import { getAuth } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
+import { getFirebaseApp } from "../firebase/firebaseApp";
 
 const pages = [
   { name: "Campaigns", path: "campaigns" },
@@ -25,6 +28,10 @@ const settings = ["Profile", "Settings", "Logout"];
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const router = useRouter();
+  const app = getFirebaseApp();
+  const auth = getAuth();
+  const [user, loading] = useAuthState(auth);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -37,7 +44,17 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = async (event) => {
+    event.preventDefault();
+
+    const { setting } = event.currentTarget.dataset;
+
+    if (setting === "Logout" && user) {
+      auth.signOut();
+      setAnchorElUser(null);
+      router.push("/");
+    }
+
     setAnchorElUser(null);
   };
 
@@ -154,7 +171,11 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  data-setting={setting}
+                  onClick={handleCloseUserMenu}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

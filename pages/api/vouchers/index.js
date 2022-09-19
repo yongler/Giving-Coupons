@@ -5,13 +5,8 @@ export default async function handler(req, res) {
   try {
     const httpMethod = req.method;
     const { campaignId, amount, deadline } = req.body;
-    const jwt = jwtExtractor(req);
 
     if (httpMethod === "GET") {
-      if (!jwt) {
-        res.status(401).json({ message: "Not Authorized" });
-      }
-
       const vouchers = await prisma.voucher.findMany();
       res.status(200).json(vouchers);
     } else if (httpMethod === "POST") {
