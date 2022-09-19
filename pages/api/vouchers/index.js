@@ -1,6 +1,5 @@
 import prisma from "../../../lib/prisma";
 import { unredeemed } from "../../../util/constants/voucherStatus";
-import { jwtExtractor } from "../../../util/functions/jwtHelpers";
 
 export default async function handler(req, res) {
   try {
@@ -16,10 +15,6 @@ export default async function handler(req, res) {
       const vouchers = await prisma.voucher.findMany();
       res.status(200).json(vouchers);
     } else if (httpMethod === "POST") {
-      if (!jwt) {
-        res.status(401).json({ message: "Not Authorized" });
-      }
-
       const voucher = await prisma.voucher.create({
         data: {
           campaign: {

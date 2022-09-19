@@ -1938,11 +1938,6 @@
   dependencies:
     "safe-buffer" "~5.1.1"
 
-"cookie@^0.5.0":
-  "integrity" "sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw=="
-  "resolved" "https://registry.npmjs.org/cookie/-/cookie-0.5.0.tgz"
-  "version" "0.5.0"
-
 "core-js-compat@^3.25.1":
   "integrity" "sha512-pOHS7O0i8Qt4zlPW/eIFjwp+NrTPx+wTL0ctgI2fHn31sZOq89rDsmtc/A2vAX7r6shl+bmVI+678He46jgBlw=="
   "resolved" "https://registry.npmjs.org/core-js-compat/-/core-js-compat-3.25.1.tgz"
@@ -2975,11 +2970,6 @@
     "@types/node" "*"
     "merge-stream" "^2.0.0"
     "supports-color" "^8.0.0"
-
-"jose@^4.9.3":
-  "integrity" "sha512-f8E/z+T3Q0kA9txzH2DKvH/ds2uggcw0m3vVPSB9HrSkrQ7mojjifvS7aR8cw+lQl2Fcmx9npwaHpM/M3GD8UQ=="
-  "resolved" "https://registry.npmjs.org/jose/-/jose-4.9.3.tgz"
-  "version" "4.9.3"
 
 "js-sdsl@^4.1.4":
   "integrity" "sha512-Y2/yD55y5jteOAmY50JbUZYwk3CP3wnLPEZnlR1w9oKhITrBEtAxwuWKebFf8hMrPMgbYwFoWK/lH2sBkErELw=="

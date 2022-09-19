@@ -1,5 +1,4 @@
 import prisma from "../../../lib/prisma";
-import { jwtExtractor } from "../../../util/functions/jwtHelpers";
 
 export default async function handler(req, res) {
   try {
@@ -26,11 +25,6 @@ export default async function handler(req, res) {
 
       res.status(200).json(campaign);
     } else if (httpMethod === "DELETE") {
-      const jwt = jwtExtractor(req);
-      if (!jwt) {
-        res.status(401).json({ message: "Not Authorized" });
-      }
-
       const campaign = await prisma.campaign.delete({
         where: {
           id: campaignId,

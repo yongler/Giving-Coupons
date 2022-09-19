@@ -1,5 +1,4 @@
 import prisma from "../../../lib/prisma";
-import { jwtExtractor } from "../../../util/functions/jwtHelpers";
 
 export default async function handler(req, res) {
   try {
@@ -32,10 +31,6 @@ export default async function handler(req, res) {
       });
       res.status(200).json(voucher);
     } else if (httpMethod === "DELETE") {
-      if (!jwt) {
-        res.status(401).json({ message: "Not Authorized" });
-      }
-
       const voucher = await prisma.voucher.delete({
         where: {
           id: voucherId,

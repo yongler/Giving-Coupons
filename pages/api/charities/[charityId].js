@@ -1,5 +1,4 @@
 import prisma from "../../../lib/prisma";
-import { jwtExtractor } from "../../../util/functions/jwtHelpers";
 
 export default async function handler(req, res) {
   try {
@@ -16,10 +15,6 @@ export default async function handler(req, res) {
       });
       res.status(200).json(charity);
     } else if (httpMethod === "PATCH") {
-      if (!jwt) {
-        res.status(401).json({ message: "Not Authorized" });
-      }
-
       const charity = await prisma.charity.update({
         where: {
           id: charityId,
@@ -28,10 +23,6 @@ export default async function handler(req, res) {
       });
       res.status(200).json(charity);
     } else if (httpMethod === "DELETE") {
-      if (!jwt) {
-        res.status(401).json({ message: "Not Authorized" });
-      }
-      
       const charity = await prisma.charity.delete({
         where: {
           id: charityId,

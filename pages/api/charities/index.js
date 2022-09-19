@@ -1,5 +1,4 @@
 import prisma from "../../../lib/prisma";
-import { jwtExtractor } from "../../../util/functions/jwtHelpers";
 
 export default async function handler(req, res) {
   try {
@@ -11,10 +10,6 @@ export default async function handler(req, res) {
       const charities = await prisma.charity.findMany();
       res.status(200).json(charities);
     } else if (httpMethod === "POST") {
-      if (!jwt) {
-        res.status(401).json({ message: "Not Authorized" });
-      }
-
       const charity = await prisma.charity.create({
         data: payload,
       });
