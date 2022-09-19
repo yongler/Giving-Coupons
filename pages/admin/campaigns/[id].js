@@ -22,6 +22,12 @@ export default function Campaign({ data }) {
       campaign.charitiesChosenByDonor[i].name;
   }
 
+  function getDaysLeft(endDate) {
+    return Math.floor(
+      (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24)
+    );
+  }
+
   return (
     <div className={styles.formpage}>
       <Paper className={styles.form} elevation={0}>
@@ -32,7 +38,7 @@ export default function Campaign({ data }) {
           {`Donor: ${campaign.donor}`}
         </Typography>
         <Typography gutterBottom variant="h5" component="div">
-          {`${campaign.endDate} left`}
+          {`${getDaysLeft(campaign.endDate)} days left`}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {`Description: ${campaign.description}`}
