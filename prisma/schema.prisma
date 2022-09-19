@@ -14,10 +14,9 @@ model Voucher {
   id String @id @default(cuid())
 
   campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  campaignId String
+  campaignId Int
 
   amount   Int
-  deadline DateTime
   status   Int
 
   charity   Charity? @relation(fields: [charityId], references: [id], onDelete: SetNull)
@@ -29,12 +28,12 @@ model Voucher {
 }
 
 model Campaign {
-  id          String   @id @default(cuid())
+  id          Int   @id @default(autoincrement())
   name        String
   description String
   donor       String
-  totalAmount Int
-  startDate   DateTime
+  voucherAmount Int
+  numVouchers Int
   endDate     DateTime
 
   vouchers               Voucher[]

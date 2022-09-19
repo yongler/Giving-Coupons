@@ -7,8 +7,8 @@ export default async function handler(req, res) {
       name,
       description,
       donor,
-      totalAmount,
-      startDate,
+      voucherAmount,
+      numVouchers,
       endDate,
       charitiesChosenByDonor,
     } = req.body;
@@ -40,8 +40,8 @@ export default async function handler(req, res) {
           name,
           description,
           donor,
-          totalAmount,
-          startDate,
+          voucherAmount,
+          numVouchers,
           endDate,
           charitiesChosenByDonor: {
             connect: charitiesChosenByDonor.map((x) => {
