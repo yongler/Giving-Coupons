@@ -11,10 +11,13 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { useEffect, useState } from "react";
+import InputAdornment from "@mui/material/InputAdornment";
+import { useState } from "react";
 
-export default function VoucherForm({ data }) {
-  const [submitted, setSubmitted] = useState(false);
+export default function VoucherForm({ charities, voucher }) {
+  const [submitted, setSubmitted] = useState(
+    voucher.status == 1 || voucher.status == 2
+  );
   const { query } = useRouter();
   const { id } = query;
   // TODO: After getting id, check whether its a valid voucher code or not
@@ -32,10 +35,20 @@ export default function VoucherForm({ data }) {
   const onSubmit = (data) => {
     console.log(data);
     setSubmitted(true);
+    fetch("/api/vouchers/" + data.voucherId, {
+      method: "PATCH",
+      body: JSON.stringify({
+        status: 1,
+        charityId: data.selectedCharity,
+        amountAdded: data.amount ? parseInt(data.amount) : 0,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
   };
-
-  // list of charities, query the backend for the charity data from getServerSideProps
-  const charities = data;
 
   return (
     <div className={styles.formpage}>
@@ -46,7 +59,6 @@ export default function VoucherForm({ data }) {
           sponsored by an anonymous donor, and the donor would like you to
           choose a charity from the list below for the money to go to!
         </Typography>
-        {/* <Charity 1-6 with a few sentences each + link> */}
         {charities.map((charity) => (
           <CharityCard
             key={charity.id}
@@ -57,17 +69,37 @@ export default function VoucherForm({ data }) {
             link={charity.link}
           />
         ))}
-        {submitted ? (
-          <Typography variant="h6" className={styles.completed}>
-            We have received your submission :)
-          </Typography>
-        ) : (
-          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              rules={{ required: "Please choose a charity to donate to" }}
-              name="selectcharity"
-              control={control}
-              render={({ field }) => (
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            rules={{ required: "Please choose a charity to donate to" }}
+            name="selectedCharity"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <FormControl>
+                  <FormLabel id="demo-radio-buttons-group-label">
+                    I would like to donate the voucher to:
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    name="radio-buttons-group"
+                    defaultValue={voucher.charityId}
+                    {...field}
+                  >
+                    {charities.map((charity) => {
+                      return (
+                        <FormControlLabel
+                          disabled
+                          key={charity.id}
+                          value={charity.id}
+                          control={<Radio />}
+                          label={charity.name}
+                        />
+                      );
+                    })}
+                  </RadioGroup>
+                </FormControl>
+              ) : (
                 <FormControl>
                   <FormLabel id="demo-radio-buttons-group-label">
                     I would like to donate the voucher to:
@@ -81,7 +113,7 @@ export default function VoucherForm({ data }) {
                       return (
                         <FormControlLabel
                           key={charity.id}
-                          value={charity.name}
+                          value={charity.id}
                           control={<Radio />}
                           label={charity.name}
                         />
@@ -89,27 +121,73 @@ export default function VoucherForm({ data }) {
                     })}
                   </RadioGroup>
                 </FormControl>
-              )}
-            />
-            {errors.selectcharity && (
-              <p className={styles.error}>{errors.selectcharity?.message}</p>
-            )}
-            {/* <Our hope donor hopes you would consider donating your money directly to these charities as well> */}
-            {/* <Typography variant="subtitle1" className={styles.heading}>
+              )
+            }
+          />
+          {errors.selectcharity && (
+            <p className={styles.error}>{errors.selectcharity?.message}</p>
+          )}
+          {/* <Our hope donor hopes you would consider donating your money directly to these charities as well> */}
+          <Typography variant="subtitle1" className={styles.heading}>
             Our hope donor hopes you would consider donating your money directly
-            to these charities as well
-          </Typography> */}
-
-            {/* <Please let us know if you have any feedback regarding this project, or if you like to join us, if you want us to provide proof of the donations, do leave your contact details here> */}
-            <Typography variant="subtitle1" className={styles.heading}>
-              Please let us know if you have any feedback regarding this
-              project, if you like to join us or if you want us to provide proof
-              of the donations, do leave your contact details here.
-            </Typography>
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => (
+            to the charitie selected as well. You can do so by filling in the
+            Amount field below, and it is purely optional :)
+          </Typography>
+          <Controller
+            name="amount"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <TextField
+                  {...field}
+                  label="Amount"
+                  disabled
+                  className={styles.contact}
+                  id="outlined-start-adornment"
+                  defaultValue={voucher.amountAdded}
+                  sx={{ m: 1, width: 300 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">SGD$</InputAdornment>
+                    ),
+                  }}
+                />
+              ) : (
+                <TextField
+                  {...field}
+                  label="Amount"
+                  className={styles.contact}
+                  id="outlined-start-adornment"
+                  sx={{ m: 1, width: 300 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">SGD$</InputAdornment>
+                    ),
+                  }}
+                />
+              )
+            }
+          />
+          <Typography variant="subtitle1" className={styles.heading}>
+            Please let us know if you have any feedback regarding this project,
+            if you like to join us or if you want us to provide proof of the
+            donations, do leave your contact details here.
+          </Typography>
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <TextField
+                  {...field}
+                  disabled
+                  className={styles.contact}
+                  id="outlined-basic"
+                  label="Name"
+                  variant="outlined"
+                  sx={{ width: 300 }}
+                />
+              ) : (
                 <TextField
                   {...field}
                   className={styles.contact}
@@ -118,12 +196,24 @@ export default function VoucherForm({ data }) {
                   variant="outlined"
                   sx={{ width: 300 }}
                 />
-              )}
-            />
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
+              )
+            }
+          />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <TextField
+                  {...field}
+                  disabled
+                  className={styles.contact}
+                  id="outlined-basic"
+                  label="Email"
+                  variant="outlined"
+                  sx={{ width: 300 }}
+                />
+              ) : (
                 <TextField
                   {...field}
                   className={styles.contact}
@@ -132,12 +222,25 @@ export default function VoucherForm({ data }) {
                   variant="outlined"
                   sx={{ width: 300 }}
                 />
-              )}
-            />
-            <Controller
-              name="message"
-              control={control}
-              render={({ field }) => (
+              )
+            }
+          />
+          <Controller
+            name="message"
+            control={control}
+            render={({ field }) =>
+              submitted ? (
+                <TextField
+                  {...field}
+                  className={styles.contact}
+                  id="outlined-basic"
+                  label="Message"
+                  disabled
+                  variant="outlined"
+                  multiline
+                  sx={{ width: 300 }}
+                />
+              ) : (
                 <TextField
                   {...field}
                   className={styles.contact}
@@ -147,15 +250,19 @@ export default function VoucherForm({ data }) {
                   multiline
                   sx={{ width: 300 }}
                 />
-              )}
-            />
+              )
+            }
+          />
+          {submitted ? (
+            <Typography variant="h6" className={styles.submit}>
+              Thank you for filling in this form.
+            </Typography>
+          ) : (
             <Button className={styles.submit} variant="contained" type="submit">
               Submit
             </Button>
-          </form>
-        )}
-        {/* <* Yes! I intend to donate money to these charities> */}
-        {/* <No> */}
+          )}
+        </form>
       </Paper>
     </div>
   );
@@ -164,13 +271,13 @@ export default function VoucherForm({ data }) {
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const id = context.params.id;
-  const res = await fetch(`http:/localhost:3000/api/vouchers/` + id);
+  const res = await fetch(process.env.URL + `/api/vouchers/` + id);
   const voucher = await res.json();
   const charityRes = await fetch(
-    "http:/localhost:3000/api/campaigns/" + voucher.campaignId
+    process.env.URL + "/api/campaigns/" + voucher.campaignId
   );
   const campaign = await charityRes.json();
-  const data = campaign.charitiesChosenByDonor;
+  const charities = campaign.charitiesChosenByDonor;
   // Pass data to the page via props
   // const data = [
   //   {
@@ -198,5 +305,5 @@ export async function getServerSideProps(context) {
   //     link: "https://www.foodfromtheheart.sg/",
   //   },
   // ];
-  return { props: { data } };
+  return { props: { charities, voucher } };
 }

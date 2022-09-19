@@ -13,6 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
 import { useTheme } from "@mui/material/styles";
+import { useRouter } from 'next/router'
+
 
 const pages = [
   { name: "Campaigns", path: "campaigns" },
@@ -41,8 +43,11 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  const router = useRouter()
+
   return (
-    <AppBar position="sticky">
+    router.pathname != '/coupon/[id]' && // Hide app bar for coupon view
+     <AppBar position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -60,7 +65,7 @@ const ResponsiveAppBar = () => {
               textDecoration: "none",
             }}
           >
-            GivingCoupons
+            Giving Coupons
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -117,7 +122,7 @@ const ResponsiveAppBar = () => {
               textDecoration: "none",
             }}
           >
-            GivingCoupons
+            Coupons
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (

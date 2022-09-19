@@ -1,4 +1,4 @@
-# Giving Vouchers
+# Giving Coupons
 
 URL of application: https://2022-a3-2022-a3-group-1.vercel.app/
 
