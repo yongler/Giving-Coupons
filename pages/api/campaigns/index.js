@@ -13,7 +13,6 @@ export default async function handler(req, res) {
       endDate,
       charitiesChosenByDonor,
     } = req.body;
-    const jwt = jwtExtractor(req);
 
     if (httpMethod === "GET") {
       const campaigns = await prisma.campaign.findMany({
@@ -37,6 +36,7 @@ export default async function handler(req, res) {
 
       res.status(200).json(campaignsWithCharities);
     } else if (httpMethod === "POST") {
+      const jwt = jwtExtractor(req);
       if (!jwt) {
         res.status(401).json({ message: "Not Authorized" });
       }

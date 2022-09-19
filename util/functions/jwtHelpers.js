@@ -2,9 +2,8 @@ export const jwtExtractor = (req) => {
   let token = null;
   if (req.headers.authorization) {
     token = req.headers.authorization.replace("Bearer ", "").trim();
-  } else if (req && req.cookies["next-auth.session-token"]) {
-    const userCookie = jwt.decode(req.cookies["next-auth.session-token"]);
-    token = userCookie.accessToken;
+  } else if (req && req.cookies.get("GivingCouponsJWT")) {
+    token = req.cookies.get("GivingCouponsJWT");
   }
 
   return token;
