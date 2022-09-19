@@ -79,7 +79,9 @@ async function main () {
       numVouchers: 1,
       endDate: '2022-10-01T00:00:00.000Z',
       charitiesChosenByDonor: {
-        connect: ['make-a-wish', 'twc2', 'sos'].map(x => ({ id: x }))
+        connect: ['make-a-wish', 'twc2', 'sos', 'beyond', 'hwa'].map(x => ({
+          id: x
+        }))
       },
       vouchers: {
         create: [{ id: 'test', status: 0 }]
