@@ -5,11 +5,11 @@
     border: 0.5px;
     border-style: solid;
     text-align: center;
+    page-break-inside: avoid;
 }
 
 .couponLeft{
     width:100mm;
-    height:69mm;
     color: white;
     background-color: #C41140;
 }
@@ -39,7 +39,6 @@
 
 .couponRight{
     width:49mm;
-    height:69mm;
 }
 
 .instructions{

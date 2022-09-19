@@ -10,6 +10,9 @@ export default async function handler (req, res) {
       const voucher = await prisma.voucher.findFirst({
         where: {
           id: voucherId
+        },
+        include: {
+          campaign: true
         }
       })
       res.status(200).json(voucher)
