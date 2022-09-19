@@ -25,9 +25,7 @@ async function handleRead (req, res) {
     }
   })
 
-  const allCharities = await prisma.charity.findMany()
-
-  res.status(200).json(allCharities)
+  res.status(200).json(campaigns)
 }
 
 async function handleAdd (req, res) {
@@ -71,6 +69,7 @@ function genVoucherIds (campaignId, numVouchers) {
     const suffix = Math.random()
       .toString(36)
       .slice(2, 4)
+      .toUpperCase()
     voucherIds.push(campaignId + '-' + String(i).padStart(2, '0') + suffix)
   }
   return voucherIds
