@@ -12,12 +12,18 @@ const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const router = useRouter();
+  const canonicalUrl = (
+    `https://2022-a3-2022-a3-group-1.vercel.app/` +
+    (router.asPath === "/" ? "" : router.asPath)
+  ).split("?")[0];
 
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>GivingVoucher.sg</title>
+        <title>GivingCoupons.sg</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <link rel="canonical" href={canonicalUrl} />
       </Head>
       <ThemeProvider theme={theme}>
         <Layout>
