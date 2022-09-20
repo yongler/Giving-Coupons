@@ -48,14 +48,7 @@ export default function Campaign({ data }) {
         </Typography>
         <List dense={true}>
           {campaign.charitiesChosenByDonor.map((charity) => (
-            <ListItem
-              key={charity.id}
-              secondaryAction={
-                <IconButton edge="end" aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
-              }
-            >
+            <ListItem key={charity.id}>
               <ListItemText primary={charity.name} />
             </ListItem>
           ))}
