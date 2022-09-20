@@ -37,9 +37,8 @@ export default function MyApp(props) {
   return (
     <>
       <CacheProvider value={emotionCache}>
-
         {/* google analytics */}
-        <Script
+        {/* <Script
           strategy="lazyOnLoad"
           src={`https://www.googletagmanager.com/gtag/js?id=G-E0010RXQ9K`}
         />
@@ -51,7 +50,7 @@ export default function MyApp(props) {
 
           gtag('config', 'G-E0010RXQ9K');
           `}
-        </Script>
+        </Script> */}
 
         {/* metadata */}
         <Head>
