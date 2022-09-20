@@ -1,5 +1,19 @@
 .charityCard {
     margin-top: 2.5vh;
     margin-bottom: 2.5vh;
-    max-width: 60vw;
+}
+
+.image {
+    height: 80px;
+    object-fit: contain;
+    padding: 10px 20px 0px;
+}
+
+.name {
+    font-size: 18px;
+}
+
+.description {
+    text-align: justify;
+    font-size: 14px;
 }

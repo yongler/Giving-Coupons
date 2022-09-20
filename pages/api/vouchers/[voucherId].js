@@ -12,7 +12,11 @@ export default async function handler (req, res) {
           id: voucherId
         },
         include: {
-          campaign: true
+          campaign: {
+            include: {
+              charitiesChosenByDonor: true
+            }
+          }
         }
       })
       res.status(200).json(voucher)
