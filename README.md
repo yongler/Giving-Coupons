@@ -9,10 +9,12 @@ List of group members:
 Contributions:
 
 - Lee Yong Ler:
-  - (Milestone 9) MUI integration for better and uniform styling
-  - (Milestone 9) PWA setup and UIUX testing on mobile end
-  - (Milestone 9) Setup offline functionalities
+  - (Milestone 4) Alternatives to REST
+  - (Milestone 8) MUI integration for better and uniform styling
   - (Milestone 9) HTTPS setup and redirecting HTTP to HTTPS for secure browsing
+  - (Milestone 10) PWA setup and UIUX testing on mobile end
+  - (Milestone 10) Setup offline functionalities
+  - (Milestone 14) Google analytics 
   - 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
