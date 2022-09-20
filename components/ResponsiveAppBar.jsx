@@ -11,17 +11,19 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import Link from "next/link";
+import Link from "@mui/material/Link";
+import { useTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
-import styles from "../styles/Appbar.module.css";
+import icon from "../images/icon-512x512-removebg.png";
+import styles from "../styles/ResponsiveAppBar.module.css";
 
-const pages = [
-  { name: "Campaigns", path: "campaigns" },
-  { name: "Form", path: "form" },
-  { name: "Donor Form", path: "donor-form" },
-  { name: "Pending campaign requests", path: "pending-campaigns" },
-];
-const settings = ["Profile", "Settings", "Logout"];
+// const pages = [
+//   { name: "Campaigns", path: "campaigns" },
+//   { name: "Form", path: "form" },
+//   { name: "Donor Form", path: "donor-form" },
+//   { name: "Pending campaign requests", path: "pending-campaigns" },
+// ];
+// const settings = ["Profile", "Settings", "Logout"];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -48,10 +50,10 @@ const ResponsiveAppBar = () => {
     // Hide app bar for coupon view
     router.pathname != "/coupon/[id]" &&
     router.pathname != "/campaigns/[id]/print" && (
-      <AppBar position="sticky" className={styles.appbar}>
+      <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Typography
+            {/* <Typography
               variant="h6"
               noWrap
               component="a"
@@ -66,10 +68,20 @@ const ResponsiveAppBar = () => {
                 textDecoration: "none",
               }}
             >
-              Giving Coupons
-            </Typography>
-
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              GivingCoupons
+            </Typography> */}
+            <Link href="/">
+              <Box
+                className={styles.icon}
+                component="img"
+                src={icon.src}
+                alt="split"
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                }}
+              />
+            </Link>
+            {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -106,8 +118,8 @@ const ResponsiveAppBar = () => {
                   </Link>
                 ))}
               </Menu>
-            </Box>
-            <Typography
+            </Box> */}
+            {/* <Typography
               variant="h5"
               noWrap
               component="a"
@@ -124,8 +136,18 @@ const ResponsiveAppBar = () => {
               }}
             >
               Coupons
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            </Typography> */}
+            <Box
+              className={styles.icon}
+              component="img"
+              href="/"
+              src={icon.src}
+              alt="split"
+              sx={{
+                display: { xs: "flex", md: "none" },
+              }}
+            />
+            {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <Button
                   key={page.name}
@@ -135,9 +157,9 @@ const ResponsiveAppBar = () => {
                   <Link href={page.path}>{page.name}</Link>
                 </Button>
               ))}
-            </Box>
+            </Box> */}
 
-            <Box sx={{ flexGrow: 0 }}>
+            {/* <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -165,7 +187,7 @@ const ResponsiveAppBar = () => {
                   </MenuItem>
                 ))}
               </Menu>
-            </Box>
+            </Box> */}
           </Toolbar>
         </Container>
       </AppBar>
