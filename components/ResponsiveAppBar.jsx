@@ -12,8 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
+import { useTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
-import styles from "../styles/Appbar.module.css";
 
 const pages = [
   { name: "Campaigns", path: "campaigns" },
@@ -48,7 +48,7 @@ const ResponsiveAppBar = () => {
     // Hide app bar for coupon view
     router.pathname != "/coupon/[id]" &&
     router.pathname != "/campaigns/[id]/print" && (
-      <AppBar position="sticky" className={styles.appbar}>
+      <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography

@@ -14,6 +14,22 @@
   background-size: cover;
 }
 
+.homescreen { 
+  min-height: 100vh;
+}
+
+.titleMain {
+  font-weight: 400;
+  font-size: 100px;
+  text-shadow: -2px 2px 6px #00000061;
+}
+
+.titleSub {
+  font-weight: 600;
+  text-shadow: -2px 2px 6px #00000061;
+  font-size: 1.8rem
+}
+
 /* .logo {
   color: black;
   font-size: large;
@@ -122,6 +138,17 @@
   }
   .main {
     background-size: contain;
+  }
+}
+
+@media (max-width: 400px) {
+  .titleMain {
+    /* font-weight: 100; */
+    font-size: 50px;
+  }
+
+  .titleSub {
+    font-weight: 400;
   }
 }
 
