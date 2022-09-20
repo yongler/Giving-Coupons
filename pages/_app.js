@@ -37,6 +37,8 @@ export default function MyApp(props) {
   return (
     <>
       <CacheProvider value={emotionCache}>
+
+        {/* google analytics */}
         <Script
           strategy="lazyOnLoad"
           src={`https://www.googletagmanager.com/gtag/js?id=G-E0010RXQ9K`}
@@ -51,11 +53,14 @@ export default function MyApp(props) {
           `}
         </Script>
 
+        {/* metadata */}
         <Head>
           <title>GivingCoupons.sg</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
           <link rel="canonical" href={canonicalUrl} />
         </Head>
+
+        {/* content */}
         <ThemeProvider theme={theme}>
           <Layout>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
