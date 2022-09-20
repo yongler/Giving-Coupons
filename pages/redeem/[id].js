@@ -9,48 +9,60 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
 import InputAdornment from '@mui/material/InputAdornment'
 import Grid from '@mui/material/Grid'
-import Stack from '@mui/material/Stack'
-
 import { useState } from 'react'
+import { redeemed } from '../../util/constants/voucherStatus'
 
 export default function VoucherForm ({ voucher }) {
-  const [submitted, setSubmitted] = useState(
-    voucher.status == 1 || voucher.status == 2
-  )
-
-  const charities = voucher.campaign.charitiesChosenByDonor
-
-  // TODO: After getting id, check whether its a valid voucher code or not
-
+  const [submitted, setSubmitted] = useState(voucher?.status == redeemed)
+  const [error, setError] = useState()
   const {
     handleSubmit,
     control,
     formState: { errors }
   } = useForm({
     defaultValues: {
-      voucherId: voucher.id
+      voucherId: voucher?.id,
+      amount: voucher?.amountAdded || '',
+      message: voucher?.message || '',
+      selectedCharity: voucher?.charityId || null
     }
   })
 
+  if (voucher == null) {
+    return <div className={styles.errorPage}>Invalid voucher link</div>
+  }
+  if (Date.now() > Date.parse(voucher?.campaign.endDate) && !submitted) {
+    return <div className={styles.errorPage}>Voucher Expired</div>
+  }
+  if (error) {
+    return <div className={styles.errorPage}>{error}</div>
+  }
+
+  const charities = voucher.campaign.charitiesChosenByDonor
+
   const onSubmit = data => {
-    console.log(data)
+    if (Date.now() > Date.parse(voucher?.campaign.endDate)) {
+      setError('Voucher Expired')
+      return
+    }
     setSubmitted(true)
     fetch('/api/vouchers/' + data.voucherId, {
       method: 'PATCH',
       body: JSON.stringify({
-        status: 1,
         charityId: data.selectedCharity,
-        amountAdded: data.amount ? parseInt(data.amount) : 0
+        amountAdded: data.amount ? parseInt(data.amount) : 0,
+        message: data.message
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8'
       }
+    }).then(response => {
+      if (!response.ok) {
+        setError('Sorry, an error has occured')
+      }
     })
-      .then(response => response.json())
-      .then(json => console.log(json))
   }
 
   return (
@@ -65,7 +77,7 @@ export default function VoucherForm ({ voucher }) {
             {voucher.campaign.voucherAmount} coupon sponsored by an anonymous
             donor. Please select a charity below and submit this form. At the
             end of the campaign, our donor will transfer the money to the
-            charity you have choosen.
+            charity you have chosen.
           </Typography>
           <Typography className={styles.instructions}>
             <b>Please review these charities and indicate your choice below.</b>
@@ -80,198 +92,86 @@ export default function VoucherForm ({ voucher }) {
               link={charity.link}
             />
           ))}
-          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Typography className={styles.question}>
+              <b>I would like to donate the voucher to:</b>
+            </Typography>
             <Controller
-              rules={{ required: 'Please choose a charity to donate to' }}
+              rules={{ required: 'Please choose a charity' }}
               name='selectedCharity'
               control={control}
-              render={({ field }) =>
-                submitted ? (
-                  <FormControl>
-                    <FormLabel id='demo-radio-buttons-group-label'>
-                      I would like to donate the voucher to:
-                    </FormLabel>
-                    <RadioGroup
-                      aria-labelledby='demo-radio-buttons-group-label'
-                      name='radio-buttons-group'
-                      defaultValue={voucher.charityId}
-                      {...field}
-                    >
-                      {charities.map(charity => {
-                        return (
-                          <FormControlLabel
-                            disabled
-                            key={charity.id}
-                            value={charity.id}
-                            control={<Radio />}
-                            label={charity.name}
-                          />
-                        )
-                      })}
-                    </RadioGroup>
-                  </FormControl>
-                ) : (
-                  <FormControl>
-                    <FormLabel id='demo-radio-buttons-group-label'>
-                      I would like to donate the voucher to:
-                    </FormLabel>
-                    <RadioGroup
-                      aria-labelledby='demo-radio-buttons-group-label'
-                      name='radio-buttons-group'
-                      {...field}
-                    >
-                      {charities.map(charity => {
-                        return (
-                          <FormControlLabel
-                            key={charity.id}
-                            value={charity.id}
-                            control={<Radio />}
-                            label={charity.name}
-                          />
-                        )
-                      })}
-                    </RadioGroup>
-                  </FormControl>
-                )
-              }
+              render={({ field }) => (
+                <FormControl>
+                  <RadioGroup {...field}>
+                    {charities.map(charity => {
+                      return (
+                        <FormControlLabel
+                          disabled={submitted}
+                          key={charity.id}
+                          value={charity.id}
+                          control={<Radio />}
+                          label={charity.name}
+                        />
+                      )
+                    })}
+                  </RadioGroup>
+                </FormControl>
+              )}
             />
             {errors.selectedCharity && (
               <p className={styles.error}>{errors.selectedCharity?.message}</p>
             )}
-            {/* <Our hope donor hopes you would consider donating your money directly to these charities as well> */}
-            <Typography variant='subtitle1' className={styles.heading}>
-              Our hope donor hopes you would consider donating your money
-              directly to the charitie selected as well. You can do so by
-              filling in the Amount field below, and it is purely optional :)
+            <Typography className={styles.question}>
+              We hope you would consider donating your money directly to these
+              charities as well. This is completely optional, but if you intend
+              to do so, please let us know how much you intend to donate.
             </Typography>
             <Controller
               name='amount'
               control={control}
-              render={({ field }) =>
-                submitted ? (
-                  <TextField
-                    {...field}
-                    label='Amount'
-                    disabled
-                    className={styles.contact}
-                    id='outlined-start-adornment'
-                    defaultValue={voucher.amountAdded}
-                    sx={{ m: 1, width: 300 }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>SGD$</InputAdornment>
-                      )
-                    }}
-                  />
-                ) : (
-                  <TextField
-                    {...field}
-                    label='Amount'
-                    className={styles.contact}
-                    id='outlined-start-adornment'
-                    sx={{ m: 1, width: 300 }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>SGD$</InputAdornment>
-                      )
-                    }}
-                  />
-                )
-              }
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  disabled={submitted}
+                  type='number'
+                  fullWidth
+                  inputProps={{ min: 0 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position='start'>$</InputAdornment>
+                    )
+                  }}
+                />
+              )}
             />
-            <Typography variant='subtitle1' className={styles.heading}>
-              Please let us know if you have any feedback regarding this
-              project, if you like to join us or if you want us to provide proof
-              of the donations, do leave your contact details here.
+            <Typography className={styles.question}>
+              If you have any feedback or questions for us, or are interested in
+              joining us, let us know here and include your contact details. We
+              are also willing to provide proof of donations. Alternatively,
+              reach out to us at giving.coupons.sg@gmail.com
             </Typography>
-            <Controller
-              name='name'
-              control={control}
-              render={({ field }) =>
-                submitted ? (
-                  <TextField
-                    {...field}
-                    disabled
-                    className={styles.contact}
-                    id='outlined-basic'
-                    label='Name'
-                    variant='outlined'
-                    sx={{ width: 300 }}
-                  />
-                ) : (
-                  <TextField
-                    {...field}
-                    className={styles.contact}
-                    id='outlined-basic'
-                    label='Name'
-                    variant='outlined'
-                    sx={{ width: 300 }}
-                  />
-                )
-              }
-            />
-            <Controller
-              name='email'
-              control={control}
-              render={({ field }) =>
-                submitted ? (
-                  <TextField
-                    {...field}
-                    disabled
-                    className={styles.contact}
-                    id='outlined-basic'
-                    label='Email'
-                    variant='outlined'
-                    sx={{ width: 300 }}
-                  />
-                ) : (
-                  <TextField
-                    {...field}
-                    className={styles.contact}
-                    id='outlined-basic'
-                    label='Email'
-                    variant='outlined'
-                    sx={{ width: 300 }}
-                  />
-                )
-              }
-            />
             <Controller
               name='message'
               control={control}
-              render={({ field }) =>
-                submitted ? (
-                  <TextField
-                    {...field}
-                    className={styles.contact}
-                    id='outlined-basic'
-                    label='Message'
-                    disabled
-                    variant='outlined'
-                    multiline
-                    sx={{ width: 300 }}
-                  />
-                ) : (
-                  <TextField
-                    {...field}
-                    className={styles.contact}
-                    id='outlined-basic'
-                    label='Message'
-                    variant='outlined'
-                    multiline
-                    sx={{ width: 300 }}
-                  />
-                )
-              }
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  disabled={submitted}
+                  variant='outlined'
+                  multiline
+                  fullWidth
+                />
+              )}
             />
             {submitted ? (
-              <Typography variant='h6' className={styles.submit}>
-                Thank you for filling in this form.
+              <Typography variant='h6' className={styles.submitText}>
+                Thank you for submitting this form.
               </Typography>
             ) : (
               <Button
-                className={styles.submit}
+                className={styles.submitButton}
                 variant='contained'
+                fullWidth
                 type='submit'
               >
                 Submit

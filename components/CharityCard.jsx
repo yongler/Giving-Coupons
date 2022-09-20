@@ -33,7 +33,7 @@ export default function CharityCard (props) {
           {description}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing className={styles.button}>
         <Button size='small' onClick={openLink}>
           Visit website
         </Button>

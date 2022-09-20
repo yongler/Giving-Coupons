@@ -17,3 +17,7 @@
     text-align: justify;
     font-size: 14px;
 }
+
+.button {
+    padding: 0px 12px 8px;
+}

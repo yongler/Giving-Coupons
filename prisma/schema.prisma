@@ -11,17 +11,19 @@ datasource db {
 }
 
 model Voucher {
-  id String @id @default(cuid())
+  id          String @id @default(cuid())
 
-  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  campaignId Int
+  campaign    Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignId  Int
 
-  status   Int
+  status      Int
 
-  charity   Charity? @relation(fields: [charityId], references: [id], onDelete: SetNull)
-  charityId String?
+  charity     Charity? @relation(fields: [charityId], references: [id], onDelete: SetNull)
+  charityId   String?
 
-  amountAdded Int?
+  amountAdded   Int?
+  message       String?
+  timeSubmitted DateTime?
 
   @@map("vouchers")
 }
