@@ -1,0 +1,19 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    /* justify-content:; */
+}
+
+.dashboardpaper {
+    width: 70vw;
+    height: 70vh;
+    margin: auto;
+}
+
+.title {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    /* margin: auto; */
+    text-decoration: underline;
+    align-self: center;
+}
