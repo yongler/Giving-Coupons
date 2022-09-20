@@ -19,7 +19,7 @@ export default function CharityCard (props) {
   }
 
   return (
-    <Card className={styles.charityCard} variant='outlined'>
+    <Card className={styles.charityCard}>
       <CardMedia
         component='img'
         height={140}

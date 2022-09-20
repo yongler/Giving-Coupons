@@ -18,16 +18,15 @@
 }
 
 .contact {
-    margin-bottom: 0.5vh;
-    margin-top: 3vh;
+  margin-bottom: 1vh;
+  margin-top: 0.5vh;
 }
 
 .submit {
-    margin-top: 3vh;
-    margin-bottom: 3vh;
+  margin-bottom: 3vh;
 }
 
 .error {
-    color: red;
-    margin-bottom: -0.5vh;
+  color: red;
+  margin-bottom: -0.5vh;
 }
