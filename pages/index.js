@@ -1,9 +1,15 @@
-import styles from '../styles/Home.module.css'
+import ProductCTA from "../components/ProductCTA";
+import ProductHero from "../components/ProductHero";
+import ProductHowItWorks from "../components/ProductHowItWorks";
 
-export default function Home () {
+export default function Home() {
   return (
-    <div className={styles.main}>
-      <p className={styles.logo}>Giving Coupons</p>
+    <div>
+      <ProductHero />
+      <ProductHowItWorks />
+      {/* <ProductCTA /> */}
+      {/* <ProductSmokingHero /> */}
+      {/* <AppFooter /> */}
     </div>
-  )
+  );
 }
