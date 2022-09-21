@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import * as ga from "../lib/ga";
 
 // Client-side cache, shared for the whole session of the user in the browser.
+// Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
