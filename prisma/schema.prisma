@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,30 +8,27 @@ datasource db {
 }
 
 model Voucher {
-  id String @id @default(cuid())
-
-  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  campaignId Int
-
-  status   Int
-
-  charity   Charity? @relation(fields: [charityId], references: [id], onDelete: SetNull)
-  charityId String?
-
-  amountAdded Int?
+  id            String    @id @default(cuid())
+  campaignId    Int
+  status        Int
+  charityId     String?
+  amountAdded   Int?
+  message       String?
+  timeSubmitted DateTime?
+  campaign      Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  charity       Charity?  @relation(fields: [charityId], references: [id])
 
   @@map("vouchers")
 }
 
 model Campaign {
-  id          Int   @id @default(autoincrement())
-  name        String
-  description String
-  donor       String
-  voucherAmount Int
-  numVouchers Int
-  endDate     DateTime
-
+  id                     Int       @id @default(autoincrement())
+  name                   String
+  description            String
+  donor                  String
+  voucherAmount          Int
+  numVouchers            Int
+  endDate                DateTime
   vouchers               Voucher[]
   charitiesChosenByDonor Charity[]
 
@@ -42,14 +36,13 @@ model Campaign {
 }
 
 model Charity {
-  id          String  @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String
   description String
   image       String?
   link        String
-
-  vouchers  Voucher[]
-  campaigns Campaign[]
+  vouchers    Voucher[]
+  campaigns   Campaign[]
 
   @@map("charities")
 }

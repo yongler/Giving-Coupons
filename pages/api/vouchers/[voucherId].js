@@ -1,49 +1,74 @@
-import prisma from '../../../lib/prisma'
+import prisma from "../../../lib/prisma";
+import { redeemed } from "../../../util/constants/voucherStatus";
 
-export default async function handler (req, res) {
+export default async function handler(req, res) {
   try {
-    const httpMethod = req.method
-    const voucherId = req.query.voucherId
-    const { status, charityId, amountAdded } = req.body
+    const httpMethod = req.method;
+    const voucherId = req.query.voucherId;
+    const { charityId, amountAdded, message } = req.body;
 
-    if (httpMethod === 'GET') {
+    if (httpMethod === "GET") {
       const voucher = await prisma.voucher.findFirst({
         where: {
-          id: voucherId
+          id: voucherId,
         },
         include: {
-          campaign: true
-        }
-      })
-      res.status(200).json(voucher)
-    } else if (httpMethod === 'PATCH') {
+          campaign: {
+            include: {
+              charitiesChosenByDonor: true,
+            },
+          },
+        },
+      });
+      res.status(200).json(voucher);
+    } else if (httpMethod === "PATCH") {
+      let old = await prisma.voucher.findFirst({
+        where: {
+          id: voucherId,
+        },
+        include: {
+          campaign: true,
+        },
+      });
+      if (!old) {
+        res.status(400).json("Invalid id");
+        return;
+      } else if (old.status == redeemed) {
+        res.status(400).json("Coupon redeemed");
+        return;
+      } else if (new Date() > old.campaign.endDate) {
+        res.status(400).json("Coupon expired");
+        return;
+      }
       const voucher = await prisma.voucher.update({
         where: {
-          id: voucherId
+          id: voucherId,
         },
         data: {
-          status,
+          status: redeemed,
           charity: {
             connect: {
-              id: charityId
-            }
+              id: charityId,
+            },
           },
-          amountAdded
-        }
-      })
-      res.status(200).json(voucher)
-    } else if (httpMethod === 'DELETE') {
+          amountAdded,
+          message,
+          timeSubmitted: new Date(),
+        },
+      });
+      res.status(200).json(voucher);
+    } else if (httpMethod === "DELETE") {
       const voucher = await prisma.voucher.delete({
         where: {
-          id: voucherId
-        }
-      })
-      res.status(200).json(voucher)
+          id: voucherId,
+        },
+      });
+      res.status(200).json(voucher);
     } else {
-      res.setHeader('Allow', ['GET', 'PATCH', 'DELETE'])
-      res.status(405).end(`Method ${httpMethod} Not Allowed`)
+      res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
+      res.status(405).end(`Method ${httpMethod} Not Allowed`);
     }
   } catch (err) {
-    res.status(500).json(err.toString())
+    res.status(500).json(err.toString());
   }
 }
