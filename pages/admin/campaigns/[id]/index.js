@@ -1,19 +1,20 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import styles from "../../../styles/Admin.campaigns.page.module.css";
+import styles from "../../../../styles/Admin.campaigns.page.module.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableContainer from "@mui/material/TableContainer";
-import { unredeemed } from "../../../util/constants/voucherStatus";
+import { unredeemed } from "../../../../util/constants/voucherStatus";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 export default function Campaign({ data }) {
   const campaign = data;
@@ -74,9 +75,18 @@ export default function Campaign({ data }) {
             </TableBody>
           </Table>
         </TableContainer>
-        <Typography className={styles.title} variant="h6" component="div">
-          Coupons Status
-        </Typography>
+        <div className={styles.couponsTitle}>
+          <Typography className={styles.title} variant="h6" component="div">
+            Coupons Status
+          </Typography>
+          <Button
+            variant="contained"
+            className={styles.couponsButton}
+            href={`/admin/campaigns/${campaign.id}/print`}
+          >
+            View Coupons
+          </Button>
+        </div>
         <TableContainer
           className={styles.table}
           component={Paper}

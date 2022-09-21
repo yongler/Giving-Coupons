@@ -49,7 +49,7 @@ const ResponsiveAppBar = () => {
   return (
     // Hide app bar for coupon view
     router.pathname != "/coupon/[id]" &&
-    router.pathname != "/campaigns/[id]/print" && (
+    router.pathname != "/admin/campaigns/[id]/print" && (
       <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>

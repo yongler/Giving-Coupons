@@ -33,3 +33,15 @@
     font-size: 50px;
     margin-top: 20vh;
 }
+
+.couponsTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.couponsButton {
+    margin-top: 3.5vh;
+    margin-left: 3vw;
+    height: 35px;
+}
