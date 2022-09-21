@@ -22,7 +22,7 @@
 
 .table {
     width: auto;
-    max-width: 100vw;
+    max-width: 95vw;
     /* overflow-y: hidden; */
     overflow-x: scroll;
     /* overflow: scroll; */
