@@ -17,9 +17,9 @@ import styles from "../styles/Appbar.module.css";
 
 const pages = [
   { name: "Campaigns", path: "campaigns" },
-  { name: "Form", path: "form" },
-  { name: "Donor Form", path: "donor-form" },
-  { name: "Pending campaign requests", path: "pending-campaigns" },
+  // { name: "Form", path: "form" },
+  // { name: "Donor Form", path: "donor-form" },
+  // { name: "Pending campaign requests", path: "pending-campaigns" },
 ];
 const settings = ["Profile", "Settings", "Logout"];
 

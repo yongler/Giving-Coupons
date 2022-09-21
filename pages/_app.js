@@ -9,19 +9,11 @@ import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import { useRouter } from "next/router";
 import Script from "next/script";
+import { useEffect } from "react";
+import * as ga from "../lib/ga";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
-
-// <!-- Google tag (gtag.js) -->
-// <script async src="https://www.googletagmanager.com/gtag/js?id=G-E0010RXQ9K"></script>
-// <script>
-//   window.dataLayer = window.dataLayer || [];
-//   function gtag(){dataLayer.push(arguments);}
-//   gtag('js', new Date());
-
-//   gtag('config', 'G-E0010RXQ9K');
-// </script>
 
 export default function MyApp(props) {
   // MUI rendering first
@@ -34,25 +26,25 @@ export default function MyApp(props) {
     (router.asPath === "/" ? "" : router.asPath)
   ).split("?")[0];
 
+  // google analytics
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      ga.pageview(url);
+    };
+    //When the component is mounted, subscribe to router changes
+    //and log those page views
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <>
       <CacheProvider value={emotionCache}>
-
-        {/* google analytics */}
-        <Script
-          strategy="lazyOnLoad"
-          src={`https://www.googletagmanager.com/gtag/js?id=G-E0010RXQ9K`}
-        />
-        <Script strategy="lazyOnLoad">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-E0010RXQ9K');
-          `}
-        </Script>
-
         {/* metadata */}
         <Head>
           <title>GivingCoupons.sg</title>
