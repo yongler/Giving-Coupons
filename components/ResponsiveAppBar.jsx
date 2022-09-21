@@ -49,7 +49,7 @@ const ResponsiveAppBar = () => {
   return (
     // Hide app bar for coupon view
     router.pathname != "/coupon/[id]" &&
-    router.pathname != "/campaigns/[id]/print" && (
+    router.pathname != "/admin/campaigns/[id]/print" && (
       <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -137,16 +137,18 @@ const ResponsiveAppBar = () => {
             >
               Coupons
             </Typography> */}
-            <Box
-              className={styles.icon}
-              component="img"
-              href="/"
-              src={icon.src}
-              alt="split"
-              sx={{
-                display: { xs: "flex", md: "none" },
-              }}
-            />
+            <Link href="/">
+              <Box
+                className={styles.icon}
+                component="img"
+                href="/"
+                src={icon.src}
+                alt="split"
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                }}
+              />
+            </Link>
             {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <Button

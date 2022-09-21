@@ -14,8 +14,8 @@ Contributions:
   - (Milestone 9) HTTPS setup and redirecting HTTP to HTTPS for secure browsing
   - (Milestone 10) PWA setup and UIUX testing on mobile end
   - (Milestone 10) Setup offline functionalities
-  - (Milestone 14) Google analytics 
-  - 
+  - (Milestone 14) Google analytics
+  -
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -51,6 +51,12 @@ After updating database, run
 npx prisma generate
 ```
 
+To pull new changes from database, run
+
+```bash
+npx prisma db pull
+```
+
 To view db GUI, run
 
 ```bash
@@ -60,6 +66,7 @@ npx prisma studio
 ## Resources
 
 https://www.youtube.com/watch?v=ARNN_zmrwcw
+
 https://medium.com/geekculture/how-to-make-a-next-js-app-a-pwa-a5e2b13da548
 
 ## Learn More
