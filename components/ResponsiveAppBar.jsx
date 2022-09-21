@@ -137,16 +137,18 @@ const ResponsiveAppBar = () => {
             >
               Coupons
             </Typography> */}
-            <Box
-              className={styles.icon}
-              component="img"
-              href="/"
-              src={icon.src}
-              alt="split"
-              sx={{
-                display: { xs: "flex", md: "none" },
-              }}
-            />
+            <Link href="/">
+              <Box
+                className={styles.icon}
+                component="img"
+                href="/"
+                src={icon.src}
+                alt="split"
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                }}
+              />
+            </Link>
             {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <Button
