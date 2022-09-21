@@ -10,6 +10,8 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableContainer from "@mui/material/TableContainer";
+import { unredeemed } from "../../../util/constants/voucherStatus";
+import { red } from "@mui/material/colors";
 
 export default function Campaign({ data }) {
   const campaign = data;
@@ -52,14 +54,11 @@ export default function Campaign({ data }) {
             </ListItem>
           ))}
         </List> */}
-        <TableContainer component={Paper}>
+        <TableContainer className={styles.table} component={Paper}>
           <Table className={styles.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                {/* <TableCell>ID</TableCell> */}
                 <TableCell align="center">Name</TableCell>
-                {/* <TableCell align="right">Description</TableCell> */}
-                {/* <TableCell align="right">Link</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -68,12 +67,7 @@ export default function Campaign({ data }) {
                   key={charity.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  {/* <TableCell component="th" scope="row">
-                  {charity.id}
-                </TableCell> */}
                   <TableCell align="center">{charity.name}</TableCell>
-                  {/* <TableCell align="right">{charity.description}</TableCell> */}
-                  {/* <TableCell align="right">{charity.link}</TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
@@ -82,14 +76,19 @@ export default function Campaign({ data }) {
         <Typography className={styles.title} variant="h6" component="div">
           Vouchers Status
         </Typography>
-        <TableContainer component={Paper}>
-          <Table className={styles.table} aria-label="simple table">
+        <TableContainer
+          className={styles.table}
+          component={Paper}
+          sx={{ overflowX: "hidden" }}
+        >
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
                 <TableCell align="right">Status</TableCell>
                 <TableCell align="right">Charity Selected</TableCell>
                 <TableCell align="right">Amount Added</TableCell>
+                <TableCell align="right">Date Submitted</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -102,11 +101,7 @@ export default function Campaign({ data }) {
                     {voucher.id}
                   </TableCell>
                   <TableCell align="right">
-                    {voucher.status == 0
-                      ? "Unredeemed"
-                      : voucher.status == 1
-                      ? "Redeemed"
-                      : "Expired"}
+                    {voucher.status == unredeemed ? "Unredeemed" : "Redeemed"}
                   </TableCell>
                   <TableCell align="right">
                     {voucher.charityId
@@ -115,6 +110,11 @@ export default function Campaign({ data }) {
                   </TableCell>
                   <TableCell align="right">
                     {voucher.amountAdded ? "$" + voucher.amountAdded : "$0"}
+                  </TableCell>
+                  <TableCell align="right">
+                    {voucher.status == unredeemed
+                      ? "-"
+                      : new Date(voucher.timeSubmitted).toDateString()}
                   </TableCell>
                 </TableRow>
               ))}
