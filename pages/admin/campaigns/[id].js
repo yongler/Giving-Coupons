@@ -69,7 +69,7 @@ export default function Campaign({ data }) {
           </Table>
         </TableContainer>
         <Typography className={styles.title} variant="h6" component="div">
-          Vouchers Status
+          Coupons Status
         </Typography>
         <TableContainer
           className={styles.table}
