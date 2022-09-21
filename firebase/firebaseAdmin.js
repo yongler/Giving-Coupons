@@ -1,4 +1,5 @@
 import * as firebaseAdmin from "firebase-admin";
+require("firebase/auth");
 
 // get this JSON from the Firebase board
 const serviceAccount = require("./adminConfig.json");
@@ -12,10 +13,5 @@ if (!firebaseAdmin.apps.length) {
     }),
   });
 }
-
-export const verifyToken = async (jwt) => {
-  const res = await firebaseAdmin.auth().verifyIdToken(jwt);
-  return res;
-};
 
 export { firebaseAdmin };

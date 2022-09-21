@@ -1,9 +1,8 @@
 import prisma from "../../../lib/prisma";
 import { unredeemed } from "../../../util/constants/voucherStatus";
-import { verifyToken } from "../../../firebase/firebaseAdmin";
+import { firebaseAdmin } from "../../../firebase/firebaseAdmin";
 
 export default async function handler(req, res) {
-
   try {
     const httpMethod = req.method;
     if (httpMethod === "GET") {
@@ -20,6 +19,13 @@ export default async function handler(req, res) {
 }
 
 async function handleRead(req, res) {
+  try {
+    const jwt = req.headers.authorization.replace("Bearer ", "").trim();
+    await firebaseAdmin.auth().verifyIdToken(jwt);
+  } catch (err) {
+    res.status(401).json({ message: "Not Authorized" });
+  }
+
   const campaigns = await prisma.campaign.findMany({
     include: {
       vouchers: true,

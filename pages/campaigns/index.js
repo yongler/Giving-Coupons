@@ -1,11 +1,29 @@
 import Paper from "@mui/material/Paper";
-import { env } from "process";
 import CampaignCard from "../../components/CampaignCard";
 import styles from "../../styles/Form.module.css";
+import { auth } from "../../firebase/firebaseApp";
+import { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-export default function campaignList({ data }) {
+export default function campaignList() {
   // list of campaigns, query the backend for the campaign data
-  const campaigns = data;
+  const [campaigns, setCampaigns] = useState([]);
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    user.getIdToken().then((jwt) => {
+      fetch("/api/campaigns", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + jwt,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setCampaigns(data);
+        });
+    });
+  }, []);
 
   return (
     <div className={styles.formpage}>
@@ -25,10 +43,4 @@ export default function campaignList({ data }) {
       </Paper>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const res = await fetch(process.env.URL + `/api/campaigns`);
-  const data = await res.json();
-  return { props: { data } };
 }

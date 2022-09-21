@@ -4,12 +4,12 @@ import { makeStyles } from "@material-ui/core";
 
 const Layout = ({ children }) => {
   return (
-    <div>
-      <ResponsiveAppBar />
+      <div>
+        <ResponsiveAppBar />
 
-      {/* main content */}
-      {children}
-    </div>
+        {/* main content */}
+        {children}
+      </div>
   );
 };
 

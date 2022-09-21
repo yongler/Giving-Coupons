@@ -1,19 +1,17 @@
 import { Button, FormControl, InputLabel, Input } from "@mui/material";
 import styles from "../../styles/Form.module.css";
-import { getFirebaseApp } from "../../firebase/firebaseApp";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState } from "react";
+import { auth } from "../../firebase/firebaseApp";
 
 export default function adminLogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const app = getFirebaseApp();
   const provider = new GoogleAuthProvider();
-  const auth = getAuth();
   const router = useRouter();
   const [user, loading] = useAuthState(auth);
 

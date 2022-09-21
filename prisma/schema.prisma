@@ -8,13 +8,15 @@ datasource db {
 }
 
 model Voucher {
-  id          String   @id @default(cuid())
-  campaignId  Int
-  status      Int
-  charityId   String?
-  amountAdded Int?
-  campaign    Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  charity     Charity? @relation(fields: [charityId], references: [id])
+  id            String    @id @default(cuid())
+  campaignId    Int
+  status        Int
+  charityId     String?
+  amountAdded   Int?
+  message       String?
+  timeSubmitted DateTime?
+  campaign      Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  charity       Charity?  @relation(fields: [charityId], references: [id])
 
   @@map("vouchers")
 }
