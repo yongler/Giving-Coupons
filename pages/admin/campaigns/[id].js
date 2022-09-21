@@ -18,6 +18,10 @@ import Box from "@mui/material/Box";
 export default function Campaign({ data }) {
   const campaign = data;
 
+  if (campaign == null || campaign.charitiesChosenByDonor == undefined) {
+    return <div className={styles.errorPage}>Invalid campaign link</div>;
+  }
+
   console.log(campaign);
   const charityMappings = {};
   for (let i = 0; i < campaign.charitiesChosenByDonor.length; i++) {
