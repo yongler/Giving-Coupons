@@ -45,7 +45,9 @@ export default function Campaign({ data }) {
           {`Donor: ${campaign.donor}`}
         </Typography>
         <Typography gutterBottom variant="h5" component="div">
-          {`${getDaysLeft(campaign.endDate)} days left`}
+          {getDaysLeft(campaign.endDate) > 0
+            ? `${getDaysLeft(campaign.endDate)} days left`
+            : "Campaign has ended"}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {`Description: ${campaign.description}`}
