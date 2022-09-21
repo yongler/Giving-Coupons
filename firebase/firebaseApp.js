@@ -5,16 +5,18 @@ import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+const serviceAccount = require("./firebaseConfig.json");
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDh_ADjW7zLHnZ_n26j9m3MMRTWdp0wPQc",
-  authDomain: "giving-coupons.firebaseapp.com",
-  projectId: "giving-coupons",
-  storageBucket: "giving-coupons.appspot.com",
-  messagingSenderId: "908736405455",
-  appId: "1:908736405455:web:741ae82cb6205acfddbcba",
-  measurementId: "G-E0010RXQ9K",
+  apiKey: serviceAccount.apiKey,
+  authDomain: serviceAccount.authDomain,
+  projectId: serviceAccount.projectId,
+  storageBucket: serviceAccount.storageBucket,
+  messagingSenderId: serviceAccount.messagingSenderId,
+  appId: serviceAccount.appId,
+  measurementId: serviceAccount.measurementId,
 };
 
 // Initialize Firebase

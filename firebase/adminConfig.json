@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "giving-coupons",
+  "private_key_id": "30229c6e3b3585468f49f7daf3e9f1377f3f1e9c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCn/zNAiM7/kfYm\nBRaW8fwq8tOtyZOx6i09/r40NebRtlQrzzpja0cxhRMXp+qMBjDxFmWAPpiG91Yj\n8Z5+F8PQQc3FVC/qQlxae9rPNLvZ+gOTYGZV4Z1BLZQkUjC4DD0ovTGmJpfKL5Gg\n12mZFa6jqNnwfSBtY3gopzwahk+mTJAFGdWLhiAR+1LWbLeP9X8OV1txJIYoPzHE\nR9NWqY+/Jh3nKjY4NIpCsXJGdx3a+9E+VPrqmSov8ThLoLeWYj3vO6TnsJ1Mfp3B\n+NM8e0kNQuotEkj9XnKmAJC0jjC2QGKYrG5TACL1PamBE6QW32iupzXq/Sh2VDzS\nqa5fhy1PAgMBAAECggEAIw86NfSXJnTipsqXDUdQ9fGZRYJ05UNWz8JTFXhORGPF\nqyLjL45a3DXGZ0BuzWwZWKbw5dOqZzhE7Nlm1y/EeLjS5aSNH1lcBrIkVuvNbE8l\n4eLTWIbuF4UYjn/slOxQ8yiQrPkO4m4M+UEbU4xX1uXNHcgvNUT19Z35CBwRkUXA\nhOwsu+SSGIIEMyAaxjFts8dP5UX3grRi7lnj3Nz9Ek397iXLbqn9UaeW+oeCUPak\ndqHe44mYkGKw26nvlZV0SEeWHRD3t9Uu9pZdCeX595Ylu24OhROWlYxBFFGoTksw\nf1Z6WeKTeqYcmaAL188AlawN64HukeQC68QQlerdSQKBgQDXkyhfuOCvPmU5U1SH\nZz3oWlx1lG4vBcEU+tHRXn2Q4WDUfjq6kfUhPaU4dTAYMJnp0NiqRH2Bbe+zGrmU\nOdzknDyRYwJWI1pD13gg2qeeabfkuFeggjWU4kkTpIcm6xHehcturtOCPqQG3y2i\nOK4xShBCLXGwYivYrAjCOpHXlQKBgQDHgAZH1SFGurCb87slIPulzeKIo0VKVoxO\nov/u8DNyRfONWh3HhZPiBENpfSbP5l97QPgQ1URnyh/k8YKoW88UctZgfcqLpug3\nLjd7ER3PLwYtRrAaNNq+2/pMZ6sC1OfS2JfIBk/UJRj3VZMsYNMw1EPtvYKYcdjT\nj9vlFpMoUwKBgBkj/VJkgjeNxEpSMIp1/N9LIntH6y2qsyDaO3v6VBSAZEWDzx+R\nBBBzWwBhklFP4bNF+u6ofCaLBqhRlpD1ypAStHGUJWKcTtuYllbmiSPNWnffE8ER\nTmRlm3Yh+u0L/xJ/cgEffGU1HvX6Mx03FQGEjK7bE+YpHMnxDjhwki+dAoGBALdd\nCGjFkAw+U01Du+LoaeN/VJNZ3bnxyowMbUfkJqUFflGRXoWgVMgMOxmeGipEB8Z1\ndIukOXdb4+y9veWYXMDiu/98Hso04oK1S/ElTky7X+YFbp7nrZZ3AZtwPVIg9eJp\niTgj9QN8BXJviRHk/LeIodbFtF8BZNUvCGGLWj5ZAoGAIMZo+uMiif9i/LD81+mG\nrox2Dr3Btb3ReUS/V20hr/Zh2kw6w3sHeq7RimRLhVhzaDK2gMwc2V6MmkFw21v9\n2g6JdT+7JWVPiOkx7cSeUOHVTrIopW6pG8WORHYMA7ld0kSqhUKaYhGaPXOJrbqR\nvCp0mVw3+So6tf61JW0g2xA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-g8xu4@giving-coupons.iam.gserviceaccount.com",
+  "client_id": "102239605322659052230",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-g8xu4%40giving-coupons.iam.gserviceaccount.com"
+}

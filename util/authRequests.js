@@ -7,7 +7,7 @@ export const authRequest = async (method, url, jwt, body) => {
     },
   };
 
-  switch (method) {
+  switch (method.toUpperCase()) {
     case "GET":
       return await axios.get(url, authHeader);
     case "POST":

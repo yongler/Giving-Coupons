@@ -5,8 +5,12 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useState } from "react";
 
 export default function adminLogIn() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const app = getFirebaseApp();
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
