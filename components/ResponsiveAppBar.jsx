@@ -17,14 +17,6 @@ import { useRouter } from "next/router";
 import icon from "../images/icon-512x512-removebg.png";
 import styles from "../styles/ResponsiveAppBar.module.css";
 
-// const pages = [
-//   { name: "Campaigns", path: "campaigns" },
-//   { name: "Form", path: "form" },
-//   { name: "Donor Form", path: "donor-form" },
-//   { name: "Pending campaign requests", path: "pending-campaigns" },
-// ];
-// const settings = ["Profile", "Settings", "Logout"];
-
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
