@@ -32,7 +32,7 @@ export default function Coupon ({ coupon }) {
             to redeem your free coupon
           </Typography>
         </Box>
-        <QRCodeSVG value={link} size='112' />
+        <QRCodeSVG value={'https://' + link} size='112' />
         <Typography className={styles.link}>
           <u>{link}</u>
         </Typography>
