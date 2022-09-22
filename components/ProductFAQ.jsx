@@ -1,23 +1,23 @@
-import * as React from 'react'
+import * as React from "react"
 
-import Box from '@mui/material/Box'
-import Stack from '@mui/material/Grid'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
-import offwhiteBackgroundFlip from '../images/offwhite-background-flip.jpg'
-import Paper from '@mui/material/Paper'
+import Box from "@mui/material/Box"
+import Stack from "@mui/material/Grid"
+import Container from "@mui/material/Container"
+import Typography from "@mui/material/Typography"
+import offwhiteBackgroundFlip from "../images/offwhite-background-flip.jpg"
+import Paper from "@mui/material/Paper"
 
 export default function ProductHowItWorks() {
-  const faqStyle = { mt: 6, mb: 1, fontWeight: 500, fontSize: '25px' }
+  const faqStyle = { mt: 6, mb: 1, fontWeight: 500, fontSize: "25px" }
 
   return (
     <Box
       component="section"
       sx={{
-        display: 'flex',
-        overflow: 'hidden',
+        display: "flex",
+        overflow: "hidden",
         backgroundImage: `url(${offwhiteBackgroundFlip.src})`,
-        minHeight: '100vh',
+        minHeight: "100vh",
       }}
     >
       <Container
@@ -25,14 +25,14 @@ export default function ProductHowItWorks() {
         sx={{
           mt: 10,
           mb: 15,
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <Paper sx={{ p: 4 }}>
-          <Typography align="center" sx={{ fontWeight: 700, fontSize: '55px' }}>
+          <Typography align="center" sx={{ fontWeight: 700, fontSize: "55px" }}>
             FAQ
           </Typography>
           <Stack spacing={5}>

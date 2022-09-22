@@ -1,5 +1,5 @@
-import prisma from '../../../lib/prisma'
-import { redeemed } from '../../../util/constants/voucherStatus'
+import prisma from "../../../lib/prisma"
+import { redeemed } from "../../../util/constants/voucherStatus"
 
 export default async function handler(req, res) {
   try {
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     const voucherId = req.query.voucherId
     const { charityId, amountAdded, message } = req.body
 
-    if (httpMethod === 'GET') {
+    if (httpMethod === "GET") {
       const voucher = await prisma.voucher.findFirst({
         where: {
           id: voucherId,
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         },
       })
       res.status(200).json(voucher)
-    } else if (httpMethod === 'PATCH') {
+    } else if (httpMethod === "PATCH") {
       let old = await prisma.voucher.findFirst({
         where: {
           id: voucherId,
@@ -31,13 +31,13 @@ export default async function handler(req, res) {
         },
       })
       if (!old) {
-        res.status(400).json('Invalid id')
+        res.status(400).json("Invalid id")
         return
       } else if (old.status == redeemed) {
-        res.status(400).json('Coupon redeemed')
+        res.status(400).json("Coupon redeemed")
         return
       } else if (new Date() > old.campaign.endDate) {
-        res.status(400).json('Coupon expired')
+        res.status(400).json("Coupon expired")
         return
       }
       const voucher = await prisma.voucher.update({
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
         },
       })
       res.status(200).json(voucher)
-    } else if (httpMethod === 'DELETE') {
+    } else if (httpMethod === "DELETE") {
       const voucher = await prisma.voucher.delete({
         where: {
           id: voucherId,
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
       })
       res.status(200).json(voucher)
     } else {
-      res.setHeader('Allow', ['GET', 'PATCH', 'DELETE'])
+      res.setHeader("Allow", ["GET", "PATCH", "DELETE"])
       res.status(405).end(`Method ${httpMethod} Not Allowed`)
     }
   } catch (err) {

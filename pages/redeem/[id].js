@@ -1,18 +1,18 @@
-import Paper from '@mui/material/Paper'
-import styles from '../../styles/Form.module.css'
-import CharityCard from '../../components/CharityCard'
-import Typography from '@mui/material/Typography'
-import { useForm, Controller } from 'react-hook-form'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormControl from '@mui/material/FormControl'
-import InputAdornment from '@mui/material/InputAdornment'
-import Grid from '@mui/material/Grid'
-import { useState } from 'react'
-import { redeemed } from '../../util/constants/voucherStatus'
+import Paper from "@mui/material/Paper"
+import styles from "../../styles/Form.module.css"
+import CharityCard from "../../components/CharityCard"
+import Typography from "@mui/material/Typography"
+import { useForm, Controller } from "react-hook-form"
+import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button"
+import Radio from "@mui/material/Radio"
+import RadioGroup from "@mui/material/RadioGroup"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import FormControl from "@mui/material/FormControl"
+import InputAdornment from "@mui/material/InputAdornment"
+import Grid from "@mui/material/Grid"
+import { useState } from "react"
+import { redeemed } from "../../util/constants/voucherStatus"
 
 export default function VoucherForm({ voucher }) {
   const [submitted, setSubmitted] = useState(voucher?.status == redeemed)
@@ -24,8 +24,8 @@ export default function VoucherForm({ voucher }) {
   } = useForm({
     defaultValues: {
       voucherId: voucher?.id,
-      amount: voucher?.amountAdded || '',
-      message: voucher?.message || '',
+      amount: voucher?.amountAdded || "",
+      message: voucher?.message || "",
       selectedCharity: voucher?.charityId || null,
     },
   })
@@ -44,23 +44,23 @@ export default function VoucherForm({ voucher }) {
 
   const onSubmit = (data) => {
     if (Date.now() > Date.parse(voucher?.campaign.endDate)) {
-      setError('Coupon Expired')
+      setError("Coupon Expired")
       return
     }
     setSubmitted(true)
-    fetch('/api/vouchers/' + data.voucherId, {
-      method: 'PATCH',
+    fetch("/api/vouchers/" + data.voucherId, {
+      method: "PATCH",
       body: JSON.stringify({
         charityId: data.selectedCharity,
         amountAdded: data.amount ? parseInt(data.amount) : 0,
         message: data.message,
       }),
       headers: {
-        'Content-type': 'application/json; charset=UTF-8',
+        "Content-type": "application/json; charset=UTF-8",
       },
     }).then((response) => {
       if (!response.ok) {
-        setError('Sorry, an error has occured')
+        setError("Sorry, an error has occured")
       }
     })
   }
@@ -97,7 +97,7 @@ export default function VoucherForm({ voucher }) {
               <b>I would like the money to be given to:</b>
             </Typography>
             <Controller
-              rules={{ required: 'Please choose a charity' }}
+              rules={{ required: "Please choose a charity" }}
               name="selectedCharity"
               control={control}
               render={({ field }) => (

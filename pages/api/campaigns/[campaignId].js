@@ -1,11 +1,11 @@
-import prisma from '../../../lib/prisma'
+import prisma from "../../../lib/prisma"
 
 export default async function handler(req, res) {
   try {
     const httpMethod = req.method
     const campaignId = parseInt(req.query.campaignId)
 
-    if (httpMethod === 'GET') {
+    if (httpMethod === "GET") {
       const campaign = await prisma.campaign.findFirst({
         where: {
           id: campaignId,
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       })
 
       res.status(200).json(campaign)
-    } else if (httpMethod === 'DELETE') {
+    } else if (httpMethod === "DELETE") {
       const campaign = await prisma.campaign.delete({
         where: {
           id: campaignId,
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
       res.status(200).json(campaign)
     } else {
-      res.setHeader('Allow', ['GET', 'DELETE'])
+      res.setHeader("Allow", ["GET", "DELETE"])
       res.status(405).end(`Method ${httpMethod} Not Allowed`)
     }
   } catch (err) {

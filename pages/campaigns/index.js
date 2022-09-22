@@ -1,6 +1,6 @@
-import Paper from '@mui/material/Paper'
-import CampaignCard from '../../components/CampaignCard'
-import styles from '../../styles/Form.module.css'
+import Paper from "@mui/material/Paper"
+import CampaignCard from "../../components/CampaignCard"
+import styles from "../../styles/Form.module.css"
 
 export default function campaignList({ data }) {
   // list of campaigns, query the backend for the campaign data

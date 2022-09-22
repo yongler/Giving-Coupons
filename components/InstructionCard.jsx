@@ -1,10 +1,10 @@
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
+import Grid from "@mui/material/Grid"
+import Card from "@mui/material/Card"
 
-import styles from '../styles/InstructionCard.module.css'
+import styles from "../styles/InstructionCard.module.css"
 
 function InstructionCards({ number, img, alt, text }) {
   return (

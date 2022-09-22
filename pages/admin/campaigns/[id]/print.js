@@ -1,4 +1,4 @@
-import Coupon from '../../../../components/Coupon'
+import Coupon from "../../../../components/Coupon"
 
 export default function CouponView({ coupons, endDate, voucherAmount }) {
   return coupons.map((c) => {

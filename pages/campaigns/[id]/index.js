@@ -1,7 +1,7 @@
-import Paper from '@mui/material/Paper'
-import CharityCard from '../../../components/CharityCard'
-import Typography from '@mui/material/Typography'
-import styles from '../../../styles/Form.module.css'
+import Paper from "@mui/material/Paper"
+import CharityCard from "../../../components/CharityCard"
+import Typography from "@mui/material/Typography"
+import styles from "../../../styles/Form.module.css"
 
 export default function Campaign({ data }) {
   const onSubmit = () => {

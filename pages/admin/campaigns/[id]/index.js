@@ -1,20 +1,20 @@
-import * as React from 'react'
-import Paper from '@mui/material/Paper'
-import Typography from '@mui/material/Typography'
-import styles from '../../../../styles/Admin.campaigns.page.module.css'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import TableContainer from '@mui/material/TableContainer'
-import { unredeemed } from '../../../../util/constants/voucherStatus'
-import IconButton from '@mui/material/IconButton'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import Collapse from '@mui/material/Collapse'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import * as React from "react"
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import styles from "../../../../styles/Admin.campaigns.page.module.css"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
+import TableContainer from "@mui/material/TableContainer"
+import { unredeemed } from "../../../../util/constants/voucherStatus"
+import IconButton from "@mui/material/IconButton"
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
+import Collapse from "@mui/material/Collapse"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
 
 export default function Campaign({ data }) {
   const campaign = data
@@ -48,7 +48,7 @@ export default function Campaign({ data }) {
         <Typography gutterBottom variant="h5" component="div">
           {getDaysLeft(campaign.endDate) > 0
             ? `${getDaysLeft(campaign.endDate)} days left`
-            : 'Campaign has ended'}
+            : "Campaign has ended"}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {`Description: ${campaign.description}`}
@@ -67,7 +67,7 @@ export default function Campaign({ data }) {
               {campaign.charitiesChosenByDonor.map((charity) => (
                 <TableRow
                   key={charity.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="center">{charity.name}</TableCell>
                 </TableRow>
@@ -90,7 +90,7 @@ export default function Campaign({ data }) {
         <TableContainer
           className={styles.table}
           component={Paper}
-          sx={{ overflowX: 'hidden' }}
+          sx={{ overflowX: "hidden" }}
         >
           <Table aria-label="simple table">
             <TableHead>
@@ -125,7 +125,7 @@ function VoucherRow(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           {voucher.message && (
             <IconButton
@@ -141,17 +141,17 @@ function VoucherRow(props) {
           {voucher.id}
         </TableCell>
         <TableCell align="right">
-          {voucher.status == unredeemed ? 'Unredeemed' : 'Redeemed'}
+          {voucher.status == unredeemed ? "Unredeemed" : "Redeemed"}
         </TableCell>
         <TableCell align="right">
-          {voucher.charityId ? charityMappings[voucher.charityId] : '-'}
+          {voucher.charityId ? charityMappings[voucher.charityId] : "-"}
         </TableCell>
         <TableCell align="right">
-          {voucher.amountAdded ? '$' + voucher.amountAdded : '$0'}
+          {voucher.amountAdded ? "$" + voucher.amountAdded : "$0"}
         </TableCell>
         <TableCell align="right">
           {voucher.status == unredeemed
-            ? '-'
+            ? "-"
             : new Date(voucher.timeSubmitted).toDateString()}
         </TableCell>
       </TableRow>

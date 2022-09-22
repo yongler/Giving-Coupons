@@ -1,15 +1,15 @@
-import prisma from '../../../lib/prisma'
-import { unredeemed } from '../../../util/constants/voucherStatus'
+import prisma from "../../../lib/prisma"
+import { unredeemed } from "../../../util/constants/voucherStatus"
 
 export default async function handler(req, res) {
   try {
     const httpMethod = req.method
-    if (httpMethod === 'GET') {
+    if (httpMethod === "GET") {
       await handleRead(req, res)
-    } else if (httpMethod === 'POST') {
+    } else if (httpMethod === "POST") {
       await handleAdd(req, res)
     } else {
-      res.setHeader('Allow', ['POST', 'GET'])
+      res.setHeader("Allow", ["POST", "GET"])
       res.status(405).end(`Method ${httpMethod} Not Allowed`)
     }
   } catch (err) {
@@ -67,8 +67,8 @@ function genVoucherIds(campaignId, numVouchers) {
   for (let i = 1; i <= numVouchers; i++) {
     // Generate random suffix to prevent guessing
     const suffix = Math.random().toString(36).slice(2, 4).toUpperCase()
-    const padded = String(i).padStart(String(numVouchers).length, '0')
-    voucherIds.push(campaignId + '-' + padded + suffix)
+    const padded = String(i).padStart(String(numVouchers).length, "0")
+    voucherIds.push(campaignId + "-" + padded + suffix)
   }
   return voucherIds
 }

@@ -1,17 +1,17 @@
-import * as React from 'react'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import ProductHeroLayout from './ProductHeroLayout'
-import Image from '../images/homebackground.jpg'
-import styles from '../styles/Home.module.css'
+import * as React from "react"
+import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
+import ProductHeroLayout from "./ProductHeroLayout"
+import Image from "../images/homebackground.jpg"
+import styles from "../styles/Home.module.css"
 
 export default function ProductHero() {
   return (
     <ProductHeroLayout
       sxBackground={{
         backgroundImage: `url(${Image.src})`,
-        backgroundColor: '#7fc7d9', // Average color of the background image.
-        backgroundPosition: 'center',
+        backgroundColor: "#7fc7d9", // Average color of the background image.
+        backgroundPosition: "center",
       }}
     >
       <Typography

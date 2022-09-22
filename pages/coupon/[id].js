@@ -1,4 +1,4 @@
-import Coupon from '../../components/Coupon'
+import Coupon from "../../components/Coupon"
 
 export default function CouponView({ data }) {
   return <Coupon coupon={data} />

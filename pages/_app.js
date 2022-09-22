@@ -1,16 +1,16 @@
-import Layout from '../components/Layout'
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import Head from 'next/head'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import { CacheProvider } from '@emotion/react'
-import theme from '../src/theme'
-import createEmotionCache from '../src/createEmotionCache'
-import { useRouter } from 'next/router'
-import Script from 'next/script'
-import { useEffect } from 'react'
-import * as ga from '../lib/ga'
+import Layout from "../components/Layout"
+import * as React from "react"
+import PropTypes from "prop-types"
+import Head from "next/head"
+import { ThemeProvider } from "@mui/material/styles"
+import CssBaseline from "@mui/material/CssBaseline"
+import { CacheProvider } from "@emotion/react"
+import theme from "../src/theme"
+import createEmotionCache from "../src/createEmotionCache"
+import { useRouter } from "next/router"
+import Script from "next/script"
+import { useEffect } from "react"
+import * as ga from "../lib/ga"
 
 // Client-side cache, shared for the whole session of the user in the browser.
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -24,8 +24,8 @@ export default function MyApp(props) {
   const router = useRouter()
   const canonicalUrl = (
     `https://2022-a3-2022-a3-group-1.vercel.app/` +
-    (router.asPath === '/' ? '' : router.asPath)
-  ).split('?')[0]
+    (router.asPath === "/" ? "" : router.asPath)
+  ).split("?")[0]
 
   // google analytics
   useEffect(() => {
@@ -34,12 +34,12 @@ export default function MyApp(props) {
     }
     //When the component is mounted, subscribe to router changes
     //and log those page views
-    router.events.on('routeChangeComplete', handleRouteChange)
+    router.events.on("routeChangeComplete", handleRouteChange)
 
     // If the component is unmounted, unsubscribe
     // from the event with the `off` method
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
+      router.events.off("routeChangeComplete", handleRouteChange)
     }
   }, [router.events])
 
