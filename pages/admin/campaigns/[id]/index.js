@@ -36,7 +36,7 @@ export default function Campaign({ data }) {
 
   function toGMT8(utc_string) {
     let date = new Date(utc_string)
-    date.setTime(date.getTime() + 8 * 60 * 60 * 10000)
+    date.setTime(date.getTime() + 8 * 60 * 60 * 1000)
     const correctTime = date.toUTCString()
     return correctTime.split("GMT")[0]
   }
