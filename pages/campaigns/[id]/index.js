@@ -2,44 +2,13 @@ import Paper from "@mui/material/Paper";
 import CharityCard from "../../../components/CharityCard";
 import Typography from "@mui/material/Typography";
 import styles from "../../../styles/Form.module.css";
-import { useRouter } from "next/router";
-import { auth } from "../../../firebase/firebaseApp";
-import { useState, useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
-export default function Campaign() {
+export default function Campaign({ data }) {
   const onSubmit = () => {
     console.log(id);
   };
 
-  const { id } = useRouter().query;
-  const [campaign, setCampaign] = useState({
-    id: "",
-    name: "",
-    description: "",
-    donor: "",
-    voucherAmount: 0,
-    numVouchers: 0,
-    endDate: "",
-    vouchers: [],
-    charitiesChosenByDonor: [],
-  });
-  const [user] = useAuthState(auth);
-
-  useEffect(() => {
-    user.getIdToken().then((jwt) => {
-      fetch("/api/campaigns/" + id, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + jwt,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setCampaign(data);
-        });
-    });
-  }, []);
+  const campaign = data;
 
   function getDaysLeft(endDate) {
     return Math.floor(
@@ -77,4 +46,11 @@ export default function Campaign() {
       </Paper>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  const res = await fetch(process.env.URL + `/api/campaigns/` + id);
+  const data = await res.json();
+  return { props: { data } };
 }

@@ -7,13 +7,6 @@ export default async function handler(req, res) {
     const campaignId = parseInt(req.query.campaignId);
 
     if (httpMethod === "GET") {
-      try {
-        const jwt = req.headers.authorization.replace("Bearer ", "").trim();
-        await firebaseAdmin.auth().verifyIdToken(jwt);
-      } catch (err) {
-        res.status(401).json({ message: "Not Authorized" });
-      }
-
       const campaign = await prisma.campaign.findFirst({
         where: {
           id: campaignId,

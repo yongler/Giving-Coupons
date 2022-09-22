@@ -5,25 +5,9 @@ import { auth } from "../../firebase/firebaseApp";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-export default function campaignList() {
+export default function campaignList({ data }) {
   // list of campaigns, query the backend for the campaign data
-  const [campaigns, setCampaigns] = useState([]);
-  const [user] = useAuthState(auth);
-
-  useEffect(() => {
-    user.getIdToken().then((jwt) => {
-      fetch("/api/campaigns", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + jwt,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setCampaigns(data);
-        });
-    });
-  }, []);
+  const campaigns = data;
 
   return (
     <div className={styles.formpage}>
@@ -36,11 +20,15 @@ export default function campaignList() {
             description={campaign.description}
             donor={campaign.donor}
             endDate={campaign.endDate}
-            // image={campaign.image}
-            // link={campaign.link}
           />
         ))}
       </Paper>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(process.env.URL + `/api/campaigns`);
+  const data = await res.json();
+  return { props: { data } };
 }

@@ -19,13 +19,6 @@ export default async function handler(req, res) {
 }
 
 async function handleRead(req, res) {
-  try {
-    const jwt = req.headers.authorization.replace("Bearer ", "").trim();
-    await firebaseAdmin.auth().verifyIdToken(jwt);
-  } catch (err) {
-    res.status(401).json({ message: "Not Authorized" });
-  }
-
   const campaigns = await prisma.campaign.findMany({
     include: {
       vouchers: true,
