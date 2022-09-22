@@ -48,7 +48,7 @@ export default function MyApp(props) {
       <CacheProvider value={emotionCache}>
         {/* metadata */}
         <Head>
-          <title>GivingCoupons.sg</title>
+          <title>Giving Coupons</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
           <link rel="canonical" href={canonicalUrl} />
         </Head>

@@ -38,6 +38,13 @@ const ResponsiveAppBar = () => {
 
   const router = useRouter();
 
+  const router = useRouter()
+  const path = router.pathname
+  if (
+    path != '/coupon/[id]' &&
+    path != '/admin/campaigns/[id]/print' &&
+    path != '/'
+  )
   return (
     // Hide app bar for coupon view
     router.pathname != "/coupon/[id]" &&
