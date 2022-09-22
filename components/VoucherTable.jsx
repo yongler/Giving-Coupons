@@ -1,57 +1,57 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import { visuallyHidden } from "@mui/utils";
-import { unredeemed } from "../util/constants/voucherStatus";
-import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
-import styles from "../styles/VoucherTable.module.css";
-import EmailIcon from "@mui/icons-material/Email";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import Link from "next/link";
-import Toolbar from "@mui/material/Toolbar";
+import * as React from "react"
+import Box from "@mui/material/Box"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableContainer from "@mui/material/TableContainer"
+import TableHead from "@mui/material/TableHead"
+import TablePagination from "@mui/material/TablePagination"
+import TableRow from "@mui/material/TableRow"
+import TableSortLabel from "@mui/material/TableSortLabel"
+import Typography from "@mui/material/Typography"
+import Paper from "@mui/material/Paper"
+import { visuallyHidden } from "@mui/utils"
+import { unredeemed } from "../util/constants/voucherStatus"
+import IconButton from "@mui/material/IconButton"
+import Collapse from "@mui/material/Collapse"
+import styles from "../styles/VoucherTable.module.css"
+import EmailIcon from "@mui/icons-material/Email"
+import DraftsIcon from "@mui/icons-material/Drafts"
+import Link from "next/link"
+import Toolbar from "@mui/material/Toolbar"
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] == "-") {
-    return 1;
+    return 1
   } else if (a[orderBy] == "-") {
-    return -1;
+    return -1
   }
 
   if (b[orderBy] < a[orderBy]) {
-    return -1;
+    return -1
   }
   if (b[orderBy] > a[orderBy]) {
-    return 1;
+    return 1
   }
-  return 0;
+  return 0
 }
 
 function getComparator(order, orderBy) {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+    : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
 function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
+  const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
+    const order = comparator(a[0], b[0])
     if (order !== 0) {
-      return order;
+      return order
     }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
+    return a[1] - b[1]
+  })
+  return stabilizedThis.map((el) => el[0])
 }
 
 const headCells = [
@@ -85,20 +85,20 @@ const headCells = [
     disablePadding: false,
     label: "Date Submitted",
   },
-];
+]
 
 function toGMT8(utc_string) {
-  let date = new Date(utc_string);
-  date.setTime(date.getTime() + 8 * 60 * 60 * 10000);
-  const correctTime = date.toUTCString();
-  return correctTime.split("GMT")[0];
+  let date = new Date(utc_string)
+  date.setTime(date.getTime() + 8 * 60 * 60 * 1000)
+  const correctTime = date.toUTCString()
+  return correctTime.split("GMT")[0]
 }
 
 function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
+  const { order, orderBy, onRequestSort } = props
   const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+    onRequestSort(event, property)
+  }
 
   return (
     <TableHead>
@@ -128,15 +128,15 @@ function EnhancedTableHead(props) {
         ))}
       </TableRow>
     </TableHead>
-  );
+  )
 }
 
 export default function EnhancedTable(props) {
-  const { vouchers, charityMappings } = props;
-  const voucherData = [];
-  let amountRedeemed = 0;
+  const { vouchers, charityMappings } = props
+  const voucherData = []
+  let amountRedeemed = 0
   for (let i = 0; i < vouchers.length; i++) {
-    const voucher = vouchers[i];
+    const voucher = vouchers[i]
     voucherData.push({
       id: voucher.id,
       status: voucher.status == unredeemed ? "Unredeemed" : "Redeemed",
@@ -147,36 +147,36 @@ export default function EnhancedTable(props) {
       date_submitted:
         voucher.status == unredeemed ? "-" : toGMT8(voucher.timeSubmitted),
       message: voucher.message,
-    });
+    })
 
     if (voucher.status !== unredeemed) {
-      amountRedeemed++;
+      amountRedeemed++
     }
   }
 
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("id");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [order, setOrder] = React.useState("asc")
+  const [orderBy, setOrderBy] = React.useState("id")
+  const [page, setPage] = React.useState(0)
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
+    setOrderBy(property)
+  }
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - voucherData.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - voucherData.length) : 0
 
   return (
     <Paper sx={{ width: "100%", mb: 2 }} className={styles.table}>
@@ -200,11 +200,11 @@ export default function EnhancedTable(props) {
             {stableSort(voucherData, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
+                const labelId = `enhanced-table-checkbox-${index}`
 
                 return (
                   <VoucherRow key={row.id} voucher={row} labelId={labelId} />
-                );
+                )
               })}
             {emptyRows > 0 && (
               <TableRow
@@ -228,11 +228,11 @@ export default function EnhancedTable(props) {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-  );
+  )
 }
 
 const EnhancedTableToolbar = (props) => {
-  const { amountRedeemed, totalAmount } = props;
+  const { amountRedeemed, totalAmount } = props
 
   return (
     <Toolbar
@@ -250,12 +250,12 @@ const EnhancedTableToolbar = (props) => {
         {`Amount Redeemed: ${amountRedeemed}/${totalAmount}`}
       </Typography>
     </Toolbar>
-  );
-};
+  )
+}
 
 function VoucherRow(props) {
-  const { voucher, labelId } = props;
-  const [open, setOpen] = React.useState(false);
+  const { voucher, labelId } = props
+  const [open, setOpen] = React.useState(false)
 
   return (
     <React.Fragment>
@@ -301,5 +301,5 @@ function VoucherRow(props) {
         </TableCell>
       </TableRow>
     </React.Fragment>
-  );
+  )
 }
