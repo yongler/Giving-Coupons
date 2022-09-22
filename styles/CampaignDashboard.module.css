@@ -1,7 +1,10 @@
 .dashboard {
-  display: flex;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center */
+  /* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; */
 }
 
 .dashboardpaper {
@@ -20,6 +23,15 @@
 }
 
 .table {
-  max-width: 95vw;
-  place-self: center;
+    max-width: 95vw;
+    place-self: center;
+}
+
+/* .tabs {
+    max-width: 95vw;
+    margin-left: 2.5vw;
+} */
+
+.link {
+    cursor: pointer;
 }

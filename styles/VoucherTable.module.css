@@ -1,0 +1,16 @@
+.messageHeader {
+    font-weight: bold;
+}
+
+.table {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    max-width: 95vw;
+    overflow-x: scroll;
+    flex-direction: column;
+}
+
+.voucherLink:hover {
+    cursor: pointer;
+}
