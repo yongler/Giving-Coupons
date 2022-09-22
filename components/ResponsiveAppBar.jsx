@@ -16,6 +16,8 @@ import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { getFirebaseApp } from "../firebase/firebaseApp";
+import icon from "../images/icon-512x512-removebg.png";
+import styles from "../styles/ResponsiveAppBar.module.css";
 
 const pages = [
   { name: "Campaigns", path: "campaigns" },
@@ -58,12 +60,23 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  const logout = async (event) => {
+    event.preventDefault();
+
+    auth.signOut();
+    setAnchorElUser(null);
+    router.push("/");
+  };
+
   return (
-    router.pathname != "/coupon/[id]" && ( // Hide app bar for coupon view
+    // Hide app bar for coupon view
+    router.pathname != "/coupon/[id]" &&
+    router.pathname != "/admin/campaigns/[id]/print" &&
+    router.pathname != "/login" && (
       <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Typography
+            {/* <Typography
               variant="h6"
               noWrap
               component="a"
@@ -78,10 +91,23 @@ const ResponsiveAppBar = () => {
                 textDecoration: "none",
               }}
             >
-              Giving Coupons
-            </Typography>
+              GivingCoupons
+            </Typography> */}
+            <Link href="/">
+              <Box
+                className={styles.icon}
+                component="img"
+                src={icon.src}
+                alt="split"
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                }}
+              />
+            </Link>
 
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton onClick={logout}>Logout</IconButton>
+
+            {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -118,8 +144,8 @@ const ResponsiveAppBar = () => {
                   </Link>
                 ))}
               </Menu>
-            </Box>
-            <Typography
+            </Box> */}
+            {/* <Typography
               variant="h5"
               noWrap
               component="a"
@@ -136,8 +162,20 @@ const ResponsiveAppBar = () => {
               }}
             >
               Coupons
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            </Typography> */}
+            <Link href="/">
+              <Box
+                className={styles.icon}
+                component="img"
+                href="/"
+                src={icon.src}
+                alt="split"
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                }}
+              />
+            </Link>
+            {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <Button
                   key={page.name}
@@ -147,9 +185,9 @@ const ResponsiveAppBar = () => {
                   <Link href={page.path}>{page.name}</Link>
                 </Button>
               ))}
-            </Box>
+            </Box> */}
 
-            <Box sx={{ flexGrow: 0 }}>
+            {/* <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -172,16 +210,12 @@ const ResponsiveAppBar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    data-setting={setting}
-                    onClick={handleCloseUserMenu}
-                  >
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
-            </Box>
+            </Box> */}
           </Toolbar>
         </Container>
       </AppBar>

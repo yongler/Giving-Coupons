@@ -70,12 +70,16 @@ async function handleAdd(req, res) {
 }
 
 // Generates voucher codes
-function genVoucherIds(campaignId, numVouchers) {
-  const voucherIds = [];
-  for (let i = 0; i < numVouchers; i++) {
+function genVoucherIds (campaignId, numVouchers) {
+  const voucherIds = []
+  for (let i = 1; i <= numVouchers; i++) {
     // Generate random suffix to prevent guessing
-    const suffix = Math.random().toString(36).slice(2, 4).toUpperCase();
-    voucherIds.push(campaignId + "-" + String(i).padStart(2, "0") + suffix);
+    const suffix = Math.random()
+      .toString(36)
+      .slice(2, 4)
+      .toUpperCase()
+    const padded = String(i).padStart(String(numVouchers).length, '0')
+    voucherIds.push(campaignId + '-' + padded + suffix)
   }
   return voucherIds;
 }

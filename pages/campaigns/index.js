@@ -35,7 +35,7 @@ export default function campaignList() {
             name={campaign.name}
             description={campaign.description}
             donor={campaign.donor}
-            timeLeft={campaign.endDate}
+            endDate={campaign.endDate}
             // image={campaign.image}
             // link={campaign.link}
           />

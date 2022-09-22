@@ -1,0 +1,47 @@
+.formpage {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    min-width: 70vw;
+    margin-top: 3vh;
+    margin-left: 3vw;
+    margin-right: 3vw;
+    margin-bottom: 3vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    margin-top: 4vh;
+    text-decoration: underline;
+}   
+
+.table {
+    width: auto;
+    max-width: 95vw;
+    /* overflow-y: hidden; */
+    overflow-x: scroll;
+    /* overflow: scroll; */
+}
+
+.errorPage {
+    text-align: center;
+    font-size: 50px;
+    margin-top: 20vh;
+}
+
+.couponsTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.couponsButton {
+    margin-top: 3.5vh;
+    margin-left: 3vw;
+    height: 35px;
+}

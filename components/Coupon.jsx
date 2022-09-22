@@ -1,23 +1,25 @@
-import styles from '../styles/Coupon.module.css'
-import Typography from '@mui/material/Typography'
-import { Box } from '@mui/system'
-import { QRCodeSVG } from 'qrcode.react'
-import { DateTime } from 'luxon'
+import styles from "../styles/Coupon.module.css";
+import Typography from "@mui/material/Typography";
+import { Box } from "@mui/system";
+import { QRCodeSVG } from "qrcode.react";
+import { DateTime } from "luxon";
 
-export default function Coupon ({coupon}) {
-  var link = 'giving-coupons.sg/coupon/' + coupon.id
+export default function Coupon({ coupon }) {
+  var link = "giving-coupons.sg/coupon/" + coupon.id;
   return (
     <Box className={styles.coupon}>
       <Box className={styles.couponLeft}>
-        <Typography className={styles.title}>${coupon.amount}</Typography>
+        <Typography className={styles.title}>
+          ${coupon.campaign.voucherAmount}
+        </Typography>
         <Typography className={styles.subtitle}>Giving coupon</Typography>
         <Box className={styles.description}>
           <Typography className={styles.smallText}>
             An anonymous donor has kindly sponsored this free coupon.
           </Typography>
           <Typography className={styles.smallText}>
-            It entitles you to send ${coupon.amount} to a charity of your
-            choice, for free.
+            It entitles you to send ${coupon.campaign.voucherAmount} to a
+            charity of your choice, for free.
           </Typography>
         </Box>
       </Box>
@@ -30,14 +32,15 @@ export default function Coupon ({coupon}) {
             to redeem your free coupon
           </Typography>
         </Box>
-        <QRCodeSVG value={link} size='112' />
+        <QRCodeSVG value={link} size="112" />
         <Typography className={styles.link}>
           <u>{link}</u>
         </Typography>
         <Typography className={styles.expiry}>
-          Expires on: {DateTime.fromISO(coupon.deadline).toFormat('dd/MM/yy')}
+          Expires on:{" "}
+          {DateTime.fromISO(coupon.campaign.endDate).toFormat("dd/MM/yy")}
         </Typography>
       </Box>
     </Box>
-  )
+  );
 }
