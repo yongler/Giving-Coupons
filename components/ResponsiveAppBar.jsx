@@ -15,6 +15,8 @@ import Link from '@mui/material/Link'
 import { useTheme } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 import icon from '../images/icon-512x512-removebg.png'
+import logo from '../images/logo-with-name.png'
+
 import styles from '../styles/ResponsiveAppBar.module.css'
 
 const ResponsiveAppBar = () => {
@@ -47,7 +49,7 @@ const ResponsiveAppBar = () => {
       // Hide app bar for coupon view
       router.pathname != '/coupon/[id]' &&
       router.pathname != '/admin/campaigns/[id]/print' && (
-        <AppBar position='sticky'>
+        <AppBar position="static">
           <Container maxWidth='xl'>
             <Toolbar disableGutters>
               {/* <Typography
@@ -71,11 +73,8 @@ const ResponsiveAppBar = () => {
                 <Box
                   className={styles.icon}
                   component='img'
-                  src={icon.src}
+                  src={logo.src}
                   alt='split'
-                  sx={{
-                    display: { xs: 'none', md: 'flex' }
-                  }}
                 />
               </Link>
               {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -134,18 +133,6 @@ const ResponsiveAppBar = () => {
             >
               Coupons
             </Typography> */}
-              <Link href='/'>
-                <Box
-                  className={styles.icon}
-                  component='img'
-                  href='/'
-                  src={icon.src}
-                  alt='split'
-                  sx={{
-                    display: { xs: 'flex', md: 'none' }
-                  }}
-                />
-              </Link>
               {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <Button
