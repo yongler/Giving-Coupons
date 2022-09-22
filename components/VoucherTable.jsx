@@ -266,13 +266,11 @@ function VoucherRow(props) {
             </IconButton>
           )}
         </TableCell>
-        {/* <Link href={`/coupon/${voucher.id}`} className={styles.voucherLink}> */}
         <TableCell component="th" id={labelId} scope="row" padding="none">
           <Link href={`/coupon/${voucher.id}`} className={styles.voucherLink}>
             {voucher.id}
           </Link>
         </TableCell>
-        {/* </Link> */}
         <TableCell align="right">{voucher.status}</TableCell>
         <TableCell align="right">{voucher.charity_selected}</TableCell>
         <TableCell align="right">{voucher.amount_added}</TableCell>

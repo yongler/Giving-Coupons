@@ -32,14 +32,6 @@ export default function Campaign({ data }) {
       campaign.charitiesChosenByDonor[i].name;
   }
 
-  const charities = campaign.charitiesChosenByDonor;
-  console.log(charities);
-  function getDaysLeft(endDate) {
-    return Math.floor(
-      (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24)
-    );
-  }
-
   return (
     <div className={styles.formpage}>
       <Typography
@@ -73,6 +65,18 @@ export default function Campaign({ data }) {
             </Typography>
             <Typography gutterBottom variant="subtitle1" component="div">
               {`${campaign.description}`}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              {`Voucher Amount:`}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {`$${campaign.voucherAmount}`}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              {`Number of Vouchers:`}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {`${campaign.numVouchers}`}
             </Typography>
           </Paper>
           <Paper className={styles.campaignCard} elevation={3}>
