@@ -18,9 +18,15 @@ import styles from "../styles/VoucherTable.module.css";
 import EmailIcon from "@mui/icons-material/Email";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import Link from "next/link";
-// import { Link } from "@material-ui/core";
+import Toolbar from "@mui/material/Toolbar";
 
 function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] == "-") {
+    return 1;
+  } else if (a[orderBy] == "-") {
+    return -1;
+  }
+
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -54,6 +60,12 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: "ID",
+  },
+  {
+    id: "status",
+    numeric: false,
+    disablePadding: false,
+    label: "Status",
   },
   {
     id: "charity_selected",
@@ -115,6 +127,7 @@ function EnhancedTableHead(props) {
 export default function EnhancedTable(props) {
   const { vouchers, charityMappings } = props;
   const voucherData = [];
+  let amountRedeemed = 0;
   for (let i = 0; i < vouchers.length; i++) {
     const voucher = vouchers[i];
     voucherData.push({
@@ -122,7 +135,7 @@ export default function EnhancedTable(props) {
       status: voucher.status == unredeemed ? "Unredeemed" : "Redeemed",
       charity_selected: voucher.charityId
         ? charityMappings[voucher.charityId]
-        : "",
+        : "-",
       amount_added: voucher.amountAdded ? parseInt(voucher.amountAdded) : 0,
       date_submitted:
         voucher.status == unredeemed
@@ -130,11 +143,16 @@ export default function EnhancedTable(props) {
           : new Date(voucher.timeSubmitted).toUTCString(),
       message: voucher.message,
     });
+
+    if (voucher.status !== unredeemed) {
+      amountRedeemed++;
+    }
   }
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("id");
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -157,9 +175,13 @@ export default function EnhancedTable(props) {
 
   return (
     <Paper sx={{ width: "100%", mb: 2 }} className={styles.table}>
+      <EnhancedTableToolbar
+        amountRedeemed={amountRedeemed}
+        totalAmount={vouchers.length}
+      />
       <TableContainer>
         <Table
-          sx={{ minWidth: 750 }}
+          sx={{ minWidth: "60vw" }}
           aria-labelledby="tableTitle"
           size={"small"}
         >
@@ -204,6 +226,28 @@ export default function EnhancedTable(props) {
   );
 }
 
+const EnhancedTableToolbar = (props) => {
+  const { amountRedeemed, totalAmount } = props;
+
+  return (
+    <Toolbar
+      sx={{
+        pl: { sm: 2 },
+        pr: { xs: 1, sm: 1 },
+      }}
+    >
+      <Typography
+        sx={{ flex: "1 1 100%" }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        {`Amount Redeemed: ${amountRedeemed}/${totalAmount}`}
+      </Typography>
+    </Toolbar>
+  );
+};
+
 function VoucherRow(props) {
   const { voucher, labelId } = props;
   const [open, setOpen] = React.useState(false);
@@ -222,11 +266,14 @@ function VoucherRow(props) {
             </IconButton>
           )}
         </TableCell>
-        <Link href={`/coupons/${voucher.id}`} className={styles.voucherLink}>
-          <TableCell component="th" id={labelId} scope="row" padding="none">
+        {/* <Link href={`/coupon/${voucher.id}`} className={styles.voucherLink}> */}
+        <TableCell component="th" id={labelId} scope="row" padding="none">
+          <Link href={`/coupon/${voucher.id}`} className={styles.voucherLink}>
             {voucher.id}
-          </TableCell>
-        </Link>
+          </Link>
+        </TableCell>
+        {/* </Link> */}
+        <TableCell align="right">{voucher.status}</TableCell>
         <TableCell align="right">{voucher.charity_selected}</TableCell>
         <TableCell align="right">{voucher.amount_added}</TableCell>
         <TableCell align="right">{voucher.date_submitted}</TableCell>
