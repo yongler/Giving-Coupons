@@ -1,55 +1,55 @@
-import * as React from "react";
+import * as React from 'react'
 
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import firstIcon from "../images/pair-of-bills.png";
-import secondIcon from "../images/ticket.png";
-import thirdIcon from "../images/donation.png";
-import offwhiteBackground from "../images/offwhite-background.jpg";
-import InstructionCards from "./InstructionCards";
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Container from '@mui/material/Container'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import firstIcon from '../images/pair-of-bills.png'
+import secondIcon from '../images/ticket.png'
+import thirdIcon from '../images/donation.png'
+import offwhiteBackground from '../images/offwhite-background.jpg'
+import InstructionCards from './InstructionCards'
 
 const item = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  px: 5,
-};
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  px: 5
+}
 
 const number = {
   fontSize: 24,
-  fontFamily: "default",
-  color: "secondary.main",
-  fontWeight: "medium",
-};
+  fontFamily: 'default',
+  color: 'secondary.main',
+  fontWeight: 'medium'
+}
 
 const image = {
   height: 55,
-  my: 4,
-};
+  my: 4
+}
 
-function ProductHowItWorks() {
+function ProductHowItWorks () {
   return (
     <Box
-      component="section"
+      component='section'
       sx={{
-        display: "flex",
-        bgcolor: "secondary.light",
-        overflow: "hidden",
+        display: 'flex',
+        bgcolor: 'secondary.light',
+        overflow: 'hidden',
         backgroundImage: `url(${offwhiteBackground.src})`,
-        minHeight: "95vh",
+        minHeight: '95vh'
       }}
     >
       <Container
         sx={{
           mt: 10,
           mb: 15,
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }}
       >
         {/* <Box
@@ -63,10 +63,10 @@ function ProductHowItWorks() {
             // opacity: 0.7,
           }}
         /> */}
-        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 5 }}>
+        <Typography variant='h4' marked='center' component='h2' sx={{ mb: 5 }}>
           How it works
         </Typography>
-        <Typography variant="subtitle1" marked="center" sx={{ mb: 10 }}>
+        <Typography variant='subtitle1' marked='center' sx={{ mb: 10 }}>
           Giving Coupons leverages the money of donors to raise awareness and
           promote charitable giving
         </Typography>
@@ -119,7 +119,7 @@ function ProductHowItWorks() {
         </div>
       </Container>
     </Box>
-  );
+  )
 }
 
-export default ProductHowItWorks;
+export default ProductHowItWorks

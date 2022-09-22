@@ -14,7 +14,7 @@
   background-size: cover;
 }
 
-.homescreen { 
+.homescreen {
   min-height: 100vh;
 }
 
@@ -27,7 +27,7 @@
 .titleSub {
   font-weight: 600;
   text-shadow: -2px 2px 6px #00000061;
-  font-size: 1.8rem
+  font-size: 1.8rem;
 }
 
 /* .logo {
