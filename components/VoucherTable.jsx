@@ -8,18 +8,17 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { unredeemed } from "../util/constants/voucherStatus";
 import IconButton from "@mui/material/IconButton";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
 import styles from "../styles/VoucherTable.module.css";
 import EmailIcon from "@mui/icons-material/Email";
 import DraftsIcon from "@mui/icons-material/Drafts";
+import Link from "next/link";
+// import { Link } from "@material-ui/core";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -77,7 +76,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { voucher, order, orderBy, onRequestSort } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -211,7 +210,6 @@ function VoucherRow(props) {
 
   return (
     <React.Fragment>
-      {/* <TableRow sx={{ "& > *": { borderBottom: "unset" } }}> */}
       <TableRow hover tabIndex={-1} key={voucher.id}>
         <TableCell align="center">
           {voucher.message && (
@@ -224,14 +222,15 @@ function VoucherRow(props) {
             </IconButton>
           )}
         </TableCell>
-        <TableCell component="th" id={labelId} scope="row" padding="none">
-          {voucher.id}
-        </TableCell>
+        <Link href={`/coupons/${voucher.id}`} className={styles.voucherLink}>
+          <TableCell component="th" id={labelId} scope="row" padding="none">
+            {voucher.id}
+          </TableCell>
+        </Link>
         <TableCell align="right">{voucher.charity_selected}</TableCell>
         <TableCell align="right">{voucher.amount_added}</TableCell>
         <TableCell align="right">{voucher.date_submitted}</TableCell>
       </TableRow>
-      {/* </TableRow> */}
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
