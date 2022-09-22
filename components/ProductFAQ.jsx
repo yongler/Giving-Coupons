@@ -7,32 +7,32 @@ import Typography from '@mui/material/Typography'
 import offwhiteBackgroundFlip from '../images/offwhite-background-flip.jpg'
 import Paper from '@mui/material/Paper'
 
-export default function ProductHowItWorks () {
+export default function ProductHowItWorks() {
   const faqStyle = { mt: 6, mb: 1, fontWeight: 500, fontSize: '25px' }
 
   return (
     <Box
-      component='section'
+      component="section"
       sx={{
         display: 'flex',
         overflow: 'hidden',
         backgroundImage: `url(${offwhiteBackgroundFlip.src})`,
-        minHeight: '100vh'
+        minHeight: '100vh',
       }}
     >
       <Container
-        maxWidth='md'
+        maxWidth="md"
         sx={{
           mt: 10,
           mb: 15,
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <Paper sx={{ p: 4 }}>
-          <Typography align='center' sx={{ fontWeight: 700, fontSize: '55px' }}>
+          <Typography align="center" sx={{ fontWeight: 700, fontSize: '55px' }}>
             FAQ
           </Typography>
           <Stack spacing={5}>

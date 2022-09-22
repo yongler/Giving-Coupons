@@ -23,14 +23,14 @@ const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
-  const handleOpenNavMenu = event => {
+  const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
-  const handleOpenUserMenu = event => {
+  const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
   }
 
-  const handleCloseNavMenu = path => {
+  const handleCloseNavMenu = (path) => {
     setAnchorElNav(null)
   }
 
@@ -50,7 +50,7 @@ const ResponsiveAppBar = () => {
       router.pathname != '/coupon/[id]' &&
       router.pathname != '/admin/campaigns/[id]/print' && (
         <AppBar position="static">
-          <Container maxWidth='xl'>
+          <Container maxWidth="xl">
             <Toolbar disableGutters>
               {/* <Typography
               variant="h6"
@@ -69,12 +69,12 @@ const ResponsiveAppBar = () => {
             >
               GivingCoupons
             </Typography> */}
-              <Link href='/'>
+              <Link href="/">
                 <Box
                   className={styles.icon}
-                  component='img'
+                  component="img"
                   src={logo.src}
-                  alt='split'
+                  alt="split"
                 />
               </Link>
               {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

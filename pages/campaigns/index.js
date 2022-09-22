@@ -1,11 +1,11 @@
-import Paper from "@mui/material/Paper";
-import CampaignCard from "../../components/CampaignCard";
-import styles from "../../styles/Form.module.css";
+import Paper from '@mui/material/Paper'
+import CampaignCard from '../../components/CampaignCard'
+import styles from '../../styles/Form.module.css'
 
 export default function campaignList({ data }) {
   // list of campaigns, query the backend for the campaign data
-  const campaigns = data;
-  console.log(data);
+  const campaigns = data
+  console.log(data)
 
   return (
     <div className={styles.formpage}>
@@ -24,11 +24,11 @@ export default function campaignList({ data }) {
         ))}
       </Paper>
     </div>
-  );
+  )
 }
 
 export async function getServerSideProps() {
-  const res = await fetch(process.env.URL + `/api/campaigns`);
-  const data = await res.json();
-  return { props: { data } };
+  const res = await fetch(process.env.URL + `/api/campaigns`)
+  const data = await res.json()
+  return { props: { data } }
 }

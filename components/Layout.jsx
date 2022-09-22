@@ -1,4 +1,4 @@
-import ResponsiveAppBar from "./ResponsiveAppBar";
+import ResponsiveAppBar from './ResponsiveAppBar'
 
 const Layout = ({ children }) => {
   return (
@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
       <ResponsiveAppBar />
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

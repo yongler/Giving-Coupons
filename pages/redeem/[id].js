@@ -14,20 +14,20 @@ import Grid from '@mui/material/Grid'
 import { useState } from 'react'
 import { redeemed } from '../../util/constants/voucherStatus'
 
-export default function VoucherForm ({ voucher }) {
+export default function VoucherForm({ voucher }) {
   const [submitted, setSubmitted] = useState(voucher?.status == redeemed)
   const [error, setError] = useState()
   const {
     handleSubmit,
     control,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
     defaultValues: {
       voucherId: voucher?.id,
       amount: voucher?.amountAdded || '',
       message: voucher?.message || '',
-      selectedCharity: voucher?.charityId || null
-    }
+      selectedCharity: voucher?.charityId || null,
+    },
   })
 
   if (voucher == null) {
@@ -42,7 +42,7 @@ export default function VoucherForm ({ voucher }) {
 
   const charities = voucher.campaign.charitiesChosenByDonor
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     if (Date.now() > Date.parse(voucher?.campaign.endDate)) {
       setError('Coupon Expired')
       return
@@ -53,12 +53,12 @@ export default function VoucherForm ({ voucher }) {
       body: JSON.stringify({
         charityId: data.selectedCharity,
         amountAdded: data.amount ? parseInt(data.amount) : 0,
-        message: data.message
+        message: data.message,
       }),
       headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    }).then(response => {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    }).then((response) => {
       if (!response.ok) {
         setError('Sorry, an error has occured')
       }
@@ -66,10 +66,10 @@ export default function VoucherForm ({ voucher }) {
   }
 
   return (
-    <Grid container className={styles.formpage} justifyContent='center'>
+    <Grid container className={styles.formpage} justifyContent="center">
       <Grid item xs={12} md={8}>
         <Paper className={styles.form} elevation={5}>
-          <Typography variant='h1' className={styles.title}>
+          <Typography variant="h1" className={styles.title}>
             Giving Coupon Redemption
           </Typography>
           <Typography className={styles.instructions}>
@@ -82,7 +82,7 @@ export default function VoucherForm ({ voucher }) {
           <Typography className={styles.instructions}>
             <b>Please review these charities and indicate your choice below.</b>
           </Typography>
-          {charities.map(charity => (
+          {charities.map((charity) => (
             <CharityCard
               key={charity.id}
               id={charity.id}
@@ -98,12 +98,12 @@ export default function VoucherForm ({ voucher }) {
             </Typography>
             <Controller
               rules={{ required: 'Please choose a charity' }}
-              name='selectedCharity'
+              name="selectedCharity"
               control={control}
               render={({ field }) => (
                 <FormControl>
                   <RadioGroup {...field}>
-                    {charities.map(charity => {
+                    {charities.map((charity) => {
                       return (
                         <FormControlLabel
                           disabled={submitted}
@@ -127,19 +127,19 @@ export default function VoucherForm ({ voucher }) {
               to do so, please let us know how much you intend to donate.
             </Typography>
             <Controller
-              name='amount'
+              name="amount"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   disabled={submitted}
-                  type='number'
+                  type="number"
                   fullWidth
                   inputProps={{ min: 0 }}
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment position='start'>$</InputAdornment>
-                    )
+                      <InputAdornment position="start">$</InputAdornment>
+                    ),
                   }}
                 />
               )}
@@ -151,28 +151,28 @@ export default function VoucherForm ({ voucher }) {
               reach out to us at <i>giving.coupons.sg@gmail.com</i>
             </Typography>
             <Controller
-              name='message'
+              name="message"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   disabled={submitted}
-                  variant='outlined'
+                  variant="outlined"
                   multiline
                   fullWidth
                 />
               )}
             />
             {submitted ? (
-              <Typography variant='h6' className={styles.submitText}>
+              <Typography variant="h6" className={styles.submitText}>
                 Thank you for submitting this form.
               </Typography>
             ) : (
               <Button
                 className={styles.submitButton}
-                variant='contained'
+                variant="contained"
                 fullWidth
-                type='submit'
+                type="submit"
               >
                 Submit
               </Button>
@@ -184,7 +184,7 @@ export default function VoucherForm ({ voucher }) {
   )
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
   const id = context.params.id
   const res = await fetch(process.env.URL + `/api/vouchers/` + id)
   const voucher = await res.json()

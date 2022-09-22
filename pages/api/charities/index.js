@@ -1,6 +1,6 @@
 import prisma from '../../../lib/prisma'
 
-export default async function handler (req, res) {
+export default async function handler(req, res) {
   try {
     const httpMethod = req.method
     const payload = req.body
@@ -10,7 +10,7 @@ export default async function handler (req, res) {
       res.status(200).json(charities)
     } else if (httpMethod === 'POST') {
       const charity = await prisma.charity.create({
-        data: payload
+        data: payload,
       })
       res.status(200).json(charity)
     } else {

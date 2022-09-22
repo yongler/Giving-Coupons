@@ -1,24 +1,24 @@
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import styles from "../styles/CharityCard.module.css";
-import Link from "next/link";
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import styles from '../styles/CharityCard.module.css'
+import Link from 'next/link'
 
 export default function CampaignCard(props) {
   // const { id, name, donorName, description, images, timeLeft, tags } = props;
-  const { id, name, description, donor, endDate } = props;
+  const { id, name, description, donor, endDate } = props
 
   function getDaysLeft(endDate) {
     return Math.floor(
-      (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24)
-    );
+      (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24),
+    )
   }
 
   return (
     <Card className={styles.charityCard}>
-      <Link href={"/campaigns/" + id} key={id}>
+      <Link href={'/campaigns/' + id} key={id}>
         {/* <CardMedia component="img" height="140" image={image} alt={id} /> */}
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -37,9 +37,9 @@ export default function CampaignCard(props) {
       </Link>
       <CardActions>
         <Button size="small">
-          <Link href={"/campaigns/" + id}>Learn More</Link>
+          <Link href={'/campaigns/' + id}>Learn More</Link>
         </Button>
       </CardActions>
     </Card>
-  );
+  )
 }

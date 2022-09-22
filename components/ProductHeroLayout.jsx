@@ -15,8 +15,8 @@ const ProductHeroLayoutRoot = styled('section')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     height: '80vh',
     minHeight: '100vh',
-    maxHeight: 1300
-  }
+    maxHeight: 1300,
+  },
 }))
 
 const Background = styled(Box)({
@@ -27,10 +27,10 @@ const Background = styled(Box)({
   bottom: 0,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
-  zIndex: -2
+  zIndex: -2,
 })
 
-function ProductHeroLayout (props) {
+function ProductHeroLayout(props) {
   const { sxBackground, children } = props
 
   return (
@@ -41,7 +41,7 @@ function ProductHeroLayout (props) {
           mb: 10,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         {children}
@@ -54,16 +54,16 @@ function ProductHeroLayout (props) {
             bottom: 0,
             backgroundColor: 'common.black',
             opacity: 0.3,
-            zIndex: -1
+            zIndex: -1,
           }}
         />
         <Background sx={sxBackground} />
         <Box
-          component='img'
+          component="img"
           src={arrowDown.src}
-          height='20'
-          width='12'
-          alt='arrow down'
+          height="20"
+          width="12"
+          alt="arrow down"
           sx={{ position: 'absolute', bottom: 32 }}
         />
       </Container>
@@ -75,11 +75,11 @@ ProductHeroLayout.propTypes = {
   children: PropTypes.node,
   sxBackground: PropTypes.oneOfType([
     PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
+      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool]),
     ),
     PropTypes.func,
-    PropTypes.object
-  ])
+    PropTypes.object,
+  ]),
 }
 
 export default ProductHeroLayout

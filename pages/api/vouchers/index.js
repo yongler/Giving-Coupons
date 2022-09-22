@@ -1,7 +1,7 @@
 import prisma from '../../../lib/prisma'
 import { unredeemed } from '../../../util/constants/voucherStatus'
 
-export default async function handler (req, res) {
+export default async function handler(req, res) {
   try {
     const httpMethod = req.method
     const { campaignId } = req.body
@@ -14,11 +14,11 @@ export default async function handler (req, res) {
         data: {
           campaign: {
             connect: {
-              id: campaignId
-            }
+              id: campaignId,
+            },
           },
-          status: unredeemed
-        }
+          status: unredeemed,
+        },
       })
       res.status(201).json(voucher)
     } else {

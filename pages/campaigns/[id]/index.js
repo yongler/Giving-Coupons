@@ -1,20 +1,20 @@
-import Paper from "@mui/material/Paper";
-import CharityCard from "../../../components/CharityCard";
-import Typography from "@mui/material/Typography";
-import styles from "../../../styles/Form.module.css";
+import Paper from '@mui/material/Paper'
+import CharityCard from '../../../components/CharityCard'
+import Typography from '@mui/material/Typography'
+import styles from '../../../styles/Form.module.css'
 
 export default function Campaign({ data }) {
   const onSubmit = () => {
-    console.log(id);
-  };
+    console.log(id)
+  }
 
-  console.log(data);
-  const campaign = data;
+  console.log(data)
+  const campaign = data
 
   function getDaysLeft(endDate) {
     return Math.floor(
-      (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24)
-    );
+      (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24),
+    )
   }
 
   return (
@@ -46,12 +46,12 @@ export default function Campaign({ data }) {
         <button onClick={onSubmit}>Donate</button>
       </Paper>
     </div>
-  );
+  )
 }
 
 export async function getServerSideProps(context) {
-  const id = context.params.id;
-  const res = await fetch(process.env.URL + `/api/campaigns/` + id);
-  const data = await res.json();
-  return { props: { data } };
+  const id = context.params.id
+  const res = await fetch(process.env.URL + `/api/campaigns/` + id)
+  const data = await res.json()
+  return { props: { data } }
 }

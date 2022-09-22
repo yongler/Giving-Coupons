@@ -16,7 +16,7 @@ import * as ga from '../lib/ga'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
-export default function MyApp (props) {
+export default function MyApp(props) {
   // MUI rendering first
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
@@ -29,7 +29,7 @@ export default function MyApp (props) {
 
   // google analytics
   useEffect(() => {
-    const handleRouteChange = url => {
+    const handleRouteChange = (url) => {
       ga.pageview(url)
     }
     //When the component is mounted, subscribe to router changes
@@ -49,8 +49,8 @@ export default function MyApp (props) {
         {/* metadata */}
         <Head>
           <title>Giving Coupons</title>
-          <meta name='viewport' content='initial-scale=1, width=device-width' />
-          <link rel='canonical' href={canonicalUrl} />
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+          <link rel="canonical" href={canonicalUrl} />
         </Head>
 
         {/* content */}
@@ -69,5 +69,5 @@ export default function MyApp (props) {
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   emotionCache: PropTypes.object,
-  pageProps: PropTypes.object.isRequired
+  pageProps: PropTypes.object.isRequired,
 }

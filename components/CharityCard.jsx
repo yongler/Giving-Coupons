@@ -6,10 +6,10 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import styles from '../styles/CharityCard.module.css'
 
-export default function CharityCard (props) {
+export default function CharityCard(props) {
   const { id, name, description, image, link } = props
 
-  const openInNewTab = url => {
+  const openInNewTab = (url) => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
   }
@@ -21,7 +21,7 @@ export default function CharityCard (props) {
   return (
     <Card className={styles.charityCard}>
       <CardMedia
-        component='img'
+        component="img"
         height={140}
         image={'/images/' + image}
         alt={name}
@@ -29,12 +29,12 @@ export default function CharityCard (props) {
       />
       <CardContent>
         <Typography className={styles.name}>{name}</Typography>
-        <Typography className={styles.description} color='text.secondary'>
+        <Typography className={styles.description} color="text.secondary">
           {description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing className={styles.button}>
-        <Button size='small' onClick={openLink}>
+        <Button size="small" onClick={openLink}>
           Visit website
         </Button>
       </CardActions>
