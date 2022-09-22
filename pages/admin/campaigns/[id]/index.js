@@ -48,31 +48,31 @@ export default function Campaign({ data }) {
             <Typography className={styles.title} variant="h6" component="div">
               Details
             </Typography>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6" component="div">
               {`Donor:`}
             </Typography>
             <Typography gutterBottom variant="subtitle1" component="div">
               {`${campaign.donor}`}
             </Typography>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6" component="div">
               {"End Date:"}
             </Typography>
             <Typography gutterBottom variant="subtitle1" component="div">
               {new Date(campaign.endDate).toUTCString()}
             </Typography>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6" component="div">
               {`Description:`}
             </Typography>
             <Typography gutterBottom variant="subtitle1" component="div">
               {`${campaign.description}`}
             </Typography>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6" component="div">
               {`Voucher Amount:`}
             </Typography>
             <Typography gutterBottom variant="subtitle1" component="div">
               {`$${campaign.voucherAmount}`}
             </Typography>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6" component="div">
               {`Number of Vouchers:`}
             </Typography>
             <Typography gutterBottom variant="subtitle1" component="div">
