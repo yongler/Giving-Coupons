@@ -13,10 +13,35 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
 import { redeemed } from "../../util/constants/voucherStatus";
+import * as React from "react";
+import { useRouter } from "next/router";
+import { auth } from "../../firebase/firebaseApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { initialCoupon } from "../../util/constants/initialObjects";
 
-export default function VoucherForm({ voucher }) {
+export default function VoucherForm() {
+  const { id } = useRouter().query;
+  const [voucher, setVoucher] = React.useState(initialCoupon);
+  const [user] = useAuthState(auth);
+
+  React.useEffect(() => {
+    user.getIdToken().then((jwt) => {
+      fetch("/api/vouchers/" + id, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + jwt,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setVoucher(data);
+        });
+    });
+  }, []);
+
   const [submitted, setSubmitted] = useState(voucher?.status == redeemed);
   const [error, setError] = useState();
+
   const {
     handleSubmit,
     control,
@@ -31,10 +56,10 @@ export default function VoucherForm({ voucher }) {
   });
 
   if (voucher == null) {
-    return <div className={styles.errorPage}>Invalid coupon link</div>
+    return <div className={styles.errorPage}>Invalid coupon link</div>;
   }
   if (Date.now() > Date.parse(voucher?.campaign.endDate) && !submitted) {
-    return <div className={styles.errorPage}>Coupon Expired</div>
+    return <div className={styles.errorPage}>Coupon Expired</div>;
   }
   if (error) {
     return <div className={styles.errorPage}>{error}</div>;
@@ -44,8 +69,8 @@ export default function VoucherForm({ voucher }) {
 
   const onSubmit = (data) => {
     if (Date.now() > Date.parse(voucher?.campaign.endDate)) {
-      setError('Coupon Expired')
-      return
+      setError("Coupon Expired");
+      return;
     }
     setSubmitted(true);
     fetch("/api/vouchers/" + data.voucherId, {
@@ -182,11 +207,4 @@ export default function VoucherForm({ voucher }) {
       </Grid>
     </Grid>
   );
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id;
-  const res = await fetch(process.env.URL + `/api/vouchers/` + id);
-  const voucher = await res.json();
-  return { props: { voucher } };
 }

@@ -17,10 +17,28 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
+import { auth } from "../../../firebase/firebaseApp";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-export default function CampaignDashboard({ data }) {
-  console.log(data);
-  console.log(data[0].name);
+export default function CampaignDashboard() {
+  const [data, setData] = React.useState([]);
+  const [user] = useAuthState(auth);
+
+  React.useEffect(() => {
+    user.getIdToken().then((jwt) => {
+      fetch("/api/campaigns/", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + jwt,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+        });
+    });
+  }, []);
+
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -142,10 +160,4 @@ function a11yProps(index) {
     id: `full-width-tab-${index}`,
     "aria-controls": `full-width-tabpanel-${index}`,
   };
-}
-
-export async function getServerSideProps() {
-  const res = await fetch(process.env.URL + `/api/campaigns`);
-  const data = await res.json();
-  return { props: { data } };
 }

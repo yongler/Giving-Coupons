@@ -20,7 +20,7 @@ export default function adminLogIn() {
   }
 
   if (user) {
-    router.push("/admin");
+    router.push("/test");
     return <h4 style={{ margin: 3 }}>Loading... Please wait...</h4>;
   }
 

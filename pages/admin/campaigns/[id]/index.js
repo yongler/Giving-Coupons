@@ -15,15 +15,35 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { useRouter } from "next/router";
+import { auth } from "../../../../firebase/firebaseApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { initialCampaign } from "../../../../util/constants/initialObjects";
 
-export default function Campaign({ data }) {
-  const campaign = data;
+export default function Campaign() {
+  const { id } = useRouter().query;
+  const [campaign, setCampaign] = React.useState(initialCampaign);
+  const [user] = useAuthState(auth);
+
+  React.useEffect(() => {
+    user.getIdToken().then((jwt) => {
+      fetch("/api/campaigns/" + id, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + jwt,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setCampaign(data);
+        });
+    });
+  }, []);
 
   if (campaign == null || campaign.charitiesChosenByDonor == undefined) {
     return <div className={styles.errorPage}>Invalid campaign link</div>;
   }
 
-  console.log(campaign);
   const charityMappings = {};
   for (let i = 0; i < campaign.charitiesChosenByDonor.length; i++) {
     charityMappings[campaign.charitiesChosenByDonor[i].id] =
@@ -171,11 +191,4 @@ function VoucherRow(props) {
       </TableRow>
     </React.Fragment>
   );
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id;
-  const res = await fetch(process.env.URL + `/api/campaigns/` + id);
-  const data = await res.json();
-  return { props: { data } };
 }

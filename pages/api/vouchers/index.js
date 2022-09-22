@@ -15,7 +15,15 @@ export default async function handler(req, res) {
     const { campaignId } = req.body;
 
     if (httpMethod === "GET") {
-      const vouchers = await prisma.voucher.findMany();
+      const vouchers = await prisma.voucher.findMany({
+        include: {
+          campaign: {
+            include: {
+              charitiesChosenByDonor: true,
+            },
+          },
+        },
+      });
       res.status(200).json(vouchers);
     } else if (httpMethod === "POST") {
       try {
