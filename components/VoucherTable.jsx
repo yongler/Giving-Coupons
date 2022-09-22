@@ -87,6 +87,13 @@ const headCells = [
   },
 ];
 
+function toGMT8(utc_string) {
+  let date = new Date(utc_string);
+  date.setTime(date.getTime() + 8 * 60 * 60 * 10000);
+  const correctTime = date.toUTCString();
+  return correctTime.split("GMT")[0];
+}
+
 function EnhancedTableHead(props) {
   const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
@@ -138,9 +145,7 @@ export default function EnhancedTable(props) {
         : "-",
       amount_added: voucher.amountAdded ? parseInt(voucher.amountAdded) : 0,
       date_submitted:
-        voucher.status == unredeemed
-          ? "-"
-          : new Date(voucher.timeSubmitted).toUTCString(),
+        voucher.status == unredeemed ? "-" : toGMT8(voucher.timeSubmitted),
       message: voucher.message,
     });
 

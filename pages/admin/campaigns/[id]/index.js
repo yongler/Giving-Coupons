@@ -17,7 +17,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import EnhancedTable from "../../../../components/VoucherTable";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
@@ -35,15 +34,15 @@ export default function Campaign({ data }) {
       campaign.charitiesChosenByDonor[i].name;
   }
 
+  function toGMT8(utc_string) {
+    let date = new Date(utc_string);
+    date.setTime(date.getTime() + 8 * 60 * 60 * 10000);
+    const correctTime = date.toUTCString();
+    return correctTime.split("GMT")[0];
+  }
+
   return (
     <div className={styles.formpage}>
-      {/* <div className={styles.topbar}> */}
-      {/* <Breadcrumbs aria-label="breadcrumb" className={styles.breadcrumbs}>
-          <Link underline="hover" color="inherit" href="/admin/campaigns">
-            Dashboard
-          </Link>
-          <Typography color="text.primary">{campaign.id}</Typography>
-        </Breadcrumbs> */}
       <Link href="/admin/campaigns" className={styles.backButtonColor}>
         <ArrowBackIcon className={styles.backButton} />
       </Link>
@@ -72,7 +71,7 @@ export default function Campaign({ data }) {
               {"End Date:"}
             </Typography>
             <Typography gutterBottom variant="subtitle1" component="div">
-              {new Date(campaign.endDate).toUTCString()}
+              {toGMT8(campaign.endDate)}
             </Typography>
             <Typography gutterBottom variant="h6" component="div">
               {`Description:`}
