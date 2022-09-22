@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.5",
     "@mui/styled-engine-sc": "^5.10.3",
+    "@mui/x-data-grid": "^5.17.3",
     "@prisma/client": "^4.3.1",
     "axios": "^0.27.2",
     "luxon": "^3.0.3",

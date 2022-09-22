@@ -15,13 +15,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
-import Grid from "@mui/material/Grid";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import FolderIcon from "@mui/icons-material/Folder";
+import { DataGrid } from "@mui/x-data-grid";
+import EnhancedTable from "../../../../components/VoucherTable";
 
 export default function Campaign({ data }) {
   const campaign = data;
@@ -116,35 +111,104 @@ export default function Campaign({ data }) {
             View Coupons
           </Button>
         </div>
-        <TableContainer
-          className={styles.table}
-          component={Paper}
-          sx={{ overflowX: "hidden" }}
-        >
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell>ID</TableCell>
-                <TableCell align="right">Status</TableCell>
-                <TableCell align="right">Charity Selected</TableCell>
-                <TableCell align="right">Amount Added</TableCell>
-                <TableCell align="right">Date Submitted</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {campaign.vouchers.map((voucher) => (
-                <VoucherRow
-                  key={voucher.id}
-                  voucher={voucher}
-                  charityMappings={charityMappings}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <EnhancedTable
+          vouchers={campaign.vouchers}
+          charityMappings={charityMappings}
+        />
+        {/* <DataGridDemo
+          vouchers={campaign.vouchers}
+          charityMappings={charityMappings}
+        /> */}
+        {/* <TableContainer
+            className={styles.table}
+            component={Paper}
+            sx={{ overflowX: "hidden" }}
+          >
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell />
+                  <TableCell>ID</TableCell>
+                  <TableCell align="right">Status</TableCell>
+                  <TableCell align="right">Charity Selected</TableCell>
+                  <TableCell align="right">Amount Added</TableCell>
+                  <TableCell align="right">Date Submitted</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {campaign.vouchers.map((voucher) => (
+                  <VoucherRow
+                    key={voucher.id}
+                    voucher={voucher}
+                    charityMappings={charityMappings}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer> */}
       </Paper>
     </div>
+  );
+}
+
+const columns = [
+  { field: "id", headerName: "ID", width: 100 },
+  {
+    field: "status",
+    headerName: "Status",
+    width: 150,
+  },
+  {
+    field: "charity_selected",
+    headerName: "Charity Selected",
+    width: 300,
+  },
+  {
+    field: "amount_added",
+    headerName: "Amount Added",
+    type: "number",
+    width: 150,
+  },
+  {
+    field: "date_submitted",
+    headerName: "Date Submitted",
+    type: "number",
+    width: 300,
+  },
+];
+
+function DataGridDemo(props) {
+  const { vouchers, charityMappings } = props;
+  const voucherData = [];
+  const numShown = 25;
+
+  for (let i = 0; i < vouchers.length; i++) {
+    const voucher = vouchers[i];
+    voucherData.push({
+      id: voucher.id,
+      status: voucher.status == unredeemed ? "Unredeemed" : "Redeemed",
+      charity_selected: voucher.charityId
+        ? charityMappings[voucher.charityId]
+        : "",
+      amount_added: voucher.amountAdded ? "$" + voucher.amountAdded : "$0",
+      date_submitted:
+        voucher.status == unredeemed
+          ? ""
+          : new Date(voucher.timeSubmitted).toUTCString(),
+    });
+  }
+
+  return (
+    <Box sx={{ height: `${(numShown + 2) * 52}px`, width: "95vw" }}>
+      <DataGrid
+        rows={voucherData}
+        columns={columns}
+        pageSize={numShown}
+        rowsPerPageOptions={[10]}
+        disableSelectionOnClick
+        experimentalFeatures={{ newEditingApi: true }}
+      />
+    </Box>
   );
 }
 
@@ -204,46 +268,6 @@ function VoucherRow(props) {
         </TableCell>
       </TableRow>
     </React.Fragment>
-  );
-}
-
-function PinnedSubheaderList(props) {
-  const { campaign } = props;
-  console.log(campaign);
-  return (
-    <List
-      sx={{
-        width: "100%",
-        maxWidth: 360,
-        bgcolor: "background.paper",
-        position: "relative",
-        overflow: "auto",
-        maxHeight: 300,
-        "& ul": { padding: 0 },
-      }}
-      subheader={<li />}
-    >
-      {/* {[0, 1, 2, 3, 4].map((sectionId) => (
-        <li key={`section-${sectionId}`}>
-          <ul>
-            <ListSubheader>{`Charities Selected`}</ListSubheader>
-            {[0, 1, 2].map((item) => (
-              <ListItem key={`item-${sectionId}-${item}`}>
-                <ListItemText primary={`Item ${item}`} />
-              </ListItem>
-            ))}
-          </ul>
-        </li>
-      ))} */}
-      <ul>
-        <ListSubheader>Charities Selected</ListSubheader>
-        {charities.map((charity) => {
-          <ListItem key={`${charity.id}`}>
-            <ListItemText primary={`hello`} />
-          </ListItem>;
-        })}
-      </ul>
-    </List>
   );
 }
 
