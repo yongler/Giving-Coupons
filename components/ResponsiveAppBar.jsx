@@ -13,11 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
 import { getAuth } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
-import { getFirebaseApp } from "../firebase/firebaseApp";
 import icon from "../images/icon-512x512-removebg.png";
 import styles from "../styles/ResponsiveAppBar.module.css";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const pages = [
   { name: "Campaigns", path: "campaigns" },
@@ -62,7 +61,10 @@ const ResponsiveAppBar = () => {
     router.pathname != "/login" && (
       <AppBar position="sticky">
         <Container maxWidth="xl">
-          <Toolbar disableGutters>
+          <Toolbar
+            disableGutters
+            className={router.pathname.startsWith("/admin") && styles.toolbar}
+          >
             {/* <Typography
               variant="h6"
               noWrap
@@ -86,13 +88,16 @@ const ResponsiveAppBar = () => {
                 component="img"
                 src={icon.src}
                 alt="split"
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                }}
               />
             </Link>
 
-            <IconButton onClick={logout}>Logout</IconButton>
+            {router.pathname.startsWith("/admin") && (
+              <Box>
+                <IconButton onClick={logout} className={styles.logoutButton}>
+                  <LogoutIcon className={styles.button} /> Log Out
+                </IconButton>
+              </Box>
+            )}
 
             {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -150,18 +155,7 @@ const ResponsiveAppBar = () => {
             >
               Coupons
             </Typography> */}
-            <Link href="/">
-              <Box
-                className={styles.icon}
-                component="img"
-                href="/"
-                src={icon.src}
-                alt="split"
-                sx={{
-                  display: { xs: "flex", md: "none" },
-                }}
-              />
-            </Link>
+
             {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <Button

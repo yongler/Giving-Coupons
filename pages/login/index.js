@@ -1,6 +1,13 @@
-import { Button, FormControl, InputLabel, Input } from "@mui/material";
-import styles from "../../styles/Form.module.css";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import Box from "@mui/material/Box";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -8,7 +15,7 @@ import { useState } from "react";
 import { auth } from "../../firebase/firebaseApp";
 import { base64Encode } from "@firebase/util";
 
-export default function adminLogIn() {
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -43,7 +50,7 @@ export default function adminLogIn() {
             toast.success("Successfully signed in. Welcome admin!", {
               autoClose: 2000,
             });
-            router.push("/admin/test");
+            router.push("/admin/campaigns");
             return res;
           })
           .catch((error) => {
@@ -55,37 +62,54 @@ export default function adminLogIn() {
   };
 
   return (
-    <form
-      style={{
-        justifyContent: "center",
-        height: "100vh",
-      }}
-      className={styles.formpage}
-      onSubmit={signIn}
-    >
-      <h1>Log In</h1>
-      <FormControl sx={{ m: 1 }}>
-        <InputLabel htmlFor="email">Email</InputLabel>
-        <Input
-          id="email"
-          aria-describedby="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormControl>
-
-      <FormControl sx={{ m: 1 }}>
-        <InputLabel htmlFor="password">Password</InputLabel>
-        <Input
-          id="password"
-          aria-describedby="password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </FormControl>
-
-      <Button sx={{ m: 4 }} type="submit" variant="contained">
-        Log In
-      </Button>
-    </form>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 15,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <SupervisorAccountIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Admin Sign in
+        </Typography>
+        <Box component="form" onSubmit={signIn} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+            Sign In
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 }
