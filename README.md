@@ -14,8 +14,7 @@ Contributions:
   - (Milestone 9) HTTPS setup and redirecting HTTP to HTTPS for secure browsing
   - (Milestone 10) PWA setup and UIUX testing on mobile end
   - (Milestone 10) Setup offline functionalities
-  - (Milestone 14) Google analytics
-  -
+  - (Milestone 14) Google analytics setup 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
