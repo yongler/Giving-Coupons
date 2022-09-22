@@ -49,8 +49,10 @@ export default function CampaignDashboard({ data }) {
       <Typography className={styles.title} variant="h4" component="div">
         Campaigns Dashboard
       </Typography>
-      <Box sx={{ bgcolor: "background.paper", width: "100vw" }}>
-        <AppBar position="static">
+      <Box
+        sx={{ bgcolor: "background.paper", width: "95vw", marginLeft: "2.5vw" }}
+      >
+        <AppBar className={styles.tabs} position="static">
           <Tabs
             value={value}
             onChange={handleChange}
@@ -118,7 +120,7 @@ function TabPanel(props) {
                     <TableCell>{campaign.id}</TableCell>
                     <TableCell align="right">{campaign.name}</TableCell>
                     <TableCell align="right">{campaign.donor}</TableCell>
-                    <TableCell>
+                    <TableCell align="right">
                       <Link href={`/admin/campaigns/${campaign.id}`}>
                         <IconButton aria-label="info" size="small">
                           <KeyboardArrowRightIcon />

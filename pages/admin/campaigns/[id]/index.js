@@ -152,7 +152,7 @@ function VoucherRow(props) {
         <TableCell align="right">
           {voucher.status == unredeemed
             ? "-"
-            : new Date(voucher.timeSubmitted).toDateString()}
+            : new Date(voucher.timeSubmitted).toUTCString()}
         </TableCell>
       </TableRow>
       <TableRow>
