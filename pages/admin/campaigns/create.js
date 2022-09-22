@@ -1,28 +1,28 @@
-import Paper from "@mui/material/Paper";
-import styles from "../../../styles/Form.module.css";
-import CharityCard from "../../../components/CharityCard";
-import Typography from "@mui/material/Typography";
-import { useForm, Controller } from "react-hook-form";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import InputAdornment from "@mui/material/InputAdornment";
-import Grid from "@mui/material/Grid";
-import { useState } from "react";
+import Paper from "@mui/material/Paper"
+import styles from "../../../styles/Form.module.css"
+import CharityCard from "../../../components/CharityCard"
+import Typography from "@mui/material/Typography"
+import { useForm, Controller } from "react-hook-form"
+import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button"
+import Radio from "@mui/material/Radio"
+import RadioGroup from "@mui/material/RadioGroup"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import FormControl from "@mui/material/FormControl"
+import InputAdornment from "@mui/material/InputAdornment"
+import Grid from "@mui/material/Grid"
+import { useState } from "react"
 // import { redeemed } from "../../util/constants/voucherStatus";
-import FormGroup from "@mui/material/FormGroup";
-import Checkbox from "@mui/material/Checkbox";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import FormGroup from "@mui/material/FormGroup"
+import Checkbox from "@mui/material/Checkbox"
+import { DatePicker } from "@mui/x-date-pickers/DatePicker"
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment"
 
 export default function VoucherForm({ charities }) {
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState();
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState()
   // const [numberOfVouchers, setNumberOfVouchers] = useState(0);
   // const [voucherValue, setVoucherValue] = useState(0);
 
@@ -43,19 +43,19 @@ export default function VoucherForm({ charities }) {
       numberOfVouchers: "",
       voucherValue: "",
     },
-  });
+  })
 
   if (error) {
-    return <div className={styles.errorPage}>{error}</div>;
+    return <div className={styles.errorPage}>{error}</div>
   }
 
   const onSubmit = (data) => {
-    setSubmitted(true);
+    setSubmitted(true)
 
-    const chosenCharities = [];
+    const chosenCharities = []
     for (const key in data) {
       if (data[key] === true) {
-        chosenCharities.push(key);
+        chosenCharities.push(key)
       }
     }
 
@@ -67,7 +67,7 @@ export default function VoucherForm({ charities }) {
       description: data.description,
       numVouchers: parseInt(data.numberOfVouchers),
       voucherAmount: parseInt(data.voucherValue),
-    });
+    })
 
     fetch("/api/campaigns/", {
       method: "POST",
@@ -77,10 +77,10 @@ export default function VoucherForm({ charities }) {
       },
     }).then((response) => {
       if (!response.ok) {
-        setError("Sorry, an error has occured");
+        setError("Sorry, an error has occured")
       }
-    });
-  };
+    })
+  }
 
   return (
     <Grid container className={styles.formpage} justifyContent="center">
@@ -177,7 +177,7 @@ export default function VoucherForm({ charities }) {
                       <Checkbox
                         checked={!!value}
                         onChange={(event, item) => {
-                          onChange(item);
+                          onChange(item)
                         }}
                         name={checboxItem.name}
                         color="primary"
@@ -264,11 +264,11 @@ export default function VoucherForm({ charities }) {
         </Paper>
       </Grid>
     </Grid>
-  );
+  )
 }
 
 export async function getServerSideProps() {
-  const res = await fetch(process.env.URL + `/api/charities/`);
-  const charities = await res.json();
-  return { props: { charities } };
+  const res = await fetch(process.env.URL + `/api/charities/`)
+  const charities = await res.json()
+  return { props: { charities } }
 }

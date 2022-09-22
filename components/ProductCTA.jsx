@@ -1,23 +1,23 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Snackbar from "@mui/material/Snackbar";
-import Button from "@mui/material/Button";
+import * as React from "react"
+import Box from "@mui/material/Box"
+import Grid from "@mui/material/Grid"
+import Container from "@mui/material/Container"
+import Typography from "@mui/material/Typography"
+import TextField from "@mui/material/TextField"
+import Snackbar from "@mui/material/Snackbar"
+import Button from "@mui/material/Button"
 
 function ProductCTA() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    setOpen(true);
-  };
+    event.preventDefault()
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <Container component="section" sx={{ mt: 10, display: "flex" }}>
@@ -100,7 +100,7 @@ function ProductCTA() {
         message="We will send you our best offers, once a week."
       />
     </Container>
-  );
+  )
 }
 
-export default ProductCTA;
+export default ProductCTA

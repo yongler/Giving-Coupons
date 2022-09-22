@@ -1,39 +1,39 @@
-import * as React from "react";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import styles from "../../../../styles/Admin.campaigns.page.module.css";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableContainer from "@mui/material/TableContainer";
-import { unredeemed } from "../../../../util/constants/voucherStatus";
-import IconButton from "@mui/material/IconButton";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Collapse from "@mui/material/Collapse";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import * as React from "react"
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import styles from "../../../../styles/Admin.campaigns.page.module.css"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
+import TableContainer from "@mui/material/TableContainer"
+import { unredeemed } from "../../../../util/constants/voucherStatus"
+import IconButton from "@mui/material/IconButton"
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
+import Collapse from "@mui/material/Collapse"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
 
 export default function Campaign({ data }) {
-  const campaign = data;
+  const campaign = data
 
   if (campaign == null || campaign.charitiesChosenByDonor == undefined) {
-    return <div className={styles.errorPage}>Invalid campaign link</div>;
+    return <div className={styles.errorPage}>Invalid campaign link</div>
   }
 
-  console.log(campaign);
-  const charityMappings = {};
+  console.log(campaign)
+  const charityMappings = {}
   for (let i = 0; i < campaign.charitiesChosenByDonor.length; i++) {
     charityMappings[campaign.charitiesChosenByDonor[i].id] =
-      campaign.charitiesChosenByDonor[i].name;
+      campaign.charitiesChosenByDonor[i].name
   }
 
   function getDaysLeft(endDate) {
     return Math.floor(
       (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24)
-    );
+    )
   }
 
   return (
@@ -116,12 +116,12 @@ export default function Campaign({ data }) {
         </TableContainer>
       </Paper>
     </div>
-  );
+  )
 }
 
 function VoucherRow(props) {
-  const { voucher, charityMappings } = props;
-  const [open, setOpen] = React.useState(false);
+  const { voucher, charityMappings } = props
+  const [open, setOpen] = React.useState(false)
 
   return (
     <React.Fragment>
@@ -170,12 +170,12 @@ function VoucherRow(props) {
         </TableCell>
       </TableRow>
     </React.Fragment>
-  );
+  )
 }
 
 export async function getServerSideProps(context) {
-  const id = context.params.id;
-  const res = await fetch(process.env.URL + `/api/campaigns/` + id);
-  const data = await res.json();
-  return { props: { data } };
+  const id = context.params.id
+  const res = await fetch(process.env.URL + `/api/campaigns/` + id)
+  const data = await res.json()
+  return { props: { data } }
 }

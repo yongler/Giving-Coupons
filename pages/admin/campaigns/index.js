@@ -1,46 +1,46 @@
-import * as React from "react";
-import Paper from "@mui/material/Paper";
-import styles from "../../../styles/CampaignDashboard.module.css";
-import Typography from "@mui/material/Typography";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableContainer from "@mui/material/TableContainer";
-import IconButton from "@mui/material/IconButton";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Link } from "@mui/material";
-import Box from "@mui/material/Box";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import SwipeableViews from "react-swipeable-views";
-import { useTheme } from "@mui/material/styles";
+import * as React from "react"
+import Paper from "@mui/material/Paper"
+import styles from "../../../styles/CampaignDashboard.module.css"
+import Typography from "@mui/material/Typography"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
+import TableContainer from "@mui/material/TableContainer"
+import IconButton from "@mui/material/IconButton"
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
+import { Link } from "@mui/material"
+import Box from "@mui/material/Box"
+import AppBar from "@mui/material/AppBar"
+import Tabs from "@mui/material/Tabs"
+import Tab from "@mui/material/Tab"
+import SwipeableViews from "react-swipeable-views"
+import { useTheme } from "@mui/material/styles"
 
 export default function CampaignDashboard({ data }) {
-  console.log(data);
-  console.log(data[0].name);
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  console.log(data)
+  console.log(data[0].name)
+  const theme = useTheme()
+  const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
 
   const handleChangeIndex = (index) => {
-    setValue(index);
-  };
+    setValue(index)
+  }
 
-  const ongoingCampaigns = [];
-  const expiredCampaigns = [];
+  const ongoingCampaigns = []
+  const expiredCampaigns = []
   //separate expired and non expired campaigns
   for (let i = 0; i < data.length; i++) {
-    const campaign = data[i];
+    const campaign = data[i]
     if (Date.parse(campaign.endDate) - new Date() < 0) {
-      expiredCampaigns.push(campaign);
+      expiredCampaigns.push(campaign)
     } else {
-      ongoingCampaigns.push(campaign);
+      ongoingCampaigns.push(campaign)
     }
   }
 
@@ -83,11 +83,11 @@ export default function CampaignDashboard({ data }) {
         </SwipeableViews>
       </Box>
     </div>
-  );
+  )
 }
 
 function TabPanel(props) {
-  const { children, value, index, campaigns, ...other } = props;
+  const { children, value, index, campaigns, ...other } = props
 
   return (
     <div
@@ -134,18 +134,18 @@ function TabPanel(props) {
         </Box>
       )}
     </div>
-  );
+  )
 }
 
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
     "aria-controls": `full-width-tabpanel-${index}`,
-  };
+  }
 }
 
 export async function getServerSideProps() {
-  const res = await fetch(process.env.URL + `/api/campaigns`);
-  const data = await res.json();
-  return { props: { data } };
+  const res = await fetch(process.env.URL + `/api/campaigns`)
+  const data = await res.json()
+  return { props: { data } }
 }
