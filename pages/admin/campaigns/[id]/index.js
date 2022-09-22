@@ -15,6 +15,13 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
+import Grid from "@mui/material/Grid";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import FolderIcon from "@mui/icons-material/Folder";
 
 export default function Campaign({ data }) {
   const campaign = data;
@@ -30,6 +37,8 @@ export default function Campaign({ data }) {
       campaign.charitiesChosenByDonor[i].name;
   }
 
+  const charities = campaign.charitiesChosenByDonor;
+  console.log(charities);
   function getDaysLeft(endDate) {
     return Math.floor(
       (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24)
@@ -38,45 +47,65 @@ export default function Campaign({ data }) {
 
   return (
     <div className={styles.formpage}>
+      <Typography
+        className={styles.mainTitle}
+        gutterBottom
+        variant="h4"
+        component="div"
+      >
+        {`Campaign Name: ${campaign.name}`}
+      </Typography>
       <Paper className={styles.form} elevation={0}>
-        <Typography gutterBottom variant="h5" component="div">
-          {`Campaign Name: ${campaign.name}`}
-        </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          {`Donor: ${campaign.donor}`}
-        </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          {getDaysLeft(campaign.endDate) > 0
-            ? `${getDaysLeft(campaign.endDate)} days left`
-            : "Campaign has ended"}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {`Description: ${campaign.description}`}
-        </Typography>
-        <Typography className={styles.title} variant="h6" component="div">
-          Charities Selected
-        </Typography>
-        <TableContainer className={styles.table} component={Paper}>
-          <Table className={styles.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Name</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {campaign.charitiesChosenByDonor.map((charity) => (
-                <TableRow
-                  key={charity.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="center">{charity.name}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <div className={styles.topPortion}>
+          <Paper className={styles.campaignCard} elevation={3}>
+            <Typography className={styles.title} variant="h6" component="div">
+              Details
+            </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              {`Donor:`}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {`${campaign.donor}`}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              {"End Date:"}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {new Date(campaign.endDate).toUTCString()}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              {`Description:`}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {`${campaign.description}`}
+            </Typography>
+          </Paper>
+          <Paper className={styles.campaignCard} elevation={3}>
+            <Typography className={styles.title} variant="h6" component="div">
+              Charities Selected
+            </Typography>
+            <TableContainer className={styles.table} component={Paper}>
+              <Table className={styles.table} aria-label="simple table">
+                <TableBody>
+                  {campaign.charitiesChosenByDonor.map((charity) => (
+                    <TableRow
+                      key={charity.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell align="center">{charity.name}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </div>
         <div className={styles.couponsTitle}>
-          <Typography className={styles.title} variant="h6" component="div">
+          <Typography
+            className={styles.titleCoupons}
+            variant="h6"
+            component="div"
+          >
             Coupons Status
           </Typography>
           <Button
@@ -159,10 +188,15 @@ function VoucherRow(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography
+                variant="body1"
+                gutterBottom
+                component="div"
+                className={styles.messageHeader}
+              >
                 Message from user:
               </Typography>
-              <Typography variant="subtitle1" gutterBottom component="div">
+              <Typography variant="body2" gutterBottom component="div">
                 {voucher.message}
               </Typography>
             </Box>
@@ -170,6 +204,46 @@ function VoucherRow(props) {
         </TableCell>
       </TableRow>
     </React.Fragment>
+  );
+}
+
+function PinnedSubheaderList(props) {
+  const { campaign } = props;
+  console.log(campaign);
+  return (
+    <List
+      sx={{
+        width: "100%",
+        maxWidth: 360,
+        bgcolor: "background.paper",
+        position: "relative",
+        overflow: "auto",
+        maxHeight: 300,
+        "& ul": { padding: 0 },
+      }}
+      subheader={<li />}
+    >
+      {/* {[0, 1, 2, 3, 4].map((sectionId) => (
+        <li key={`section-${sectionId}`}>
+          <ul>
+            <ListSubheader>{`Charities Selected`}</ListSubheader>
+            {[0, 1, 2].map((item) => (
+              <ListItem key={`item-${sectionId}-${item}`}>
+                <ListItemText primary={`Item ${item}`} />
+              </ListItem>
+            ))}
+          </ul>
+        </li>
+      ))} */}
+      <ul>
+        <ListSubheader>Charities Selected</ListSubheader>
+        {charities.map((charity) => {
+          <ListItem key={`${charity.id}`}>
+            <ListItemText primary={`hello`} />
+          </ListItem>;
+        })}
+      </ul>
+    </List>
   );
 }
 

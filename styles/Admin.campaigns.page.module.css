@@ -4,6 +4,11 @@
     flex-direction: column;
 }
 
+.mainTitle {
+    margin-top: 3vh;
+    font-weight: bolder;
+}
+
 .form {
     min-width: 70vw;
     margin-top: 3vh;
@@ -16,11 +21,15 @@
 }
 
 .title {
-    margin-top: 4vh;
     text-decoration: underline;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2vh;
 }   
 
 .table {
+    display: flex;
+    justify-content: center;
     width: auto;
     max-width: 95vw;
     /* overflow-y: hidden; */
@@ -40,8 +49,56 @@
     justify-content: space-evenly;
 }
 
+.titleCoupons {
+    margin-top: 4vh;
+    text-decoration: underline;
+}
+
 .couponsButton {
     margin-top: 3.5vh;
     margin-left: 3vw;
     height: 35px;
+}
+
+.campaignCard {
+    min-width: 25vw;
+    min-height: 40vh;
+    padding: 25px;
+    /* margin-left: 3vw; */
+    max-width: 25vw;
+    overflow: auto;
+}
+
+.topPortion {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 95vw;
+    max-width: 95vw;
+    margin-bottom: 5vh;
+}
+
+.messageHeader {
+    font-weight: bold;
+}
+
+@media (max-width: 700px) {
+    .topPortion {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 95vw;
+        max-width: 95vw;
+        margin-bottom: 5vh;
+    }
+
+    .campaignCard {
+        min-width: 25vw;
+        min-height: 30vh;
+        padding: 25px;
+        /* margin-left: 3vw; */
+        overflow: auto;
+        max-width: 95vw;
+        margin-bottom: 3vh;
+    }
 }
