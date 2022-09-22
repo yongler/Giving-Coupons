@@ -31,10 +31,10 @@ export default function VoucherForm({ voucher }) {
   });
 
   if (voucher == null) {
-    return <div className={styles.errorPage}>Invalid voucher link</div>;
+    return <div className={styles.errorPage}>Invalid coupon link</div>
   }
   if (Date.now() > Date.parse(voucher?.campaign.endDate) && !submitted) {
-    return <div className={styles.errorPage}>Voucher Expired</div>;
+    return <div className={styles.errorPage}>Coupon Expired</div>
   }
   if (error) {
     return <div className={styles.errorPage}>{error}</div>;
@@ -44,8 +44,8 @@ export default function VoucherForm({ voucher }) {
 
   const onSubmit = (data) => {
     if (Date.now() > Date.parse(voucher?.campaign.endDate)) {
-      setError("Voucher Expired");
-      return;
+      setError('Coupon Expired')
+      return
     }
     setSubmitted(true);
     fetch("/api/vouchers/" + data.voucherId, {
@@ -94,7 +94,7 @@ export default function VoucherForm({ voucher }) {
           ))}
           <form onSubmit={handleSubmit(onSubmit)}>
             <Typography className={styles.question}>
-              <b>I would like to donate the voucher to:</b>
+              <b>I would like the money to be given to:</b>
             </Typography>
             <Controller
               rules={{ required: "Please choose a charity" }}
