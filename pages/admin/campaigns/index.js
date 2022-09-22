@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import TableContainer from "@mui/material/TableContainer";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Link } from "@mui/material";
+import Link from "next/link";
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
@@ -113,21 +113,27 @@ function TabPanel(props) {
               </TableHead>
               <TableBody>
                 {campaigns.map((campaign) => (
-                  <TableRow
+                  <Link
                     key={campaign.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    href={`/admin/campaigns/${campaign.id}`}
+                    className={styles.link}
                   >
-                    <TableCell>{campaign.id}</TableCell>
-                    <TableCell align="right">{campaign.name}</TableCell>
-                    <TableCell align="right">{campaign.donor}</TableCell>
-                    <TableCell align="right">
-                      <Link href={`/admin/campaigns/${campaign.id}`}>
-                        <IconButton aria-label="info" size="small">
-                          <KeyboardArrowRightIcon />
-                        </IconButton>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
+                    <TableRow
+                      key={campaign.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>{campaign.id}</TableCell>
+                      <TableCell align="right">{campaign.name}</TableCell>
+                      <TableCell align="right">{campaign.donor}</TableCell>
+                      <TableCell align="right">
+                        <Link href={`/admin/campaigns/${campaign.id}`}>
+                          <IconButton aria-label="info" size="small">
+                            <KeyboardArrowRightIcon />
+                          </IconButton>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  </Link>
                 ))}
               </TableBody>
             </Table>

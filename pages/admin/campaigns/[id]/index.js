@@ -17,6 +17,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import EnhancedTable from "../../../../components/VoucherTable";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function Campaign({ data }) {
   const campaign = data;
@@ -34,6 +37,16 @@ export default function Campaign({ data }) {
 
   return (
     <div className={styles.formpage}>
+      {/* <div className={styles.topbar}> */}
+      {/* <Breadcrumbs aria-label="breadcrumb" className={styles.breadcrumbs}>
+          <Link underline="hover" color="inherit" href="/admin/campaigns">
+            Dashboard
+          </Link>
+          <Typography color="text.primary">{campaign.id}</Typography>
+        </Breadcrumbs> */}
+      <Link href="/admin/campaigns" className={styles.backButtonColor}>
+        <ArrowBackIcon className={styles.backButton} />
+      </Link>
       <Typography
         className={styles.mainTitle}
         gutterBottom
@@ -42,6 +55,7 @@ export default function Campaign({ data }) {
       >
         {`Campaign Name: ${campaign.name}`}
       </Typography>
+      {/* </div> */}
       <Paper className={styles.form} elevation={0}>
         <div className={styles.topPortion}>
           <Paper className={styles.campaignCard} elevation={3}>

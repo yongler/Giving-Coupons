@@ -5,7 +5,6 @@
 }
 
 .mainTitle {
-    margin-top: 3vh;
     font-weight: bolder;
 }
 
@@ -80,6 +79,20 @@
 
 .messageHeader {
     font-weight: bold;
+}
+
+.topbar {
+    display: flex;
+    flex-direction: column;
+}
+
+.backButton {
+    margin-top: 2vh;
+    margin-right: 93vw
+}
+
+.backButtonColor {
+    color: black;
 }
 
 @media (max-width: 700px) {

@@ -28,3 +28,7 @@
     max-width: 95vw;
     margin-left: 2.5vw;
 } */
+
+.link {
+    cursor: pointer;
+}
