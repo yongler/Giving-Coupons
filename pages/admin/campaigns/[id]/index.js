@@ -32,7 +32,7 @@ export default function Campaign({ data }) {
 
   function getDaysLeft(endDate) {
     return Math.floor(
-      (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24),
+      (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24)
     )
   }
 

@@ -75,7 +75,7 @@ ProductHeroLayout.propTypes = {
   children: PropTypes.node,
   sxBackground: PropTypes.oneOfType([
     PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool]),
+      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
     ),
     PropTypes.func,
     PropTypes.object,
