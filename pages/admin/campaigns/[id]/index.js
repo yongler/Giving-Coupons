@@ -15,6 +15,10 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 import Collapse from "@mui/material/Collapse"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import { DataGrid } from "@mui/x-data-grid"
+import EnhancedTable from "../../../../components/VoucherTable"
+import Link from "@mui/material/Link"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
 export default function Campaign({ data }) {
   const campaign = data
@@ -30,53 +34,90 @@ export default function Campaign({ data }) {
       campaign.charitiesChosenByDonor[i].name
   }
 
-  function getDaysLeft(endDate) {
-    return Math.floor(
-      (Date.parse(endDate) - new Date()) / (1000 * 60 * 60 * 24)
-    )
+  function toGMT8(utc_string) {
+    let date = new Date(utc_string)
+    date.setTime(date.getTime() + 8 * 60 * 60 * 10000)
+    const correctTime = date.toUTCString()
+    return correctTime.split("GMT")[0]
   }
 
   return (
     <div className={styles.formpage}>
+      <Link href="/admin/campaigns" className={styles.backButtonColor}>
+        <ArrowBackIcon className={styles.backButton} />
+      </Link>
+      <Typography
+        className={styles.mainTitle}
+        gutterBottom
+        variant="h4"
+        component="div"
+      >
+        {`Campaign Name: ${campaign.name}`}
+      </Typography>
+      {/* </div> */}
       <Paper className={styles.form} elevation={0}>
-        <Typography gutterBottom variant="h5" component="div">
-          {`Campaign Name: ${campaign.name}`}
-        </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          {`Donor: ${campaign.donor}`}
-        </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          {getDaysLeft(campaign.endDate) > 0
-            ? `${getDaysLeft(campaign.endDate)} days left`
-            : "Campaign has ended"}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {`Description: ${campaign.description}`}
-        </Typography>
-        <Typography className={styles.title} variant="h6" component="div">
-          Charities Selected
-        </Typography>
-        <TableContainer className={styles.table} component={Paper}>
-          <Table className={styles.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Name</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {campaign.charitiesChosenByDonor.map((charity) => (
-                <TableRow
-                  key={charity.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="center">{charity.name}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <div className={styles.topPortion}>
+          <Paper className={styles.campaignCard} elevation={3}>
+            <Typography className={styles.title} variant="h6" component="div">
+              Details
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              {`Donor:`}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {`${campaign.donor}`}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              {"End Date:"}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {toGMT8(campaign.endDate)}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              {`Description:`}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {`${campaign.description}`}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              {`Voucher Amount:`}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {`$${campaign.voucherAmount}`}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              {`Number of Vouchers:`}
+            </Typography>
+            <Typography gutterBottom variant="subtitle1" component="div">
+              {`${campaign.numVouchers}`}
+            </Typography>
+          </Paper>
+          <Paper className={styles.campaignCard} elevation={3}>
+            <Typography className={styles.title} variant="h6" component="div">
+              Charities Selected
+            </Typography>
+            <TableContainer className={styles.table} component={Paper}>
+              <Table className={styles.table} aria-label="simple table">
+                <TableBody>
+                  {campaign.charitiesChosenByDonor.map((charity) => (
+                    <TableRow
+                      key={charity.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell align="center">{charity.name}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </div>
         <div className={styles.couponsTitle}>
-          <Typography className={styles.title} variant="h6" component="div">
+          <Typography
+            className={styles.titleCoupons}
+            variant="h6"
+            component="div"
+          >
             Coupons Status
           </Typography>
           <Button
@@ -87,35 +128,104 @@ export default function Campaign({ data }) {
             View Coupons
           </Button>
         </div>
-        <TableContainer
-          className={styles.table}
-          component={Paper}
-          sx={{ overflowX: "hidden" }}
-        >
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell>ID</TableCell>
-                <TableCell align="right">Status</TableCell>
-                <TableCell align="right">Charity Selected</TableCell>
-                <TableCell align="right">Amount Added</TableCell>
-                <TableCell align="right">Date Submitted</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {campaign.vouchers.map((voucher) => (
-                <VoucherRow
-                  key={voucher.id}
-                  voucher={voucher}
-                  charityMappings={charityMappings}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <EnhancedTable
+          vouchers={campaign.vouchers}
+          charityMappings={charityMappings}
+        />
+        {/* <DataGridDemo
+          vouchers={campaign.vouchers}
+          charityMappings={charityMappings}
+        /> */}
+        {/* <TableContainer
+            className={styles.table}
+            component={Paper}
+            sx={{ overflowX: "hidden" }}
+          >
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell />
+                  <TableCell>ID</TableCell>
+                  <TableCell align="right">Status</TableCell>
+                  <TableCell align="right">Charity Selected</TableCell>
+                  <TableCell align="right">Amount Added</TableCell>
+                  <TableCell align="right">Date Submitted</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {campaign.vouchers.map((voucher) => (
+                  <VoucherRow
+                    key={voucher.id}
+                    voucher={voucher}
+                    charityMappings={charityMappings}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer> */}
       </Paper>
     </div>
+  )
+}
+
+const columns = [
+  { field: "id", headerName: "ID", width: 100 },
+  {
+    field: "status",
+    headerName: "Status",
+    width: 150,
+  },
+  {
+    field: "charity_selected",
+    headerName: "Charity Selected",
+    width: 300,
+  },
+  {
+    field: "amount_added",
+    headerName: "Amount Added",
+    type: "number",
+    width: 150,
+  },
+  {
+    field: "date_submitted",
+    headerName: "Date Submitted",
+    type: "number",
+    width: 300,
+  },
+]
+
+function DataGridDemo(props) {
+  const { vouchers, charityMappings } = props
+  const voucherData = []
+  const numShown = 25
+
+  for (let i = 0; i < vouchers.length; i++) {
+    const voucher = vouchers[i]
+    voucherData.push({
+      id: voucher.id,
+      status: voucher.status == unredeemed ? "Unredeemed" : "Redeemed",
+      charity_selected: voucher.charityId
+        ? charityMappings[voucher.charityId]
+        : "",
+      amount_added: voucher.amountAdded ? "$" + voucher.amountAdded : "$0",
+      date_submitted:
+        voucher.status == unredeemed
+          ? ""
+          : new Date(voucher.timeSubmitted).toUTCString(),
+    })
+  }
+
+  return (
+    <Box sx={{ height: `${(numShown + 2) * 52}px`, width: "95vw" }}>
+      <DataGrid
+        rows={voucherData}
+        columns={columns}
+        pageSize={numShown}
+        rowsPerPageOptions={[10]}
+        disableSelectionOnClick
+        experimentalFeatures={{ newEditingApi: true }}
+      />
+    </Box>
   )
 }
 
@@ -152,17 +262,22 @@ function VoucherRow(props) {
         <TableCell align="right">
           {voucher.status == unredeemed
             ? "-"
-            : new Date(voucher.timeSubmitted).toDateString()}
+            : new Date(voucher.timeSubmitted).toUTCString()}
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography
+                variant="body1"
+                gutterBottom
+                component="div"
+                className={styles.messageHeader}
+              >
                 Message from user:
               </Typography>
-              <Typography variant="subtitle1" gutterBottom component="div">
+              <Typography variant="body2" gutterBottom component="div">
                 {voucher.message}
               </Typography>
             </Box>
