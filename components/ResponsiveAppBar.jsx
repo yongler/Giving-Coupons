@@ -1,45 +1,45 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import Link from "@mui/material/Link";
-import { useTheme } from "@mui/material/styles";
-import { useRouter } from "next/router";
-import icon from "../images/icon-512x512-removebg.png";
-import logo from "../images/logo-with-name.png";
+import * as React from "react"
+import AppBar from "@mui/material/AppBar"
+import Box from "@mui/material/Box"
+import Toolbar from "@mui/material/Toolbar"
+import IconButton from "@mui/material/IconButton"
+import Typography from "@mui/material/Typography"
+import Menu from "@mui/material/Menu"
+import MenuIcon from "@mui/icons-material/Menu"
+import Container from "@mui/material/Container"
+import Avatar from "@mui/material/Avatar"
+import Button from "@mui/material/Button"
+import Tooltip from "@mui/material/Tooltip"
+import MenuItem from "@mui/material/MenuItem"
+import Link from "@mui/material/Link"
+import { useTheme } from "@mui/material/styles"
+import { useRouter } from "next/router"
+import icon from "../images/icon-512x512-removebg.png"
+import logo from "../images/logo-with-name.png"
 
-import styles from "../styles/ResponsiveAppBar.module.css";
+import styles from "../styles/ResponsiveAppBar.module.css"
 
 const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+    setAnchorElNav(event.currentTarget)
+  }
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    setAnchorElUser(event.currentTarget)
+  }
 
   const handleCloseNavMenu = (path) => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    setAnchorElUser(null)
+  }
 
-  const router = useRouter();
-  const path = router.pathname;
+  const router = useRouter()
+  const path = router.pathname
   if (
     path != "/coupon/[id]" &&
     path != "/admin/campaigns/[id]/print" &&
@@ -178,6 +178,6 @@ const ResponsiveAppBar = () => {
           </Container>
         </AppBar>
       )
-    );
-};
-export default ResponsiveAppBar;
+    )
+}
+export default ResponsiveAppBar
