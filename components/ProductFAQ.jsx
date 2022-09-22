@@ -51,11 +51,12 @@ export default function ProductHowItWorks () {
               submit the form before the expiry date on the coupon. We do not
               require you to donate your own money.
             </Typography>
-            <Typography sx={faqStyle}>Is this scam?</Typography>
+            <Typography sx={faqStyle}>Is this a scam?</Typography>
             <Typography>
               No, we do not handle or collect any money. We only encourage users
               to donate directly to charities via their websites. Contact us at
-              <i> giving.coupons.sg@gmail.com </i> to receive proof of donation.
+              <i> giving.coupons.sg@gmail.com </i> to receive proof of our
+              donation.
             </Typography>
             <Typography sx={faqStyle}>
               How can I find out more about this project?

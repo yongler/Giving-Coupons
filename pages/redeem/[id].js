@@ -148,7 +148,7 @@ export default function VoucherForm({ voucher }) {
               If you have any feedback or questions for us, or are interested in
               joining us, let us know here and include your contact details. We
               are also willing to provide proof of donations. Alternatively,
-              reach out to us at giving.coupons.sg@gmail.com
+              reach out to us at <i>giving.coupons.sg@gmail.com</i>
             </Typography>
             <Controller
               name="message"

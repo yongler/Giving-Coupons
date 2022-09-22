@@ -5,7 +5,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { DateTime } from "luxon";
 
 export default function Coupon({ coupon }) {
-  var link = "giving-coupons.sg/coupon/" + coupon.id;
+  const link = 'giving-coupons.vercel.app/redeem/' + coupon.id
   return (
     <Box className={styles.coupon}>
       <Box className={styles.couponLeft}>
