@@ -1,9 +1,6 @@
 import Paper from "@mui/material/Paper";
 import CampaignCard from "../../components/CampaignCard";
 import styles from "../../styles/Form.module.css";
-import { auth } from "../../firebase/firebaseApp";
-import { useState, useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function campaignList({ data }) {
   // list of campaigns, query the backend for the campaign data

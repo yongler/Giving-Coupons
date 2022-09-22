@@ -30,6 +30,13 @@ async function handleRead(req, res) {
 }
 
 async function handleAdd(req, res) {
+  try {
+    const jwt = req.headers.authorization.replace("Bearer ", "").trim();
+    await firebaseAdmin.auth().verifyIdToken(jwt);
+  } catch (err) {
+    res.status(401).json({ message: "Not Authorized" });
+  }
+
   const {
     name,
     description,
@@ -63,16 +70,13 @@ async function handleAdd(req, res) {
 }
 
 // Generates voucher codes
-function genVoucherIds (campaignId, numVouchers) {
-  const voucherIds = []
+function genVoucherIds(campaignId, numVouchers) {
+  const voucherIds = [];
   for (let i = 1; i <= numVouchers; i++) {
     // Generate random suffix to prevent guessing
-    const suffix = Math.random()
-      .toString(36)
-      .slice(2, 4)
-      .toUpperCase()
-    const padded = String(i).padStart(String(numVouchers).length, '0')
-    voucherIds.push(campaignId + '-' + padded + suffix)
+    const suffix = Math.random().toString(36).slice(2, 4).toUpperCase();
+    const padded = String(i).padStart(String(numVouchers).length, "0");
+    voucherIds.push(campaignId + "-" + padded + suffix);
   }
   return voucherIds;
 }

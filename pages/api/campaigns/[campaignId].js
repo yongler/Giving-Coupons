@@ -19,6 +19,13 @@ export default async function handler(req, res) {
 
       res.status(200).json(campaign);
     } else if (httpMethod === "DELETE") {
+      try {
+        const jwt = req.headers.authorization.replace("Bearer ", "").trim();
+        await firebaseAdmin.auth().verifyIdToken(jwt);
+      } catch (err) {
+        res.status(401).json({ message: "Not Authorized" });
+      }
+
       const campaign = await prisma.campaign.delete({
         where: {
           id: campaignId,
