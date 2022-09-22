@@ -31,9 +31,6 @@ const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const router = useRouter();
-  const app = getFirebaseApp();
-  const auth = getAuth();
-  const [user, loading] = useAuthState(auth);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -47,22 +44,12 @@ const ResponsiveAppBar = () => {
   };
 
   const handleCloseUserMenu = async (event) => {
-    event.preventDefault();
-
-    const { setting } = event.currentTarget.dataset;
-
-    if (setting === "Logout" && user) {
-      auth.signOut();
-      setAnchorElUser(null);
-      router.push("/");
-    }
-
     setAnchorElUser(null);
   };
 
   const logout = async (event) => {
     event.preventDefault();
-
+    const auth = getAuth();
     auth.signOut();
     setAnchorElUser(null);
     router.push("/");

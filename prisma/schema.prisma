@@ -46,3 +46,8 @@ model Charity {
 
   @@map("charities")
 }
+
+model Admin {
+  email              String @id
+  saltHashedPassword String
+}

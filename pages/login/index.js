@@ -1,17 +1,17 @@
 import { Button, FormControl, InputLabel, Input } from "@mui/material";
 import styles from "../../styles/Form.module.css";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState } from "react";
 import { auth } from "../../firebase/firebaseApp";
+import { base64Encode } from "@firebase/util";
 
 export default function adminLogIn() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const provider = new GoogleAuthProvider();
   const router = useRouter();
   const [user, loading] = useAuthState(auth);
 
@@ -20,16 +20,37 @@ export default function adminLogIn() {
   }
 
   if (user) {
-    router.push("/test");
+    router.push("/admin/test");
     return <h4 style={{ margin: 3 }}>Loading... Please wait...</h4>;
   }
 
   const signIn = async (e) => {
     e.preventDefault();
 
-    await signInWithPopup(auth, provider).catch((error) => {
-      toast.error("There was an error logging in", { autoClose: 2000 });
-      router.push("/login");
+    fetch("/api/login/", {
+      method: "GET",
+      headers: {
+        Authorization: "Basic " + base64Encode(email + ":" + password),
+      },
+    }).then((res) => {
+      if (res.status === 401) {
+        toast.error("Your email or password was incorrect. Please try again!", {
+          autoClose: 2000,
+        });
+      } else {
+        signInWithEmailAndPassword(auth, email, password)
+          .then((res) => {
+            toast.success("Successfully signed in. Welcome admin!", {
+              autoClose: 2000,
+            });
+            router.push("/admin/test");
+            return res;
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("There was an error logging in", { autoClose: 2000 });
+          });
+      }
     });
   };
 
@@ -44,11 +65,11 @@ export default function adminLogIn() {
     >
       <h1>Log In</h1>
       <FormControl sx={{ m: 1 }}>
-        <InputLabel htmlFor="username">Username</InputLabel>
+        <InputLabel htmlFor="email">Email</InputLabel>
         <Input
-          id="username"
-          aria-describedby="username"
-          onChange={(e) => setUsername(e.target.value)}
+          id="email"
+          aria-describedby="email"
+          onChange={(e) => setEmail(e.target.value)}
         />
       </FormControl>
 
