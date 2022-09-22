@@ -14,7 +14,7 @@ const ProductHeroLayoutRoot = styled('section')(({ theme }) => ({
   alignItems: 'center',
   [theme.breakpoints.up('sm')]: {
     height: '80vh',
-    minHeight: '95vh',
+    minHeight: '100vh',
     maxHeight: 1300
   }
 }))
@@ -34,7 +34,7 @@ function ProductHeroLayout (props) {
   const { sxBackground, children } = props
 
   return (
-    <ProductHeroLayoutRoot sx={{ minHeight: '95vh' }}>
+    <ProductHeroLayoutRoot sx={{ minHeight: '100vh' }}>
       <Container
         sx={{
           mt: 3,
@@ -61,7 +61,7 @@ function ProductHeroLayout (props) {
         <Box
           component='img'
           src={arrowDown.src}
-          height='16'
+          height='20'
           width='12'
           alt='arrow down'
           sx={{ position: 'absolute', bottom: 32 }}

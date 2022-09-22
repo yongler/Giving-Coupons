@@ -28,7 +28,7 @@ export default function ProductHero () {
         color='inherit'
         align='center'
         variant='h5'
-        sx={{ mb: 4, mt: { sx: 2, sm: 2 } }}
+        sx={{ mb: 4, mt: { sx: 3, sm: 3 } }}
       >
         Giving the gift of giving
       </Typography>
