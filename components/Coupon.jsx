@@ -1,11 +1,11 @@
-import styles from "../styles/Coupon.module.css";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/system";
-import { QRCodeSVG } from "qrcode.react";
-import { DateTime } from "luxon";
+import styles from '../styles/Coupon.module.css'
+import Typography from '@mui/material/Typography'
+import { Box } from '@mui/system'
+import { QRCodeSVG } from 'qrcode.react'
+import { DateTime } from 'luxon'
 
-export default function Coupon({ coupon }) {
-  var link = "giving-coupons.sg/coupon/" + coupon.id;
+export default function Coupon ({ coupon }) {
+  const link = 'giving-coupons.vercel.app/redeem/' + coupon.id
   return (
     <Box className={styles.coupon}>
       <Box className={styles.couponLeft}>
@@ -32,15 +32,15 @@ export default function Coupon({ coupon }) {
             to redeem your free coupon
           </Typography>
         </Box>
-        <QRCodeSVG value={link} size="112" />
+        <QRCodeSVG value={'https://' + link} size='112' />
         <Typography className={styles.link}>
           <u>{link}</u>
         </Typography>
         <Typography className={styles.expiry}>
-          Expires on:{" "}
-          {DateTime.fromISO(coupon.campaign.endDate).toFormat("dd/MM/yy")}
+          Expires on:{' '}
+          {DateTime.fromISO(coupon.campaign.endDate).toFormat('dd/MM/yy')}
         </Typography>
       </Box>
     </Box>
-  );
+  )
 }

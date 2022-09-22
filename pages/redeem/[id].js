@@ -1,75 +1,75 @@
-import Paper from "@mui/material/Paper";
-import styles from "../../styles/Form.module.css";
-import CharityCard from "../../components/CharityCard";
-import Typography from "@mui/material/Typography";
-import { useForm, Controller } from "react-hook-form";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import InputAdornment from "@mui/material/InputAdornment";
-import Grid from "@mui/material/Grid";
-import { useState } from "react";
-import { redeemed } from "../../util/constants/voucherStatus";
+import Paper from '@mui/material/Paper'
+import styles from '../../styles/Form.module.css'
+import CharityCard from '../../components/CharityCard'
+import Typography from '@mui/material/Typography'
+import { useForm, Controller } from 'react-hook-form'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControl from '@mui/material/FormControl'
+import InputAdornment from '@mui/material/InputAdornment'
+import Grid from '@mui/material/Grid'
+import { useState } from 'react'
+import { redeemed } from '../../util/constants/voucherStatus'
 
-export default function VoucherForm({ voucher }) {
-  const [submitted, setSubmitted] = useState(voucher?.status == redeemed);
-  const [error, setError] = useState();
+export default function VoucherForm ({ voucher }) {
+  const [submitted, setSubmitted] = useState(voucher?.status == redeemed)
+  const [error, setError] = useState()
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     defaultValues: {
       voucherId: voucher?.id,
-      amount: voucher?.amountAdded || "",
-      message: voucher?.message || "",
-      selectedCharity: voucher?.charityId || null,
-    },
-  });
+      amount: voucher?.amountAdded || '',
+      message: voucher?.message || '',
+      selectedCharity: voucher?.charityId || null
+    }
+  })
 
   if (voucher == null) {
-    return <div className={styles.errorPage}>Invalid voucher link</div>;
+    return <div className={styles.errorPage}>Invalid coupon link</div>
   }
   if (Date.now() > Date.parse(voucher?.campaign.endDate) && !submitted) {
-    return <div className={styles.errorPage}>Voucher Expired</div>;
+    return <div className={styles.errorPage}>Coupon Expired</div>
   }
   if (error) {
-    return <div className={styles.errorPage}>{error}</div>;
+    return <div className={styles.errorPage}>{error}</div>
   }
 
-  const charities = voucher.campaign.charitiesChosenByDonor;
+  const charities = voucher.campaign.charitiesChosenByDonor
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     if (Date.now() > Date.parse(voucher?.campaign.endDate)) {
-      setError("Voucher Expired");
-      return;
+      setError('Coupon Expired')
+      return
     }
-    setSubmitted(true);
-    fetch("/api/vouchers/" + data.voucherId, {
-      method: "PATCH",
+    setSubmitted(true)
+    fetch('/api/vouchers/' + data.voucherId, {
+      method: 'PATCH',
       body: JSON.stringify({
         charityId: data.selectedCharity,
         amountAdded: data.amount ? parseInt(data.amount) : 0,
-        message: data.message,
+        message: data.message
       }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    }).then((response) => {
-      if (!response.ok) {
-        setError("Sorry, an error has occured");
+        'Content-type': 'application/json; charset=UTF-8'
       }
-    });
-  };
+    }).then(response => {
+      if (!response.ok) {
+        setError('Sorry, an error has occured')
+      }
+    })
+  }
 
   return (
-    <Grid container className={styles.formpage} justifyContent="center">
+    <Grid container className={styles.formpage} justifyContent='center'>
       <Grid item xs={12} md={8}>
         <Paper className={styles.form} elevation={5}>
-          <Typography variant="h1" className={styles.title}>
+          <Typography variant='h1' className={styles.title}>
             Giving Coupon Redemption
           </Typography>
           <Typography className={styles.instructions}>
@@ -82,7 +82,7 @@ export default function VoucherForm({ voucher }) {
           <Typography className={styles.instructions}>
             <b>Please review these charities and indicate your choice below.</b>
           </Typography>
-          {charities.map((charity) => (
+          {charities.map(charity => (
             <CharityCard
               key={charity.id}
               id={charity.id}
@@ -94,16 +94,16 @@ export default function VoucherForm({ voucher }) {
           ))}
           <form onSubmit={handleSubmit(onSubmit)}>
             <Typography className={styles.question}>
-              <b>I would like to donate the voucher to:</b>
+              <b>I would like the money to be given to:</b>
             </Typography>
             <Controller
-              rules={{ required: "Please choose a charity" }}
-              name="selectedCharity"
+              rules={{ required: 'Please choose a charity' }}
+              name='selectedCharity'
               control={control}
               render={({ field }) => (
                 <FormControl>
                   <RadioGroup {...field}>
-                    {charities.map((charity) => {
+                    {charities.map(charity => {
                       return (
                         <FormControlLabel
                           disabled={submitted}
@@ -112,7 +112,7 @@ export default function VoucherForm({ voucher }) {
                           control={<Radio />}
                           label={charity.name}
                         />
-                      );
+                      )
                     })}
                   </RadioGroup>
                 </FormControl>
@@ -127,19 +127,19 @@ export default function VoucherForm({ voucher }) {
               to do so, please let us know how much you intend to donate.
             </Typography>
             <Controller
-              name="amount"
+              name='amount'
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   disabled={submitted}
-                  type="number"
+                  type='number'
                   fullWidth
                   inputProps={{ min: 0 }}
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    ),
+                      <InputAdornment position='start'>$</InputAdornment>
+                    )
                   }}
                 />
               )}
@@ -148,31 +148,31 @@ export default function VoucherForm({ voucher }) {
               If you have any feedback or questions for us, or are interested in
               joining us, let us know here and include your contact details. We
               are also willing to provide proof of donations. Alternatively,
-              reach out to us at giving.coupons.sg@gmail.com
+              reach out to us at <i>giving.coupons.sg@gmail.com</i>
             </Typography>
             <Controller
-              name="message"
+              name='message'
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   disabled={submitted}
-                  variant="outlined"
+                  variant='outlined'
                   multiline
                   fullWidth
                 />
               )}
             />
             {submitted ? (
-              <Typography variant="h6" className={styles.submitText}>
+              <Typography variant='h6' className={styles.submitText}>
                 Thank you for submitting this form.
               </Typography>
             ) : (
               <Button
                 className={styles.submitButton}
-                variant="contained"
+                variant='contained'
                 fullWidth
-                type="submit"
+                type='submit'
               >
                 Submit
               </Button>
@@ -181,12 +181,12 @@ export default function VoucherForm({ voucher }) {
         </Paper>
       </Grid>
     </Grid>
-  );
+  )
 }
 
-export async function getServerSideProps(context) {
-  const id = context.params.id;
-  const res = await fetch(process.env.URL + `/api/vouchers/` + id);
-  const voucher = await res.json();
-  return { props: { voucher } };
+export async function getServerSideProps (context) {
+  const id = context.params.id
+  const res = await fetch(process.env.URL + `/api/vouchers/` + id)
+  const voucher = await res.json()
+  return { props: { voucher } }
 }
