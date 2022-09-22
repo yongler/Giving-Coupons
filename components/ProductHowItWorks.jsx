@@ -18,7 +18,7 @@ function ProductHowItWorks () {
         display: 'flex',
         overflow: 'hidden',
         backgroundImage: `url(${offwhiteBackground.src})`,
-        minHeight: '95vh'
+        minHeight: '110vh'
       }}
     >
       <Container

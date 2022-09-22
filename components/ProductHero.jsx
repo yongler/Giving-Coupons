@@ -2,7 +2,7 @@ import * as React from 'react'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import ProductHeroLayout from './ProductHeroLayout'
-import Image from '../images/homebackground2.jpg'
+import Image from '../images/homebackground.jpg'
 import styles from '../styles/Home.module.css'
 
 export default function ProductHero () {
