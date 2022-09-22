@@ -75,12 +75,12 @@ export default function VoucherForm({ voucher }) {
           <Typography className={styles.instructions}>
             Welcome to the Giving Coupons project, you are redeeming a $
             {voucher.campaign.voucherAmount} coupon sponsored by an anonymous
-            donor. Please select a charity below and submit this form. At the
-            end of the campaign, our donor will transfer the money to the
-            charity you have chosen.
-          </Typography>
-          <Typography className={styles.instructions}>
-            <b>Please review these charities and indicate your choice below.</b>
+            donor. Please <b>choose a charity below and submit this form</b>. At
+            the end of the campaign,{" "}
+            <b>
+              our donor will transfer the money to the charity you have chosen
+            </b>
+            .
           </Typography>
           {charities.map((charity) => (
             <CharityCard
@@ -122,9 +122,9 @@ export default function VoucherForm({ voucher }) {
               <p className={styles.error}>{errors.selectedCharity?.message}</p>
             )}
             <Typography className={styles.question}>
-              We hope you would consider donating your money directly to these
-              charities as well. This is completely optional, but if you intend
-              to do so, please let us know how much you intend to donate.
+              We encourage you to donate your own money directly to these
+              charities as well. This is <b>completely optional</b>. If you
+              intend to do so, please tell us how much you plan to donate:
             </Typography>
             <Controller
               name="amount"
@@ -145,10 +145,10 @@ export default function VoucherForm({ voucher }) {
               )}
             />
             <Typography className={styles.question}>
-              If you have any feedback or questions for us, or are interested in
-              joining us, let us know here and include your contact details. We
-              are also willing to provide proof of donations. Alternatively,
-              reach out to us at <i>giving.coupons.sg@gmail.com</i>
+              If you have any <b>feedback or questions</b> for us, or are
+              interested in joining us, let us know here and include your
+              contact details. Alternatively, email us at{" "}
+              <i>giving.coupons.sg@gmail.com</i>
             </Typography>
             <Controller
               name="message"
@@ -164,9 +164,14 @@ export default function VoucherForm({ voucher }) {
               )}
             />
             {submitted ? (
-              <Typography variant="h6" className={styles.submitText}>
-                Thank you for submitting this form.
-              </Typography>
+              <div className={styles.submitText}>
+                <Typography variant="h6">
+                  Thank you for submitting this form!
+                </Typography>
+                <Typography>
+                  Our donor will transfer the money to your chosen charity
+                </Typography>
+              </div>
             ) : (
               <Button
                 className={styles.submitButton}
