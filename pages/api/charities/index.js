@@ -3,6 +3,13 @@ import { firebaseAdmin } from "../../../firebase/firebaseAdmin";
 
 export default async function handler(req, res) {
   try {
+    const jwt = req.headers.authorization.replace("Bearer ", "").trim();
+    await firebaseAdmin.auth().verifyIdToken(jwt);
+  } catch (err) {
+    res.status(401).json({ message: "Not Authorized" });
+  }
+
+  try {
     const httpMethod = req.method;
     const payload = req.body;
 
@@ -10,13 +17,6 @@ export default async function handler(req, res) {
       const charities = await prisma.charity.findMany();
       res.status(200).json(charities);
     } else if (httpMethod === "POST") {
-      try {
-        const jwt = req.headers.authorization.replace("Bearer ", "").trim();
-        await firebaseAdmin.auth().verifyIdToken(jwt);
-      } catch (err) {
-        res.status(401).json({ message: "Not Authorized" });
-      }
-
       const charity = await prisma.charity.create({
         data: payload,
       });

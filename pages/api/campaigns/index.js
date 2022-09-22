@@ -4,6 +4,13 @@ import { firebaseAdmin } from "../../../firebase/firebaseAdmin";
 
 export default async function handler(req, res) {
   try {
+    const jwt = req.headers.authorization.replace("Bearer ", "").trim();
+    await firebaseAdmin.auth().verifyIdToken(jwt);
+  } catch (err) {
+    res.status(401).json({ message: "Not Authorized" });
+  }
+
+  try {
     const httpMethod = req.method;
     if (httpMethod === "GET") {
       await handleRead(req, res);
@@ -30,13 +37,6 @@ async function handleRead(req, res) {
 }
 
 async function handleAdd(req, res) {
-  try {
-    const jwt = req.headers.authorization.replace("Bearer ", "").trim();
-    await firebaseAdmin.auth().verifyIdToken(jwt);
-  } catch (err) {
-    res.status(401).json({ message: "Not Authorized" });
-  }
-
   const {
     name,
     description,
