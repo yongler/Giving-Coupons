@@ -52,13 +52,13 @@
   font-weight: 500;
 }
 
-.link {
-  font-size: 9px;
+.voucherCode {
+  font-size: 10px;
 }
 
 .expiry {
-  margin-top: 40px;
-  margin-right: 5px;
+  margin-top: 35px;
+  margin-right: 10px;
   font-size: 11px;
   text-align: right;
 }
