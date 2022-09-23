@@ -1,27 +1,27 @@
-import prisma from "../../../lib/prisma";
-import { unredeemed } from "../../../util/constants/voucherStatus";
-import { firebaseAdmin } from "../../../firebase/firebaseAdmin";
+import prisma from "../../../lib/prisma"
+import { unredeemed } from "../../../util/constants/voucherStatus"
+import { firebaseAdmin } from "../../../firebase/firebaseAdmin"
 
 export default async function handler(req, res) {
   try {
-    const jwt = req.headers.authorization.replace("Bearer ", "").trim();
-    await firebaseAdmin.auth().verifyIdToken(jwt);
+    const jwt = req.headers.authorization.replace("Bearer ", "").trim()
+    await firebaseAdmin.auth().verifyIdToken(jwt)
   } catch (err) {
-    res.status(401).json({ message: "Not Authorized" });
+    res.status(401).json({ message: "Not Authorized" })
   }
 
   try {
-    const httpMethod = req.method;
+    const httpMethod = req.method
     if (httpMethod === "GET") {
-      await handleRead(req, res);
+      await handleRead(req, res)
     } else if (httpMethod === "POST") {
-      await handleAdd(req, res);
+      await handleAdd(req, res)
     } else {
-      res.setHeader("Allow", ["POST", "GET"]);
-      res.status(405).end(`Method ${httpMethod} Not Allowed`);
+      res.setHeader("Allow", ["POST", "GET"])
+      res.status(405).end(`Method ${httpMethod} Not Allowed`)
     }
   } catch (err) {
-    res.status(500).json(err.toString());
+    res.status(500).json(err.toString())
   }
 }
 
@@ -31,9 +31,9 @@ async function handleRead(req, res) {
       vouchers: true,
       charitiesChosenByDonor: true,
     },
-  });
+  })
 
-  res.status(200).json(campaigns);
+  res.status(200).json(campaigns)
 }
 
 async function handleAdd(req, res) {
@@ -45,7 +45,7 @@ async function handleAdd(req, res) {
     numVouchers,
     endDate,
     charitiesChosenByDonor,
-  } = req.body;
+  } = req.body
   const campaign = await prisma.campaign.create({
     data: {
       name,
@@ -58,25 +58,25 @@ async function handleAdd(req, res) {
         connect: charitiesChosenByDonor.map((x) => ({ id: x })),
       },
     },
-  });
-  const voucherIds = genVoucherIds(campaign.id, numVouchers);
+  })
+  const voucherIds = genVoucherIds(campaign.id, numVouchers)
   const vouchers = voucherIds.map((id) => ({
     id: id,
     campaignId: campaign.id,
     status: unredeemed,
-  }));
-  await prisma.voucher.createMany({ data: vouchers });
-  res.status(200).json(campaign);
+  }))
+  await prisma.voucher.createMany({ data: vouchers })
+  res.status(200).json(campaign)
 }
 
 // Generates voucher codes
 function genVoucherIds(campaignId, numVouchers) {
-  const voucherIds = [];
+  const voucherIds = []
   for (let i = 1; i <= numVouchers; i++) {
     // Generate random suffix to prevent guessing
-    const suffix = Math.random().toString(36).slice(2, 4).toUpperCase();
-    const padded = String(i).padStart(String(numVouchers).length, "0");
-    voucherIds.push(campaignId + "-" + padded + suffix);
+    const suffix = Math.random().toString(36).slice(2, 4).toUpperCase()
+    const padded = String(i).padStart(String(numVouchers).length, "0")
+    voucherIds.push(campaignId + "-" + padded + suffix)
   }
-  return voucherIds;
+  return voucherIds
 }

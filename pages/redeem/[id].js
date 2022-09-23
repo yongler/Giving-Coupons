@@ -1,28 +1,28 @@
-import Paper from "@mui/material/Paper";
-import styles from "../../styles/Form.module.css";
-import CharityCard from "../../components/CharityCard";
-import Typography from "@mui/material/Typography";
-import { useForm, Controller } from "react-hook-form";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import InputAdornment from "@mui/material/InputAdornment";
-import Grid from "@mui/material/Grid";
-import { useState } from "react";
-import { redeemed } from "../../util/constants/voucherStatus";
-import * as React from "react";
-import { useRouter } from "next/router";
-import { auth } from "../../firebase/firebaseApp";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { initialCoupon } from "../../util/constants/initialObjects";
+import Paper from "@mui/material/Paper"
+import styles from "../../styles/Form.module.css"
+import CharityCard from "../../components/CharityCard"
+import Typography from "@mui/material/Typography"
+import { useForm, Controller } from "react-hook-form"
+import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button"
+import Radio from "@mui/material/Radio"
+import RadioGroup from "@mui/material/RadioGroup"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import FormControl from "@mui/material/FormControl"
+import InputAdornment from "@mui/material/InputAdornment"
+import Grid from "@mui/material/Grid"
+import { useState } from "react"
+import { redeemed } from "../../util/constants/voucherStatus"
+import * as React from "react"
+import { useRouter } from "next/router"
+import { auth } from "../../firebase/firebaseApp"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { initialCoupon } from "../../util/constants/initialObjects"
 
 export default function VoucherForm() {
-  const { id } = useRouter().query;
-  const [voucher, setVoucher] = React.useState(initialCoupon);
-  const [user] = useAuthState(auth);
+  const { id } = useRouter().query
+  const [voucher, setVoucher] = React.useState(initialCoupon)
+  const [user] = useAuthState(auth)
 
   React.useEffect(() => {
     user.getIdToken().then((jwt) => {
@@ -34,13 +34,13 @@ export default function VoucherForm() {
       })
         .then((res) => res.json())
         .then((data) => {
-          setVoucher(data);
-        });
-    });
-  }, []);
+          setVoucher(data)
+        })
+    })
+  }, [])
 
-  const [submitted, setSubmitted] = useState(voucher?.status == redeemed);
-  const [error, setError] = useState();
+  const [submitted, setSubmitted] = useState(voucher?.status == redeemed)
+  const [error, setError] = useState()
 
   const {
     handleSubmit,
@@ -53,26 +53,26 @@ export default function VoucherForm() {
       message: voucher?.message || "",
       selectedCharity: voucher?.charityId || null,
     },
-  });
+  })
 
   if (voucher == null) {
-    return <div className={styles.errorPage}>Invalid coupon link</div>;
+    return <div className={styles.errorPage}>Invalid coupon link</div>
   }
   if (Date.now() > Date.parse(voucher?.campaign.endDate) && !submitted) {
-    return <div className={styles.errorPage}>Coupon Expired</div>;
+    return <div className={styles.errorPage}>Coupon Expired</div>
   }
   if (error) {
-    return <div className={styles.errorPage}>{error}</div>;
+    return <div className={styles.errorPage}>{error}</div>
   }
 
-  const charities = voucher.campaign.charitiesChosenByDonor;
+  const charities = voucher.campaign.charitiesChosenByDonor
 
   const onSubmit = (data) => {
     if (Date.now() > Date.parse(voucher?.campaign.endDate)) {
-      setError("Coupon Expired");
-      return;
+      setError("Coupon Expired")
+      return
     }
-    setSubmitted(true);
+    setSubmitted(true)
     fetch("/api/vouchers/" + data.voucherId, {
       method: "PATCH",
       body: JSON.stringify({
@@ -85,10 +85,10 @@ export default function VoucherForm() {
       },
     }).then((response) => {
       if (!response.ok) {
-        setError("Sorry, an error has occured");
+        setError("Sorry, an error has occured")
       }
-    });
-  };
+    })
+  }
 
   return (
     <Grid container className={styles.formpage} justifyContent="center">
@@ -100,12 +100,12 @@ export default function VoucherForm() {
           <Typography className={styles.instructions}>
             Welcome to the Giving Coupons project, you are redeeming a $
             {voucher.campaign.voucherAmount} coupon sponsored by an anonymous
-            donor. Please select a charity below and submit this form. At the
-            end of the campaign, our donor will transfer the money to the
-            charity you have chosen.
-          </Typography>
-          <Typography className={styles.instructions}>
-            <b>Please review these charities and indicate your choice below.</b>
+            donor. Please <b>choose a charity below and submit this form</b>. At
+            the end of the campaign,{" "}
+            <b>
+              our donor will transfer the money to the charity you have chosen
+            </b>
+            .
           </Typography>
           {charities.map((charity) => (
             <CharityCard
@@ -137,7 +137,7 @@ export default function VoucherForm() {
                           control={<Radio />}
                           label={charity.name}
                         />
-                      );
+                      )
                     })}
                   </RadioGroup>
                 </FormControl>
@@ -147,9 +147,9 @@ export default function VoucherForm() {
               <p className={styles.error}>{errors.selectedCharity?.message}</p>
             )}
             <Typography className={styles.question}>
-              We hope you would consider donating your money directly to these
-              charities as well. This is completely optional, but if you intend
-              to do so, please let us know how much you intend to donate.
+              We encourage you to donate your own money directly to these
+              charities as well. This is <b>completely optional</b>. If you
+              intend to do so, please tell us how much you plan to donate:
             </Typography>
             <Controller
               name="amount"
@@ -170,10 +170,10 @@ export default function VoucherForm() {
               )}
             />
             <Typography className={styles.question}>
-              If you have any feedback or questions for us, or are interested in
-              joining us, let us know here and include your contact details. We
-              are also willing to provide proof of donations. Alternatively,
-              reach out to us at giving.coupons.sg@gmail.com
+              If you have any <b>feedback or questions</b> for us, or are
+              interested in joining us, let us know here and include your
+              contact details. Alternatively, email us at{" "}
+              <i>giving.coupons.sg@gmail.com</i>
             </Typography>
             <Controller
               name="message"
@@ -189,9 +189,14 @@ export default function VoucherForm() {
               )}
             />
             {submitted ? (
-              <Typography variant="h6" className={styles.submitText}>
-                Thank you for submitting this form.
-              </Typography>
+              <div className={styles.submitText}>
+                <Typography variant="h6">
+                  Thank you for submitting this form!
+                </Typography>
+                <Typography>
+                  Our donor will transfer the money to your chosen charity
+                </Typography>
+              </div>
             ) : (
               <Button
                 className={styles.submitButton}
@@ -206,5 +211,5 @@ export default function VoucherForm() {
         </Paper>
       </Grid>
     </Grid>
-  );
+  )
 }

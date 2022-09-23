@@ -1,11 +1,11 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import { styled } from "@mui/material/styles";
+import * as React from "react"
+import PropTypes from "prop-types"
+import { styled } from "@mui/material/styles"
 
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import Container from "@mui/material/Container"
+import Box from "@mui/material/Box"
 
-import arrowDown from "../images/arrow-down.png";
+import arrowDown from "../images/arrow-down.png"
 
 const ProductHeroLayoutRoot = styled("section")(({ theme }) => ({
   color: theme.palette.common.white,
@@ -14,10 +14,10 @@ const ProductHeroLayoutRoot = styled("section")(({ theme }) => ({
   alignItems: "center",
   [theme.breakpoints.up("sm")]: {
     height: "80vh",
-    minHeight: "95vh",
+    minHeight: "100vh",
     maxHeight: 1300,
   },
-}));
+}))
 
 const Background = styled(Box)({
   position: "absolute",
@@ -28,13 +28,13 @@ const Background = styled(Box)({
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   zIndex: -2,
-});
+})
 
 function ProductHeroLayout(props) {
-  const { sxBackground, children } = props;
+  const { sxBackground, children } = props
 
   return (
-    <ProductHeroLayoutRoot sx={{ minHeight: "95vh" }}>
+    <ProductHeroLayoutRoot sx={{ minHeight: "100vh" }}>
       <Container
         sx={{
           mt: 3,
@@ -61,14 +61,14 @@ function ProductHeroLayout(props) {
         <Box
           component="img"
           src={arrowDown.src}
-          height="16"
+          height="20"
           width="12"
           alt="arrow down"
           sx={{ position: "absolute", bottom: 32 }}
         />
       </Container>
     </ProductHeroLayoutRoot>
-  );
+  )
 }
 
 ProductHeroLayout.propTypes = {
@@ -80,6 +80,6 @@ ProductHeroLayout.propTypes = {
     PropTypes.func,
     PropTypes.object,
   ]),
-};
+}
 
-export default ProductHeroLayout;
+export default ProductHeroLayout

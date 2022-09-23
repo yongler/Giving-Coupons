@@ -1,46 +1,46 @@
-import prisma from "../../../lib/prisma";
-import { firebaseAdmin } from "../../../firebase/firebaseAdmin";
+import prisma from "../../../lib/prisma"
+import { firebaseAdmin } from "../../../firebase/firebaseAdmin"
 
 export default async function handler(req, res) {
   try {
-    const jwt = req.headers.authorization.replace("Bearer ", "").trim();
-    await firebaseAdmin.auth().verifyIdToken(jwt);
+    const jwt = req.headers.authorization.replace("Bearer ", "").trim()
+    await firebaseAdmin.auth().verifyIdToken(jwt)
   } catch (err) {
-    res.status(401).json({ message: "Not Authorized" });
+    res.status(401).json({ message: "Not Authorized" })
   }
 
   try {
-    const httpMethod = req.method;
-    const charityId = req.query.charityId;
-    const payload = req.body;
+    const httpMethod = req.method
+    const charityId = req.query.charityId
+    const payload = req.body
 
     if (httpMethod === "GET") {
       const charity = await prisma.charity.findFirst({
         where: {
           id: charityId,
         },
-      });
-      res.status(200).json(charity);
+      })
+      res.status(200).json(charity)
     } else if (httpMethod === "PATCH") {
       const charity = await prisma.charity.update({
         where: {
           id: charityId,
         },
         data: payload,
-      });
-      res.status(200).json(charity);
+      })
+      res.status(200).json(charity)
     } else if (httpMethod === "DELETE") {
       const charity = await prisma.charity.delete({
         where: {
           id: charityId,
         },
-      });
-      res.status(200).json(charity);
+      })
+      res.status(200).json(charity)
     } else {
-      res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
-      res.status(405).end(`Method ${httpMethod} Not Allowed`);
+      res.setHeader("Allow", ["GET", "PATCH", "DELETE"])
+      res.status(405).end(`Method ${httpMethod} Not Allowed`)
     }
   } catch (err) {
-    res.status(500).json(err.toString());
+    res.status(500).json(err.toString())
   }
 }

@@ -50,36 +50,38 @@ export default function CampaignDashboard() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
 
   const handleChangeIndex = (index) => {
-    setValue(index);
-  };
+    setValue(index)
+  }
 
-  const ongoingCampaigns = [];
-  const expiredCampaigns = [];
+  const ongoingCampaigns = []
+  const expiredCampaigns = []
   //separate expired and non expired campaigns
   for (let i = 0; i < data.length; i++) {
-    const campaign = data[i];
+    const campaign = data[i]
     if (Date.parse(campaign.endDate) - new Date() < 0) {
-      expiredCampaigns.push(campaign);
+      expiredCampaigns.push(campaign)
     } else {
-      ongoingCampaigns.push(campaign);
+      ongoingCampaigns.push(campaign)
     }
   }
 
   return (
     <>
       {!user ? (
-        <Loading/>
+        <Loading />
       ) : (
         <div className={styles.dashboard}>
           <Typography className={styles.title} variant="h4" component="div">
             Campaigns Dashboard
           </Typography>
-          <Box sx={{ bgcolor: "background.paper", width: "100vw" }}>
-            <AppBar position="static">
+          <Box
+            sx={{ bgcolor: "background.paper", width: "95vw", marginLeft: "2.5vw" }}
+          >
+            <AppBar className={styles.tabs} position="static">
               <Tabs
                 value={value}
                 onChange={handleChange}
@@ -111,14 +113,13 @@ export default function CampaignDashboard() {
               ></TabPanel>
             </SwipeableViews>
           </Box>
-        </div>
-      )}
+        </div>)}
     </>
-  );
+  )
 }
 
 function TabPanel(props) {
-  const { children, value, index, campaigns, ...other } = props;
+  const { children, value, index, campaigns, ...other } = props
 
   return (
     <div
@@ -142,21 +143,27 @@ function TabPanel(props) {
               </TableHead>
               <TableBody>
                 {campaigns.map((campaign) => (
-                  <TableRow
+                  <Link
                     key={campaign.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    href={`/admin/campaigns/${campaign.id}`}
+                    className={styles.link}
                   >
-                    <TableCell>{campaign.id}</TableCell>
-                    <TableCell align="right">{campaign.name}</TableCell>
-                    <TableCell align="right">{campaign.donor}</TableCell>
-                    <TableCell>
-                      <Link href={`/admin/campaigns/${campaign.id}`}>
-                        <IconButton aria-label="info" size="small">
-                          <KeyboardArrowRightIcon />
-                        </IconButton>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
+                    <TableRow
+                      key={campaign.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>{campaign.id}</TableCell>
+                      <TableCell align="right">{campaign.name}</TableCell>
+                      <TableCell align="right">{campaign.donor}</TableCell>
+                      <TableCell align="right">
+                        <Link href={`/admin/campaigns/${campaign.id}`}>
+                          <IconButton aria-label="info" size="small">
+                            <KeyboardArrowRightIcon />
+                          </IconButton>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  </Link>
                 ))}
               </TableBody>
             </Table>
@@ -165,12 +172,12 @@ function TabPanel(props) {
         </Box>
       )}
     </div>
-  );
+  )
 }
 
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
     "aria-controls": `full-width-tabpanel-${index}`,
-  };
+  }
 }
