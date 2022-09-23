@@ -9,7 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 export default function campaignList({ data }) {
   // list of campaigns, query the backend for the campaign data
 
-  const { id } = useRouter().query
+  const router = useRouter()
   const [campaigns, setCampaigns] = useState([])
   const [user] = useAuthState(auth)
 

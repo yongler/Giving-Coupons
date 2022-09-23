@@ -13,7 +13,8 @@ export default function Campaign() {
     console.log(id)
   }
 
-  const { id } = useRouter().query
+  const router = useRouter()
+  const { id } = router.query
   const [campaign, setCampaign] = useState(initialCampaign)
   const [user] = useAuthState(auth)
 

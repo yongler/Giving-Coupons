@@ -17,6 +17,7 @@ import Checkbox from "@mui/material/Checkbox"
 import { auth } from "../../firebase/firebaseApp"
 import { useState, useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
+import { useRouter } from "next/router"
 
 export default function VoucherForm() {
   const [submitted, setSubmitted] = useState(false)
@@ -32,6 +33,7 @@ export default function VoucherForm() {
     setVoucherValue(event.target.value)
   }
 
+  const router = useRouter();
   const [charities, setCharities] = useState([])
   const [user] = useAuthState(auth)
 
@@ -78,24 +80,27 @@ export default function VoucherForm() {
 
   const onSubmit = (data) => {
     setSubmitted(true)
-    fetch("/api/campaigns/" + data.campaignId, {
-      method: "PATCH",
-      body: JSON.stringify({
-        campaignId: data.selectedcampaign,
-        numberOfVouchers: data.numberOfVouchers
-          ? parseInt(data.numberOfVouchers)
-          : 0,
-        voucherValue: data.voucherValue ? parseInt(data.voucherValue) : 0,
-        message: data.message,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    }).then((response) => {
-      if (!response.ok) {
-        setError("Sorry, an error has occured")
-      }
-    })
+    user?.getIdToken().then((jwt) => {
+      fetch("/api/campaigns/" + data.campaignId, {
+        method: "PATCH",
+        body: JSON.stringify({
+          campaignId: data.selectedcampaign,
+          numberOfVouchers: data.numberOfVouchers
+            ? parseInt(data.numberOfVouchers)
+            : 0,
+          voucherValue: data.voucherValue ? parseInt(data.voucherValue) : 0,
+          message: data.message,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: "Bearer " + jwt
+        },
+      }).then((response) => {
+        if (!response.ok) {
+          setError("Sorry, an error has occured")
+        }
+      })
+    }
   }
 
   return (
