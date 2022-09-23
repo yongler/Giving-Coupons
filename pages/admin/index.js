@@ -15,6 +15,7 @@ import { useState } from "react"
 import { auth } from "../../firebase/firebaseApp"
 import { base64Encode } from "@firebase/util"
 import Loading from "../../components/Loading"
+import styles from "../../styles/LoginPage.module.css"
 
 export default function SignIn() {
   const [email, setEmail] = useState("")
@@ -110,6 +111,7 @@ export default function SignIn() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3 }}
+                className={styles.button}
               >
                 Sign In
               </Button>
