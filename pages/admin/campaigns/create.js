@@ -244,7 +244,7 @@ export default function VoucherForm() {
                       required
                       label="Number of vouchers"
                       fullWidth
-                      inputProps={{ min: 1 }}
+                      inputProps={{ min: 1, max: 1000 }}
                       InputLabelProps={{
                         shrink: true,
                       }}
