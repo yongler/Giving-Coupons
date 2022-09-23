@@ -1,6 +1,14 @@
 import prisma from "../../../lib/prisma"
+import { firebaseAdmin } from "../../../firebase/firebaseAdmin"
 
 export default async function handler(req, res) {
+  try {
+    const jwt = req.headers.authorization.replace("Bearer ", "").trim()
+    await firebaseAdmin.auth().verifyIdToken(jwt)
+  } catch (err) {
+    res.status(401).json({ message: "Not Authorized" })
+  }
+
   try {
     const httpMethod = req.method
     const payload = req.body
