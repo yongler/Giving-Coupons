@@ -21,12 +21,17 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { initialCampaign } from "../../../../util/constants/initialObjects";
 
 export default function Campaign() {
-  const { id } = useRouter().query;
+  const router = useRouter();
+  const { id } = router.query;
   const [campaign, setCampaign] = React.useState(initialCampaign);
   const [user] = useAuthState(auth);
 
   React.useEffect(() => {
-    user.getIdToken().then((jwt) => {
+    if (!user) {
+      router.push("/admin/login");
+    }
+
+    user?.getIdToken().then((jwt) => {
       fetch("/api/campaigns/" + id, {
         method: "GET",
         headers: {

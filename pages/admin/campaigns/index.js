@@ -19,13 +19,19 @@ import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
 import { auth } from "../../../firebase/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
 
 export default function CampaignDashboard() {
   const [data, setData] = React.useState([]);
   const [user] = useAuthState(auth);
+  const router = useRouter();
 
   React.useEffect(() => {
-    user.getIdToken().then((jwt) => {
+    if (!user) {
+      router.push("/admin/login");
+    }
+
+    user?.getIdToken().then((jwt) => {
       fetch("/api/campaigns/", {
         method: "GET",
         headers: {

@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState } from "react";
-import { auth } from "../../firebase/firebaseApp";
+import { auth } from "../../../firebase/firebaseApp";
 import { base64Encode } from "@firebase/util";
 
 export default function SignIn() {
@@ -20,15 +20,10 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
 
   const router = useRouter();
-  const [user, loading] = useAuthState(auth);
-
-  if (loading) {
-    return <h4 style={{ margin: 3 }}>Loading... Please wait...</h4>;
-  }
+  const [user] = useAuthState(auth);
 
   if (user) {
-    router.push("/admin/test");
-    return <h4 style={{ margin: 3 }}>Loading... Please wait...</h4>;
+    router.push("/admin/campaigns");
   }
 
   const signIn = async (e) => {
