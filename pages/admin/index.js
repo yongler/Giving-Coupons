@@ -12,9 +12,9 @@ import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useState } from "react"
-import { auth } from "../../../firebase/firebaseApp"
+import { auth } from "../../firebase/firebaseApp"
 import { base64Encode } from "@firebase/util"
-import Loading from "../../../components/Loading"
+import Loading from "../../components/Loading"
 
 export default function SignIn() {
   const [email, setEmail] = useState("")
