@@ -160,7 +160,7 @@ function TabPanel(props) {
       {value === index && (
         <Box sx={{ p: 3 }}>
           <TableContainer className={styles.table} component={Paper}>
-            <Table className={styles.table} aria-label="simple table">
+            <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>ID</TableCell>
