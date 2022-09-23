@@ -13,6 +13,7 @@ import InputAdornment from "@mui/material/InputAdornment"
 import Grid from "@mui/material/Grid"
 import { useState } from "react"
 import { redeemed } from "../../util/constants/voucherStatus"
+import * as ga from "../../lib/ga"
 
 export default function VoucherForm({ voucher }) {
   const [submitted, setSubmitted] = useState(voucher?.status == redeemed)
@@ -65,6 +66,15 @@ export default function VoucherForm({ voucher }) {
     })
   }
 
+  const handleCharityClick = (name) => {
+    ga.event({
+      action: "selected charity in donate form",
+      params: {
+        selectedCharity: name,
+      },
+    })
+  }
+
   return (
     <Grid container className={styles.formpage} justifyContent="center">
       <Grid item xs={12} md={8}>
@@ -111,6 +121,7 @@ export default function VoucherForm({ voucher }) {
                           value={charity.id}
                           control={<Radio />}
                           label={charity.name}
+                          onClick={() => handleCharityClick(charity.name)}
                         />
                       )
                     })}
