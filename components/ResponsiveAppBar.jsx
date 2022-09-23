@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem"
 import { Link } from "@mui/material"
 import { getAuth } from "firebase/auth"
 import { useRouter } from "next/router"
-import icon from "../images/icon-512x512-removebg.png"
+import icon from "../images/logo-with-name.png"
 import styles from "../styles/ResponsiveAppBar.module.css"
 import LogoutIcon from "@mui/icons-material/Logout"
 import { Fab } from "@mui/material"
@@ -94,24 +94,23 @@ const ResponsiveAppBar = () => {
                 />
               </Link>
 
-              {router.pathname.startsWith("/admin") &&
-                router.pathname != "/admin/login" && (
-                  <Box>
-                    <Fab
-                      size="small"
-                      color="warning"
-                      variant="extended"
-                      onClick={logout}
-                      className={styles.logoutButton}
-                    >
-                      <LogoutIcon
-                        className={styles.logoutButtonContent}
-                        fontSize="small"
-                      />
-                      <h6 className={styles.logoutButtonContent}> Log Out </h6>
-                    </Fab>
-                  </Box>
-                )}
+              {router.pathname.startsWith("/admin/") && (
+                <Box>
+                  <Fab
+                    size="small"
+                    color="warning"
+                    variant="extended"
+                    onClick={logout}
+                    className={styles.logoutButton}
+                  >
+                    <LogoutIcon
+                      className={styles.logoutButtonContent}
+                      fontSize="small"
+                    />
+                    <h6 className={styles.logoutButtonContent}> Log Out </h6>
+                  </Fab>
+                </Box>
+              )}
 
               {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
