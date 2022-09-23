@@ -114,4 +114,9 @@
         max-width: 95vw;
         margin-bottom: 3vh;
     }
+
+    .mainTitle {
+        margin-left: 3vw;
+        margin-right: 3vw;
+    }
 }
