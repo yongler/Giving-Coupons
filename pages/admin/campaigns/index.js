@@ -15,7 +15,6 @@ import Box from "@mui/material/Box"
 import AppBar from "@mui/material/AppBar"
 import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
-import SwipeableViews from "react-swipeable-views"
 import { useTheme } from "@mui/material/styles"
 import { auth } from "../../../firebase/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
@@ -72,6 +71,13 @@ export default function CampaignDashboard() {
     }
   }
 
+  function sortById(a, b) {
+    if (a.id < b.id) {
+      return 1
+    }
+    return -1
+  }
+
   return (
     <>
       {!user ? (
@@ -114,24 +120,18 @@ export default function CampaignDashboard() {
                 Add campaign
               </Button>
             </Link>
-            {/* <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={value}
-              onChangeIndex={handleChangeIndex}
-            > */}
             <TabPanel
               value={value}
               index={0}
               dir={theme.direction}
-              campaigns={ongoingCampaigns}
+              campaigns={ongoingCampaigns.sort(sortById)}
             ></TabPanel>
             <TabPanel
               value={value}
               index={1}
               dir={theme.direction}
-              campaigns={expiredCampaigns}
+              campaigns={expiredCampaigns.sort(sortById)}
             ></TabPanel>
-            {/* </SwipeableViews> */}
           </Box>
         </div>
       )}
@@ -171,7 +171,7 @@ function TabPanel(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {campaigns.map((campaign) => (
+                {campaigns.reverse().map((campaign) => (
                   <Link
                     key={campaign.id}
                     href={`/admin/campaigns/${campaign.id}`}
