@@ -17,6 +17,9 @@ import { auth } from "../../../firebase/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useRouter } from "next/dist/client/router"
 import Loading from "../../../components/Loading"
+import Link from "next/link"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import Stack from "@mui/material/Stack"
 
 export default function VoucherForm() {
   const [submitted, setSubmitted] = useState(false)
@@ -53,6 +56,7 @@ export default function VoucherForm() {
     defaultValues: {
       numberOfVouchers: "",
       voucherValue: "",
+      selectedCharity: "",
     },
   })
 
@@ -94,6 +98,8 @@ export default function VoucherForm() {
         }
       })
     })
+
+    router.push("/admin/campaigns")
   }
 
   return (
@@ -104,6 +110,9 @@ export default function VoucherForm() {
         <Grid container className={styles.formpage} justifyContent="center">
           <Grid item xs={12} md={8}>
             <Paper className={styles.form} elevation={5}>
+              <Link href="/admin/campaigns" className={styles.backButtonColor}>
+                <ArrowBackIcon className={styles.backButton} />
+              </Link>
               <Typography variant="h1" className={styles.title}>
                 Create a campaign
               </Typography>
@@ -115,6 +124,7 @@ export default function VoucherForm() {
                   render={({ field }) => (
                     <TextField
                       margin="dense"
+                      required
                       {...field}
                       disabled={submitted}
                       label="Campaign Name"
@@ -158,14 +168,21 @@ export default function VoucherForm() {
                     <>
                       <LocalizationProvider dateAdapter={AdapterMoment}>
                         <DateTimePicker
+                          disablePast
                           type="datetime-local"
+                          required
                           {...field}
+                          label="Deadline of campaign"
                           renderInput={(params) => <TextField {...params} />}
                         />
                       </LocalizationProvider>
                     </>
                   )}
                 />
+
+                {errors.deadline && (
+                  <p className={styles.error}>{errors.deadline?.message}</p>
+                )}
 
                 <Typography className={styles.instructions}>
                   <b>Charity choices.</b>
@@ -221,10 +238,10 @@ export default function VoucherForm() {
                       margin="dense"
                       disabled={submitted}
                       type="number"
-                      require
+                      required
                       label="Number of vouchers"
                       fullWidth
-                      inputProps={{ min: 0 }}
+                      inputProps={{ min: 1 }}
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -243,7 +260,7 @@ export default function VoucherForm() {
                       type="number"
                       label="Value of each voucher"
                       fullWidth
-                      inputProps={{ min: 0 }}
+                      inputProps={{ min: 1 }}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">$</InputAdornment>
