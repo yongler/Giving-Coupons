@@ -13,10 +13,36 @@ import InputAdornment from "@mui/material/InputAdornment"
 import Grid from "@mui/material/Grid"
 import { useState } from "react"
 import { redeemed } from "../../util/constants/voucherStatus"
+import * as React from "react"
+import { useRouter } from "next/router"
+import { auth } from "../../firebase/firebaseApp"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { initialCoupon } from "../../util/constants/initialObjects"
+import * as ga from "../../lib/ga"
 
-export default function VoucherForm({ voucher }) {
+export default function VoucherForm() {
+  const { id } = useRouter().query
+  const [voucher, setVoucher] = React.useState(initialCoupon)
+  const [user] = useAuthState(auth)
+
+  React.useEffect(() => {
+    user.getIdToken().then((jwt) => {
+      fetch("/api/vouchers/" + id, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + jwt,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setVoucher(data)
+        })
+    })
+  }, [])
+
   const [submitted, setSubmitted] = useState(voucher?.status == redeemed)
   const [error, setError] = useState()
+
   const {
     handleSubmit,
     control,
@@ -62,6 +88,15 @@ export default function VoucherForm({ voucher }) {
       if (!response.ok) {
         setError("Sorry, an error has occured")
       }
+    })
+  }
+
+  const handleCharityClick = (name) => {
+    ga.event({
+      action: "selected charity in donate form",
+      params: {
+        selectedCharity: name,
+      },
     })
   }
 
@@ -111,6 +146,7 @@ export default function VoucherForm({ voucher }) {
                           value={charity.id}
                           control={<Radio />}
                           label={charity.name}
+                          onClick={() => handleCharityClick(charity.name)}
                         />
                       )
                     })}
@@ -187,11 +223,4 @@ export default function VoucherForm({ voucher }) {
       </Grid>
     </Grid>
   )
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id
-  const res = await fetch(process.env.URL + `/api/vouchers/` + id)
-  const voucher = await res.json()
-  return { props: { voucher } }
 }
