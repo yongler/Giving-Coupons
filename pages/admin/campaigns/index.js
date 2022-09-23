@@ -114,24 +114,24 @@ export default function CampaignDashboard() {
                 Add campaign
               </Button>
             </Link>
-            <SwipeableViews
+            {/* <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
               index={value}
               onChangeIndex={handleChangeIndex}
-            >
-              <TabPanel
-                value={value}
-                index={0}
-                dir={theme.direction}
-                campaigns={ongoingCampaigns}
-              ></TabPanel>
-              <TabPanel
-                value={value}
-                index={1}
-                dir={theme.direction}
-                campaigns={expiredCampaigns}
-              ></TabPanel>
-            </SwipeableViews>
+            > */}
+            <TabPanel
+              value={value}
+              index={0}
+              dir={theme.direction}
+              campaigns={ongoingCampaigns}
+            ></TabPanel>
+            <TabPanel
+              value={value}
+              index={1}
+              dir={theme.direction}
+              campaigns={expiredCampaigns}
+            ></TabPanel>
+            {/* </SwipeableViews> */}
           </Box>
         </div>
       )}
