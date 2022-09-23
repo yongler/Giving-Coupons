@@ -272,8 +272,8 @@ function VoucherRow(props) {
           )}
         </TableCell>
         <TableCell component="th" id={labelId} scope="row" padding="none">
-          <Link href={`/coupon/${voucher.id}`} className={styles.voucherLink}>
-            {voucher.id}
+          <Link href={`/coupon/${voucher.id}`}>
+            <p className={styles.voucherLink}>{voucher.id}</p>
           </Link>
         </TableCell>
         <TableCell align="right">{voucher.status}</TableCell>
