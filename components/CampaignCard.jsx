@@ -7,7 +7,6 @@ import styles from "../styles/CharityCard.module.css"
 import Link from "next/link"
 
 export default function CampaignCard(props) {
-  // const { id, name, donorName, description, images, timeLeft, tags } = props;
   const { id, name, description, donor, endDate } = props
 
   function getDaysLeft(endDate) {
@@ -19,7 +18,6 @@ export default function CampaignCard(props) {
   return (
     <Card className={styles.charityCard}>
       <Link href={"/campaigns/" + id} key={id}>
-        {/* <CardMedia component="img" height="140" image={image} alt={id} /> */}
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {name}

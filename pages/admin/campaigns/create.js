@@ -5,17 +5,11 @@ import Typography from "@mui/material/Typography"
 import { useForm, Controller } from "react-hook-form"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
-import Radio from "@mui/material/Radio"
-import RadioGroup from "@mui/material/RadioGroup"
 import FormControlLabel from "@mui/material/FormControlLabel"
-import FormControl from "@mui/material/FormControl"
 import InputAdornment from "@mui/material/InputAdornment"
 import Grid from "@mui/material/Grid"
 import { useState, useEffect } from "react"
-// import { redeemed } from "../../util/constants/voucherStatus";
-import FormGroup from "@mui/material/FormGroup"
 import Checkbox from "@mui/material/Checkbox"
-import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment"
@@ -23,8 +17,6 @@ import { auth } from "../../../firebase/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useRouter } from "next/dist/client/router"
 import Loading from "../../../components/Loading"
-import Link from "@mui/material/Link"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
 export default function VoucherForm() {
   const [submitted, setSubmitted] = useState(false)
@@ -36,7 +28,7 @@ export default function VoucherForm() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/admin")
+      router.push("/admin/login")
     }
 
     user?.getIdToken().then((jwt) => {
@@ -52,17 +44,6 @@ export default function VoucherForm() {
         })
     })
   }, [])
-
-  // const [numberOfVouchers, setNumberOfVouchers] = useState(0);
-  // const [voucherValue, setVoucherValue] = useState(0);
-
-  // const handleNumberOfVouchersChange = (event) => {
-  //   setNumberOfVouchers(event.target.value);
-  // };
-
-  // const handleVoucherValueChange = (event) => {
-  //   setVoucherValue(event.target.value);
-  // };
 
   const {
     handleSubmit,
@@ -231,13 +212,6 @@ export default function VoucherForm() {
                     {errors.selectedCharity?.message}
                   </p>
                 )}
-                <Typography className={styles.question}>
-                  Please indicate the number of vouchers you would like to
-                  generate and the value of each. The total amount of funds will
-                  be auto-generated and shown below. Any additional funds will
-                  be donated directly to the charities at the end of the
-                  campaign.
-                </Typography>
                 <Controller
                   name="numberOfVouchers"
                   control={control}
@@ -254,8 +228,6 @@ export default function VoucherForm() {
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      // value={numberOfVouchers}
-                      // onChange={handleNumberOfVouchersChange}
                     />
                   )}
                 />
@@ -277,15 +249,9 @@ export default function VoucherForm() {
                           <InputAdornment position="start">$</InputAdornment>
                         ),
                       }}
-                      // value={voucherValue}
-                      // onChange={handleVoucherValueChange}
                     />
                   )}
                 />
-                {/* <Typography className={styles.question}>
-              <b>Total funds needed: ${voucherValue * numberOfVouchers}</b>
-            </Typography> */}
-
                 {submitted ? (
                   <Typography variant="h6" className={styles.submitText}>
                     Thank you for submitting this form.

@@ -1,5 +1,4 @@
 import prisma from "../../../lib/prisma"
-import { unredeemed } from "../../../util/constants/voucherStatus"
 import { firebaseAdmin } from "../../../firebase/firebaseAdmin"
 
 export default async function handler(req, res) {
@@ -12,7 +11,6 @@ export default async function handler(req, res) {
 
   try {
     const httpMethod = req.method
-    const { campaignId } = req.body
 
     if (httpMethod === "GET") {
       const vouchers = await prisma.voucher.findMany({
@@ -25,20 +23,8 @@ export default async function handler(req, res) {
         },
       })
       res.status(200).json(vouchers)
-    } else if (httpMethod === "POST") {
-      const voucher = await prisma.voucher.create({
-        data: {
-          campaign: {
-            connect: {
-              id: campaignId,
-            },
-          },
-          status: unredeemed,
-        },
-      })
-      res.status(201).json(voucher)
     } else {
-      res.setHeader("Allow", ["GET", "POST"])
+      res.setHeader("Allow", ["GET"])
       res.status(405).end(`Method ${httpMethod} Not Allowed`)
     }
   } catch (err) {

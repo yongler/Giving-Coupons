@@ -7,10 +7,12 @@
     justify-content: center;
     width: auto;
     max-width: 95vw;
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
     flex-direction: column;
 }
 
 .voucherLink {
     cursor: pointer;
+    color: black;
+    text-decoration: none;
 }

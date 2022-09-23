@@ -8,19 +8,12 @@ import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import TableContainer from "@mui/material/TableContainer"
-import { unredeemed } from "../../../../util/constants/voucherStatus"
-import IconButton from "@mui/material/IconButton"
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
-import Collapse from "@mui/material/Collapse"
-import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import { useRouter } from "next/router"
 import { auth } from "../../../../firebase/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { initialCampaign } from "../../../../util/constants/initialObjects"
 import Loading from "../../../../components/Loading"
-import { DataGrid } from "@mui/x-data-grid"
 import EnhancedTable from "../../../../components/VoucherTable"
 import Link from "@mui/material/Link"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
@@ -58,6 +51,19 @@ export default function Campaign() {
   for (let i = 0; i < campaign.charitiesChosenByDonor.length; i++) {
     charityMappings[campaign.charitiesChosenByDonor[i].id] =
       campaign.charitiesChosenByDonor[i].name
+  }
+
+  const amountPerCharityMappings = {}
+  for (let i = 0; i < campaign.vouchers.length; i++) {
+    if (campaign.vouchers[i].charityId) {
+      if (amountPerCharityMappings[campaign.vouchers[i].charityId]) {
+        amountPerCharityMappings[campaign.vouchers[i].charityId] +=
+          campaign.voucherAmount
+      } else {
+        amountPerCharityMappings[campaign.vouchers[i].charityId] =
+          campaign.voucherAmount
+      }
+    }
   }
 
   function toGMT8(utc_string) {
@@ -136,6 +142,12 @@ export default function Campaign() {
                 </Typography>
                 <TableContainer className={styles.table} component={Paper}>
                   <Table className={styles.table} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right">Amount Chosen ($)</TableCell>
+                      </TableRow>
+                    </TableHead>
                     <TableBody>
                       {campaign.charitiesChosenByDonor.map((charity) => (
                         <TableRow
@@ -144,7 +156,12 @@ export default function Campaign() {
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
-                          <TableCell align="center">{charity.name}</TableCell>
+                          <TableCell align="left">{charity.name}</TableCell>
+                          <TableCell align="right">{`${
+                            amountPerCharityMappings[charity.id]
+                              ? amountPerCharityMappings[charity.id]
+                              : 0
+                          }`}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -172,37 +189,6 @@ export default function Campaign() {
               vouchers={campaign.vouchers}
               charityMappings={charityMappings}
             />
-            {/* <DataGridDemo
-          vouchers={campaign.vouchers}
-          charityMappings={charityMappings}
-        /> */}
-            {/* <TableContainer
-            className={styles.table}
-            component={Paper}
-            sx={{ overflowX: "hidden" }}
-          >
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell />
-                  <TableCell>ID</TableCell>
-                  <TableCell align="right">Status</TableCell>
-                  <TableCell align="right">Charity Selected</TableCell>
-                  <TableCell align="right">Amount Added</TableCell>
-                  <TableCell align="right">Date Submitted</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {campaign.vouchers.map((voucher) => (
-                  <VoucherRow
-                    key={voucher.id}
-                    voucher={voucher}
-                    charityMappings={charityMappings}
-                  />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer> */}
           </Paper>
         </div>
       )}
@@ -235,97 +221,3 @@ const columns = [
     width: 300,
   },
 ]
-
-function DataGridDemo(props) {
-  const { vouchers, charityMappings } = props
-  const voucherData = []
-  const numShown = 25
-
-  for (let i = 0; i < vouchers.length; i++) {
-    const voucher = vouchers[i]
-    voucherData.push({
-      id: voucher.id,
-      status: voucher.status == unredeemed ? "Unredeemed" : "Redeemed",
-      charity_selected: voucher.charityId
-        ? charityMappings[voucher.charityId]
-        : "",
-      amount_added: voucher.amountAdded ? "$" + voucher.amountAdded : "$0",
-      date_submitted:
-        voucher.status == unredeemed
-          ? ""
-          : new Date(voucher.timeSubmitted).toUTCString(),
-    })
-  }
-
-  return (
-    <Box sx={{ height: `${(numShown + 2) * 52}px`, width: "95vw" }}>
-      <DataGrid
-        rows={voucherData}
-        columns={columns}
-        pageSize={numShown}
-        rowsPerPageOptions={[10]}
-        disableSelectionOnClick
-        experimentalFeatures={{ newEditingApi: true }}
-      />
-    </Box>
-  )
-}
-
-function VoucherRow(props) {
-  const { voucher, charityMappings } = props
-  const [open, setOpen] = React.useState(false)
-
-  return (
-    <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
-          {voucher.message && (
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          )}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {voucher.id}
-        </TableCell>
-        <TableCell align="right">
-          {voucher.status == unredeemed ? "Unredeemed" : "Redeemed"}
-        </TableCell>
-        <TableCell align="right">
-          {voucher.charityId ? charityMappings[voucher.charityId] : "-"}
-        </TableCell>
-        <TableCell align="right">
-          {voucher.amountAdded ? "$" + voucher.amountAdded : "$0"}
-        </TableCell>
-        <TableCell align="right">
-          {voucher.status == unredeemed
-            ? "-"
-            : new Date(voucher.timeSubmitted).toUTCString()}
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography
-                variant="body1"
-                gutterBottom
-                component="div"
-                className={styles.messageHeader}
-              >
-                Message from user:
-              </Typography>
-              <Typography variant="body2" gutterBottom component="div">
-                {voucher.message}
-              </Typography>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  )
-}

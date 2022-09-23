@@ -1,4 +1,6 @@
 const { PrismaClient } = require("@prisma/client")
+const crypto = require("crypto")
+
 const prisma = new PrismaClient()
 
 async function main() {
@@ -64,6 +66,21 @@ async function main() {
         "For the past 50 years, the Handicaps Welfare Association (HWA) has been providing needed services to people with physical disabilities. Your donation allows HWA to meet the increasing and changing needs of people with disabilities and the rapidly aging population.",
       image: "hwa.jpg",
       link: "https://hwa.org.sg/",
+    },
+  })
+
+  const email = "giving.coupons.sg+test@gmail.com"
+  const password = "password"
+
+  await prisma.admin.upsert({
+    where: { email },
+    update: {},
+    create: {
+      email,
+      saltHashedPassword: crypto
+        .createHash("sha256")
+        .update(email + password)
+        .digest("hex"),
     },
   })
 
