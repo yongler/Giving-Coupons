@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
@@ -11,13 +11,21 @@ import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
 import Tooltip from "@mui/material/Tooltip"
 import MenuItem from "@mui/material/MenuItem"
-import Link from "@mui/material/Link"
-import { useTheme } from "@mui/material/styles"
+import { Link } from "@mui/material"
+import { getAuth } from "firebase/auth"
 import { useRouter } from "next/router"
 import icon from "../images/icon-512x512-removebg.png"
-import logo from "../images/logo-with-name.png"
-
 import styles from "../styles/ResponsiveAppBar.module.css"
+import LogoutIcon from "@mui/icons-material/Logout"
+import { Fab } from "@mui/material"
+
+const pages = [
+  { name: "Campaigns", path: "campaigns" },
+  { name: "Form", path: "form" },
+  { name: "Donor Form", path: "donor-form" },
+  { name: "Pending campaign requests", path: "pending-campaigns" },
+]
+const settings = ["Profile", "Settings", "Logout"]
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -38,6 +46,14 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null)
   }
 
+  const logout = async (event) => {
+    event.preventDefault()
+    const auth = getAuth()
+    auth.signOut()
+    setAnchorElUser(null)
+    router.push("/")
+  }
+
   const router = useRouter()
   const path = router.pathname
   if (
@@ -51,7 +67,7 @@ const ResponsiveAppBar = () => {
       router.pathname != "/admin/campaigns/[id]/print" && (
         <AppBar position="static">
           <Container maxWidth="xl">
-            <Toolbar disableGutters>
+            <Toolbar disableGutters className={styles.toolbar}>
               {/* <Typography
               variant="h6"
               noWrap
@@ -73,10 +89,30 @@ const ResponsiveAppBar = () => {
                 <Box
                   className={styles.icon}
                   component="img"
-                  src={logo.src}
+                  src={icon.src}
                   alt="split"
                 />
               </Link>
+
+              {router.pathname.startsWith("/admin") &&
+                router.pathname != "/admin/login" && (
+                  <Box>
+                    <Fab
+                      size="small"
+                      color="warning"
+                      variant="extended"
+                      onClick={logout}
+                      className={styles.logoutButton}
+                    >
+                      <LogoutIcon
+                        className={styles.logoutButtonContent}
+                        fontSize="small"
+                      />
+                      <h6 className={styles.logoutButtonContent}> Log Out </h6>
+                    </Fab>
+                  </Box>
+                )}
+
               {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"

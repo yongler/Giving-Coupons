@@ -1,21 +1,39 @@
-import Coupon from "../../../../components/Coupon"
+import * as React from "react";
+import Coupon from "../../../../components/Coupon";
+import { useRouter } from "next/router";
+import { auth } from "../../../../firebase/firebaseApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { initialCampaign } from "../../../../util/constants/initialObjects";
 
-export default function CouponView({ coupons, endDate, voucherAmount }) {
-  return coupons.map((c) => {
-    c.campaign = { endDate, voucherAmount }
-    return <Coupon coupon={c} key={c.id} />
-  })
-}
+export default function CouponView() {
+  const router = useRouter();
+  const { id } = router.query;
+  const [campaign, setCampaign] = React.useState(initialCampaign);
+  const [user] = useAuthState(auth);
 
-export async function getServerSideProps(context) {
-  const id = context.params.id
-  const res = await fetch(process.env.URL + `/api/campaigns/` + id)
-  const data = await res.json()
-  return {
-    props: {
-      coupons: data.vouchers,
-      endDate: data.endDate,
-      voucherAmount: data.voucherAmount,
-    },
-  }
+  React.useEffect(() => {
+    if (!user) {
+      router.push("/admin/login");
+    }
+
+    user?.getIdToken().then((jwt) => {
+      fetch("/api/campaigns/" + id, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + jwt,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setCampaign(data);
+        });
+    });
+  }, []);
+
+  const { vouchers, endDate, voucherAmount } = campaign;
+
+  return vouchers.map((voucher) => {
+    voucher.campaign = { endDate, voucherAmount };
+    return <Coupon coupon={voucher} key={voucher.id} />;
+  });
 }

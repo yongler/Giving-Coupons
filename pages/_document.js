@@ -28,8 +28,8 @@ export default class MyDocument extends Document {
           />
 
           {/* PWA primary color */}
-          <meta name="GivingCoupons" content="GivingCoupons" />
-          {/* <meta name="theme-color" content={theme.palette.primary.main} /> */}
+          {/* <meta name="GivingCoupons" content="GivingCoupons" /> */}
+          <meta name="theme-color" content={theme.palette.primary.main} />
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/icon.png"></link>
           <link rel="shortcut icon" href="/favicon.ico" />
@@ -37,10 +37,10 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
           />
-          {/* <meta
+          <meta
             name="emotion-insertion-point"
             content="emotion-insertion-point"
-          /> */}
+          />
           <link
             rel="apple-touch-startup-image"
             media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"

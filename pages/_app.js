@@ -7,12 +7,14 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { CacheProvider } from "@emotion/react"
 import theme from "../src/theme"
 import createEmotionCache from "../src/createEmotionCache"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import AuthContextProvider from "../context/AuthContext"
 import { useRouter } from "next/router"
 import Script from "next/script"
 import { useEffect } from "react"
 import * as ga from "../lib/ga"
 
-// Client-side cache, shared for the whole session of the user in the browser.
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
@@ -44,7 +46,7 @@ export default function MyApp(props) {
   }, [router.events])
 
   return (
-    <>
+    <AuthContextProvider>
       <CacheProvider value={emotionCache}>
         {/* metadata */}
         <Head>
@@ -61,8 +63,19 @@ export default function MyApp(props) {
             <Component {...pageProps} />
           </Layout>
         </ThemeProvider>
+
+        <ToastContainer
+          position="bottom-center"
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover={false}
+        />
       </CacheProvider>
-    </>
+    </AuthContextProvider>
   )
 }
 

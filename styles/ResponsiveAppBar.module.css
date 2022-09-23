@@ -1,4 +1,18 @@
+.logoutButton {
+  background-color: darkorange;
+}
+
+.logoutButtonContent {
+  margin-right: 0.25em;
+  color: black;
+}
+
 .icon {
   height: 55px;
   margin: 8px 10px 0px 10px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
 }
