@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebaseApp";
+import Loading from "../components/Loading";
 
 export const AuthContext = createContext({ user: null });
 
@@ -25,7 +26,7 @@ const AuthContextProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={{ user }}>
       {loading ? (
-        <h4 style={{ margin: 3 }}>Loading... Please wait...</h4>
+        <Loading />
       ) : (
         children
       )}

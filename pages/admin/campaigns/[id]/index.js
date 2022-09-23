@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import { auth } from "../../../../firebase/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { initialCampaign } from "../../../../util/constants/initialObjects";
+import Loading from "../../../../components/Loading";
 
 export default function Campaign() {
   const router = useRouter();
@@ -62,85 +63,91 @@ export default function Campaign() {
   }
 
   return (
-    <div className={styles.formpage}>
-      <Paper className={styles.form} elevation={0}>
-        <Typography gutterBottom variant="h5" component="div">
-          {`Campaign Name: ${campaign.name}`}
-        </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          {`Donor: ${campaign.donor}`}
-        </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          {getDaysLeft(campaign.endDate) > 0
-            ? `${getDaysLeft(campaign.endDate)} days left`
-            : "Campaign has ended"}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {`Description: ${campaign.description}`}
-        </Typography>
-        <Typography className={styles.title} variant="h6" component="div">
-          Charities Selected
-        </Typography>
-        <TableContainer className={styles.table} component={Paper}>
-          <Table className={styles.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Name</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {campaign.charitiesChosenByDonor.map((charity) => (
-                <TableRow
-                  key={charity.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="center">{charity.name}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div className={styles.couponsTitle}>
-          <Typography className={styles.title} variant="h6" component="div">
-            Coupons Status
-          </Typography>
-          <Button
-            variant="contained"
-            className={styles.couponsButton}
-            href={`/admin/campaigns/${campaign.id}/print`}
-          >
-            View Coupons
-          </Button>
+    <>
+      {!user ? (
+        <Loading/>
+      ) : (
+        <div className={styles.formpage}>
+          <Paper className={styles.form} elevation={0}>
+            <Typography gutterBottom variant="h5" component="div">
+              {`Campaign Name: ${campaign.name}`}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              {`Donor: ${campaign.donor}`}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              {getDaysLeft(campaign.endDate) > 0
+                ? `${getDaysLeft(campaign.endDate)} days left`
+                : "Campaign has ended"}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {`Description: ${campaign.description}`}
+            </Typography>
+            <Typography className={styles.title} variant="h6" component="div">
+              Charities Selected
+            </Typography>
+            <TableContainer className={styles.table} component={Paper}>
+              <Table className={styles.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center">Name</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {campaign.charitiesChosenByDonor.map((charity) => (
+                    <TableRow
+                      key={charity.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell align="center">{charity.name}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <div className={styles.couponsTitle}>
+              <Typography className={styles.title} variant="h6" component="div">
+                Coupons Status
+              </Typography>
+              <Button
+                variant="contained"
+                className={styles.couponsButton}
+                href={`/admin/campaigns/${campaign.id}/print`}
+              >
+                View Coupons
+              </Button>
+            </div>
+            <TableContainer
+              className={styles.table}
+              component={Paper}
+              sx={{ overflowX: "hidden" }}
+            >
+              <Table aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell />
+                    <TableCell>ID</TableCell>
+                    <TableCell align="right">Status</TableCell>
+                    <TableCell align="right">Charity Selected</TableCell>
+                    <TableCell align="right">Amount Added</TableCell>
+                    <TableCell align="right">Date Submitted</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {campaign.vouchers.map((voucher) => (
+                    <VoucherRow
+                      key={voucher.id}
+                      voucher={voucher}
+                      charityMappings={charityMappings}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
         </div>
-        <TableContainer
-          className={styles.table}
-          component={Paper}
-          sx={{ overflowX: "hidden" }}
-        >
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell>ID</TableCell>
-                <TableCell align="right">Status</TableCell>
-                <TableCell align="right">Charity Selected</TableCell>
-                <TableCell align="right">Amount Added</TableCell>
-                <TableCell align="right">Date Submitted</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {campaign.vouchers.map((voucher) => (
-                <VoucherRow
-                  key={voucher.id}
-                  voucher={voucher}
-                  charityMappings={charityMappings}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </div>
+      )}
+    </>
   );
 }
 

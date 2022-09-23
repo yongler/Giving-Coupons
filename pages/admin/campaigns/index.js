@@ -20,6 +20,7 @@ import { useTheme } from "@mui/material/styles";
 import { auth } from "../../../firebase/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
+import Loading from "../../../components/Loading";
 
 export default function CampaignDashboard() {
   const [data, setData] = React.useState([]);
@@ -69,44 +70,50 @@ export default function CampaignDashboard() {
   }
 
   return (
-    <div className={styles.dashboard}>
-      <Typography className={styles.title} variant="h4" component="div">
-        Campaigns Dashboard
-      </Typography>
-      <Box sx={{ bgcolor: "background.paper", width: "100vw" }}>
-        <AppBar position="static">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="secondary"
-            textColor="inherit"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-          >
-            <Tab label="Ongoing Campaigns" {...a11yProps(0)} />
-            <Tab label="Expired Campaigns" {...a11yProps(1)} />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel
-            value={value}
-            index={0}
-            dir={theme.direction}
-            campaigns={ongoingCampaigns}
-          ></TabPanel>
-          <TabPanel
-            value={value}
-            index={1}
-            dir={theme.direction}
-            campaigns={expiredCampaigns}
-          ></TabPanel>
-        </SwipeableViews>
-      </Box>
-    </div>
+    <>
+      {!user ? (
+        <Loading/>
+      ) : (
+        <div className={styles.dashboard}>
+          <Typography className={styles.title} variant="h4" component="div">
+            Campaigns Dashboard
+          </Typography>
+          <Box sx={{ bgcolor: "background.paper", width: "100vw" }}>
+            <AppBar position="static">
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                indicatorColor="secondary"
+                textColor="inherit"
+                variant="fullWidth"
+                aria-label="full width tabs example"
+              >
+                <Tab label="Ongoing Campaigns" {...a11yProps(0)} />
+                <Tab label="Expired Campaigns" {...a11yProps(1)} />
+              </Tabs>
+            </AppBar>
+            <SwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={value}
+              onChangeIndex={handleChangeIndex}
+            >
+              <TabPanel
+                value={value}
+                index={0}
+                dir={theme.direction}
+                campaigns={ongoingCampaigns}
+              ></TabPanel>
+              <TabPanel
+                value={value}
+                index={1}
+                dir={theme.direction}
+                campaigns={expiredCampaigns}
+              ></TabPanel>
+            </SwipeableViews>
+          </Box>
+        </div>
+      )}
+    </>
   );
 }
 

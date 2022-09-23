@@ -57,8 +57,7 @@ const ResponsiveAppBar = () => {
   return (
     // Hide app bar for coupon view
     router.pathname != "/coupon/[id]" &&
-    router.pathname != "/admin/campaigns/[id]/print" &&
-    router.pathname != "/admin/login" && (
+    router.pathname != "/admin/campaigns/[id]/print" && (
       <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar
@@ -91,13 +90,14 @@ const ResponsiveAppBar = () => {
               />
             </Link>
 
-            {router.pathname.startsWith("/admin") && (
-              <Box>
-                <IconButton onClick={logout} className={styles.logoutButton}>
-                  <LogoutIcon className={styles.button} /> Log Out
-                </IconButton>
-              </Box>
-            )}
+            {router.pathname.startsWith("/admin") &&
+              router.pathname != "/admin/login" && (
+                <Box>
+                  <IconButton onClick={logout} className={styles.logoutButton}>
+                    <LogoutIcon className={styles.button} /> Log Out
+                  </IconButton>
+                </Box>
+              )}
 
             {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
