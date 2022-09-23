@@ -21,7 +21,7 @@ import { auth } from "../../../firebase/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useRouter } from "next/router"
 import Loading from "../../../components/Loading"
-import { Fab } from "@mui/material"
+import { Button } from "@mui/material"
 
 export default function CampaignDashboard() {
   const [data, setData] = React.useState([])
@@ -102,9 +102,9 @@ export default function CampaignDashboard() {
               </Tabs>
             </AppBar>
             <Link href={"/admin/campaigns/create"}>
-              <Fab variant="extended" className={styles.button}>
+              <Button variant="contained" className={styles.button}>
                 Add campaign
-              </Fab>
+              </Button>
             </Link>
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
