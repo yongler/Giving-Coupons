@@ -8,6 +8,7 @@ Please refer to submission file for credentials.
 
 # List of group members:
 
+- Bryann Yeap Kok Keong (A0217687N)
 - Lee Yong Ler (A0219859J)
 - Stuart Long Chay Boon (A0217528B)
 - Tee Weile Wayne (A0149290B)
@@ -20,7 +21,7 @@ Please refer to submission file for credentials.
   - (Milestone 6) Shared and explained 8 SQL queries, as well as the Prisma (ORM) queries that they correspond to
   - (Milestone 11) Justified the choice of token-based authentication against session-based authentication
   - Implemented the API endpoints
-  - Implemented the database schema in Prisma 
+  - Implemented the database schema in Prisma
   - Integrated authentication using Firebase Authentication by allowing email and password log in
   - Protected the relevant API routes
   - Set up redirection of page routes with respect to whether the user is logged in
