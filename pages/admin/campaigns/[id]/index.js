@@ -33,7 +33,7 @@ export default function Campaign() {
 
   React.useEffect(() => {
     if (!user) {
-      router.push("/admin/login")
+      router.push("/admin")
     }
 
     user?.getIdToken().then((jwt) => {

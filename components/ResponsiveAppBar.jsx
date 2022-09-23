@@ -94,24 +94,23 @@ const ResponsiveAppBar = () => {
                 />
               </Link>
 
-              {router.pathname.startsWith("/admin") &&
-                router.pathname != "/admin/login" && (
-                  <Box>
-                    <Fab
-                      size="small"
-                      color="warning"
-                      variant="extended"
-                      onClick={logout}
-                      className={styles.logoutButton}
-                    >
-                      <LogoutIcon
-                        className={styles.logoutButtonContent}
-                        fontSize="small"
-                      />
-                      <h6 className={styles.logoutButtonContent}> Log Out </h6>
-                    </Fab>
-                  </Box>
-                )}
+              {router.pathname.startsWith("/admin/") && (
+                <Box>
+                  <Fab
+                    size="small"
+                    color="warning"
+                    variant="extended"
+                    onClick={logout}
+                    className={styles.logoutButton}
+                  >
+                    <LogoutIcon
+                      className={styles.logoutButtonContent}
+                      fontSize="small"
+                    />
+                    <h6 className={styles.logoutButtonContent}> Log Out </h6>
+                  </Fab>
+                </Box>
+              )}
 
               {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
