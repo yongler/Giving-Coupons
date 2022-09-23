@@ -90,7 +90,6 @@ export default function Campaign() {
           >
             {`Campaign Name: ${campaign.name}`}
           </Typography>
-          {/* </div> */}
           <Paper className={styles.form} elevation={0}>
             <div className={styles.topPortion}>
               <Paper className={styles.campaignCard} elevation={3}>
