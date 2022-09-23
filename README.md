@@ -5,6 +5,7 @@ URL of application: https://giving-coupons.vercel.app/
 # List of group members:
 
 - Lee Yong Ler (A0219859J)
+- Stuart Long Chay Boon (A0217528B)
 
 # Contributions:
 
@@ -19,6 +20,17 @@ URL of application: https://giving-coupons.vercel.app/
   - (Milestone 15) Lighthouse report
   - Feature - admin create campaign page, offline page
   - Write ups for milestone 11
+  
+ - Stuart Long Chay Boon:
+    - (Milestone 3) Design ER diagram and schema
+    - Set up repository with basic pages and templates for team to use
+    - (Milestone 8) Designed and built homepage including using MUI components
+    - (Milestone 8) Designed basic template for form to use using MUI
+    - (Milestone 8) Developed admin dashboard and admin campaign view pages using MUI components
+    - Implemented sorting and filtering of table of vouchers
+    - Integrated frontend with backend API calls with HTTP requests to communicate with server
+    - Seeding database with charities to use
+    - Participated in User Acceptance testing by distributing out physical vouchers
 
 # Set-up instructions for local testing
 
