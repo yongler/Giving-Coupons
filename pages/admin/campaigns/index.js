@@ -17,6 +17,7 @@ import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
 import SwipeableViews from "react-swipeable-views"
 import { useTheme } from "@mui/material/styles"
+import { Fab } from "@mui/material"
 
 export default function CampaignDashboard({ data }) {
   console.log(data)
@@ -65,6 +66,11 @@ export default function CampaignDashboard({ data }) {
             <Tab label="Expired Campaigns" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
+        <Link href={"/admin/campaigns/create"}>
+          <Fab variant="extended" className={styles.button}>
+            Add campaign
+          </Fab>
+        </Link>
         <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
