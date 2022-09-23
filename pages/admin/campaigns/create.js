@@ -31,7 +31,7 @@ export default function VoucherForm() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/admin/login")
+      router.push("/admin")
     }
 
     user?.getIdToken().then((jwt) => {
