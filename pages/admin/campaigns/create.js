@@ -75,11 +75,11 @@ export default function VoucherForm() {
     }
 
     const tempBody = JSON.stringify({
-      endDate: data.deadline.toDate(),
+      endDate: data.deadline ? data.deadline.toDate() : new Date(),
       charitiesChosenByDonor: chosenCharities,
-      donor: data.donorName,
+      donor: data.donorName ? data.donorName : "",
       name: data.campaignName,
-      description: data.description,
+      description: data.description ? data.description : "",
       numVouchers: parseInt(data.numberOfVouchers),
       voucherAmount: parseInt(data.voucherValue),
     })
@@ -138,6 +138,7 @@ export default function VoucherForm() {
                   render={({ field }) => (
                     <TextField
                       margin="dense"
+                      required
                       {...field}
                       disabled={submitted}
                       label="Donor name"
@@ -151,6 +152,7 @@ export default function VoucherForm() {
                   render={({ field }) => (
                     <TextField
                       margin="dense"
+                      required
                       {...field}
                       disabled={submitted}
                       label="Description of the campaign"
@@ -185,7 +187,7 @@ export default function VoucherForm() {
                 )}
 
                 <Typography className={styles.instructions}>
-                  <b>Charity choices.</b>
+                  <b>Charity choices</b>
                 </Typography>
                 {charities.map((charity) => (
                   <CharityCard

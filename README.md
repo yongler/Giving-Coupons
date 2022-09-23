@@ -1,11 +1,16 @@
 # Giving Coupons
 
-URL of application: https://giving-coupons.vercel.app/
+URL of application: https://giving-coupons.vercel.app
+
+Admin page: https://giving-coupons.vercel.app/admin
+
+Please refer to submission file for credentials.
 
 # List of group members:
 
 - Lee Yong Ler (A0219859J)
 - Stuart Long Chay Boon (A0217528B)
+- Tee Weile Wayne (A0149290B)
 
 # Contributions:
 
@@ -31,78 +36,22 @@ URL of application: https://giving-coupons.vercel.app/
   - Integrated frontend with backend API calls with HTTP requests to communicate with server
   - Seeding database with charities to use
   - Participated in User Acceptance testing by distributing out physical vouchers
+- Tee Weile Wayne
+  - Came up with idea and convinced everyone
+  - Secured donor
+  - Designed overall flow
+  - Designed coupon
+  - Designed and implement redemption form
+  - Implement campaign generation backend
+  - Designed and improved homepage
+  - Designed icon
+  - Wrote pitch
 
 # Set-up instructions for local testing
 
 1. Clone the repo.
-2. In the root directory, run `npm install` to install all the dependencies.
-3. Create `.env` file with the environment variables.
-4. In the root directory, run `npx prisma generate` followed by `npx prisma studio` to setup the database. Take note that school/home wifi might not work. Changing to data will solve the issue.
-5. In the root directory, run `npm run dev`.
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-1. Create `.env` file with `DATABASE_URL`
-2. `yarn`
-
-Then, run the development server:
-
-```bash
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-For prisma:
-To create tables in database after creating schema, run
-
-```bsh
-npx prisma db push
-```
-
-After updating database, run
-
-```bash
-npx prisma generate
-```
-
-To pull new changes from database, run
-
-```bash
-npx prisma db pull
-```
-
-To view db GUI, run
-
-```bash
-npx prisma studio
-```
-
-## Resources
-
-https://www.youtube.com/watch?v=ARNN_zmrwcw
-
-https://medium.com/geekculture/how-to-make-a-next-js-app-a-pwa-a5e2b13da548
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. In the root directory, run `yarn` to install all the dependencies.
+3. Download `.env` file with the environment variables (included in our submission) which includes credentials of our test database.
+4. Run `yarn dev`
+5. navigate to http://localhost:3000
+6. Login to http://localhost:3000/admin with test credentials `giving.coupons.sg+test@gmail.com` and `password`
