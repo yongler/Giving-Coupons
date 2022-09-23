@@ -9,10 +9,6 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import InputAdornment from "@mui/material/InputAdornment"
 import Grid from "@mui/material/Grid"
 import { useState, useEffect } from "react"
-<<<<<<< HEAD
-import FormGroup from "@mui/material/FormGroup"
-=======
->>>>>>> main
 import Checkbox from "@mui/material/Checkbox"
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
