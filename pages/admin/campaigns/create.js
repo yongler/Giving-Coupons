@@ -96,10 +96,10 @@ export default function VoucherForm() {
         if (!response.ok) {
           setError("Sorry, an error has occured")
         }
+
+        router.push("/admin/campaigns")
       })
     })
-
-    router.push("/admin/campaigns")
   }
 
   return (
