@@ -15,5 +15,10 @@
 }
 
 .logoutButton {
-  font-size: large;
+  background-color: darkorange;
+}
+
+.logoutButtonContent {
+  margin-right: 0.25em;
+  color: black;
 }

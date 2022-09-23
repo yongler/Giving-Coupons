@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import icon from "../images/icon-512x512-removebg.png";
 import styles from "../styles/ResponsiveAppBar.module.css";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { Fab } from "@mui/material";
 
 const pages = [
   { name: "Campaigns", path: "campaigns" },
@@ -93,9 +94,16 @@ const ResponsiveAppBar = () => {
             {router.pathname.startsWith("/admin") &&
               router.pathname != "/admin/login" && (
                 <Box>
-                  <IconButton onClick={logout} className={styles.logoutButton}>
-                    <LogoutIcon className={styles.button} /> Log Out
-                  </IconButton>
+                  <Fab
+                    size="small"
+                    color="warning"
+                    variant="extended"
+                    onClick={logout}
+                    className={styles.logoutButton}
+                  >
+                    <LogoutIcon className={styles.logoutButtonContent} />
+                    <b className={styles.logoutButtonContent}> Log Out </b>
+                  </Fab>
                 </Box>
               )}
 
