@@ -1,12 +1,12 @@
 # Giving Coupons
 
-URL of application: https://2022-a3-2022-a3-group-1.vercel.app/
+URL of application: https://giving-coupons.vercel.app/
 
-List of group members:
+# List of group members:
 
 - Lee Yong Ler (A0219859J)
 
-Contributions:
+# Contributions:
 
 - Lee Yong Ler:
   - (Milestone 4) Alternatives to REST
@@ -19,6 +19,14 @@ Contributions:
   - (Milestone 15) Lighthouse report
   - Feature - admin create campaign page, offline page
   - Write ups for milestone 11
+
+# Set-up instructions for local testing
+
+1. Clone the repo.
+2. In the root directory, run `npm install` to install all the dependencies.
+3. Create `.env` file with the environment variables.
+4. In the root directory, run `npx prisma generate` followed by `npx prisma studio` to setup the database. Take note that school/home wifi might not work. Changing to data will solve the issue.
+5. In the root directory, run `npm run dev`.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
