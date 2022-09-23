@@ -19,6 +19,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment"
+import Link from "@mui/material/Link"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
 export default function VoucherForm({ charities }) {
   const [submitted, setSubmitted] = useState(false)
@@ -83,187 +85,194 @@ export default function VoucherForm({ charities }) {
   }
 
   return (
-    <Grid container className={styles.formpage} justifyContent="center">
-      <Grid item xs={12} md={8}>
-        <Paper className={styles.form} elevation={5}>
-          <Typography variant="h1" className={styles.title}>
-            Create a campaign
-          </Typography>
-
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              name="campaignName"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  margin="dense"
-                  {...field}
-                  disabled={submitted}
-                  label="Campaign Name"
-                  fullWidth
-                />
-              )}
-            />
-            <Controller
-              name="donorName"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  margin="dense"
-                  {...field}
-                  disabled={submitted}
-                  label="Donor name"
-                  fullWidth
-                />
-              )}
-            />
-            <Controller
-              name="description"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  margin="dense"
-                  {...field}
-                  disabled={submitted}
-                  label="Description of the campaign"
-                  fullWidth
-                />
-              )}
-            />
-            <br />
-            <br />
-            <Controller
-              name="deadline"
-              key="deadline"
-              control={control}
-              render={({ field }) => (
-                <>
-                  <LocalizationProvider dateAdapter={AdapterMoment}>
-                    <DateTimePicker
-                      type="datetime-local"
-                      {...field}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </LocalizationProvider>
-                </>
-              )}
-            />
-
-            <Typography className={styles.instructions}>
-              <b>Charity choices.</b>
-            </Typography>
-            {charities.map((charity) => (
-              <CharityCard
-                key={charity.id}
-                id={charity.id}
-                name={charity.name}
-                description={charity.description}
-                image={charity.image}
-                link={charity.link}
-              />
-            ))}
-            <Typography className={styles.question}>
-              <b>I would like to support:</b>
+    <>
+      <Grid container className={styles.formpage} justifyContent="center">
+        <Grid item xs={12} md={8}>
+          <Paper className={styles.form} elevation={5}>
+            <Link href="/admin/campaigns" className={styles.backButtonColor}>
+              <ArrowBackIcon className={styles.backButton} />
+            </Link>
+            <Typography variant="h1" className={styles.title}>
+              Create a campaign
             </Typography>
 
-            {charities.map((checboxItem) => (
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Controller
-                name={checboxItem.id}
+                name="campaignName"
                 control={control}
-                key={checboxItem.id}
-                render={({ field: { onChange, value } }) => (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={!!value}
-                        onChange={(event, item) => {
-                          onChange(item)
-                        }}
-                        name={checboxItem.name}
-                        color="primary"
-                      />
-                    }
-                    label={checboxItem.name}
+                render={({ field }) => (
+                  <TextField
+                    margin="dense"
+                    {...field}
+                    disabled={submitted}
+                    label="Campaign Name"
+                    fullWidth
                   />
                 )}
               />
-            ))}
+              <Controller
+                name="donorName"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    margin="dense"
+                    {...field}
+                    disabled={submitted}
+                    label="Donor name"
+                    fullWidth
+                  />
+                )}
+              />
+              <Controller
+                name="description"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    margin="dense"
+                    {...field}
+                    disabled={submitted}
+                    label="Description of the campaign"
+                    fullWidth
+                  />
+                )}
+              />
+              <br />
+              <br />
+              <Controller
+                name="deadline"
+                key="deadline"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                      <DateTimePicker
+                        type="datetime-local"
+                        {...field}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                  </>
+                )}
+              />
 
-            {errors.selectedCharity && (
-              <p className={styles.error}>{errors.selectedCharity?.message}</p>
-            )}
-            <Typography className={styles.question}>
-              Please indicate the number of vouchers you would like to generate
-              and the value of each. The total amount of funds will be
-              auto-generated and shown below. Any additional funds will be
-              donated directly to the charities at the end of the campaign.
-            </Typography>
-            <Controller
-              name="numberOfVouchers"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  margin="dense"
-                  disabled={submitted}
-                  type="number"
-                  require
-                  label="Number of vouchers"
-                  fullWidth
-                  inputProps={{ min: 0 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  // value={numberOfVouchers}
-                  // onChange={handleNumberOfVouchersChange}
+              <Typography className={styles.instructions}>
+                <b>Charity choices.</b>
+              </Typography>
+              {charities.map((charity) => (
+                <CharityCard
+                  key={charity.id}
+                  id={charity.id}
+                  name={charity.name}
+                  description={charity.description}
+                  image={charity.image}
+                  link={charity.link}
                 />
-              )}
-            />
-            <Controller
-              name="voucherValue"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  margin="dense"
-                  disabled={submitted}
-                  required
-                  type="number"
-                  label="Value of each voucher"
-                  fullWidth
-                  inputProps={{ min: 0 }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    ),
-                  }}
-                  // value={voucherValue}
-                  // onChange={handleVoucherValueChange}
+              ))}
+              <Typography className={styles.question}>
+                <b>I would like to support:</b>
+              </Typography>
+
+              {charities.map((checboxItem) => (
+                <Controller
+                  name={checboxItem.id}
+                  control={control}
+                  key={checboxItem.id}
+                  render={({ field: { onChange, value } }) => (
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={!!value}
+                          onChange={(event, item) => {
+                            onChange(item)
+                          }}
+                          name={checboxItem.name}
+                          color="primary"
+                        />
+                      }
+                      label={checboxItem.name}
+                    />
+                  )}
                 />
+              ))}
+
+              {errors.selectedCharity && (
+                <p className={styles.error}>
+                  {errors.selectedCharity?.message}
+                </p>
               )}
-            />
-            {/* <Typography className={styles.question}>
+              <Typography className={styles.question}>
+                Please indicate the number of vouchers you would like to
+                generate and the value of each. The total amount of funds will
+                be auto-generated and shown below. Any additional funds will be
+                donated directly to the charities at the end of the campaign.
+              </Typography>
+              <Controller
+                name="numberOfVouchers"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    margin="dense"
+                    disabled={submitted}
+                    type="number"
+                    require
+                    label="Number of vouchers"
+                    fullWidth
+                    inputProps={{ min: 0 }}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    // value={numberOfVouchers}
+                    // onChange={handleNumberOfVouchersChange}
+                  />
+                )}
+              />
+              <Controller
+                name="voucherValue"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    margin="dense"
+                    disabled={submitted}
+                    required
+                    type="number"
+                    label="Value of each voucher"
+                    fullWidth
+                    inputProps={{ min: 0 }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">$</InputAdornment>
+                      ),
+                    }}
+                    // value={voucherValue}
+                    // onChange={handleVoucherValueChange}
+                  />
+                )}
+              />
+              {/* <Typography className={styles.question}>
               <b>Total funds needed: ${voucherValue * numberOfVouchers}</b>
             </Typography> */}
 
-            {submitted ? (
-              <Typography variant="h6" className={styles.submitText}>
-                Thank you for submitting this form.
-              </Typography>
-            ) : (
-              <Button
-                className={styles.submitButton}
-                variant="contained"
-                fullWidth
-                type="submit"
-              >
-                Submit
-              </Button>
-            )}
-          </form>
-        </Paper>
+              {submitted ? (
+                <Typography variant="h6" className={styles.submitText}>
+                  Thank you for submitting this form.
+                </Typography>
+              ) : (
+                <Button
+                  className={styles.submitButton}
+                  variant="contained"
+                  fullWidth
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              )}
+            </form>
+          </Paper>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   )
 }
 

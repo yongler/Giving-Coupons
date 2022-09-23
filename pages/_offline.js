@@ -1,3 +1,12 @@
-export default function x() {
-  return null
+import Typography from "@mui/material/Typography"
+
+export default function Offline() {
+  return (
+    <div>
+      <Typography variant="h1">
+        Hi! It seems that you are currently offline. Connect to the WiFi and
+        stay updated with GivingCoupons!
+      </Typography>
+    </div>
+  )
 }

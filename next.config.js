@@ -2,13 +2,13 @@ const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
   skipWaiting: true,
-  runtimeCaching: [
-    {
-      urlPattern: ({ request, url }) => true,
-      handler: "StaleWhileRevalidate",
-      options: {},
-    },
-  ],
+  // runtimeCaching: [
+  //   {
+  //     urlPattern: ({ request, url }) => true,
+  //     handler: "StaleWhileRevalidate",
+  //     options: {},
+  //   },
+  // ],
 })
 
 module.exports = withPWA({

@@ -5,6 +5,7 @@ import CardMedia from "@mui/material/CardMedia"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import styles from "../styles/CharityCard.module.css"
+import * as ga from "../lib/ga"
 
 export default function CharityCard(props) {
   const { id, name, description, image, link } = props
@@ -15,6 +16,12 @@ export default function CharityCard(props) {
   }
 
   const openLink = () => {
+    ga.event({
+      action: "clicked to learn more about chairities",
+      params: {
+        link: link,
+      },
+    })
     openInNewTab(link)
   }
 

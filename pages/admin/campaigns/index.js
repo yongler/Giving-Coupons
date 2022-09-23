@@ -17,6 +17,7 @@ import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
 import SwipeableViews from "react-swipeable-views"
 import { useTheme } from "@mui/material/styles"
+import Button from "@mui/material/Button"
 
 export default function CampaignDashboard({ data }) {
   console.log(data)
@@ -31,6 +32,8 @@ export default function CampaignDashboard({ data }) {
   const handleChangeIndex = (index) => {
     setValue(index)
   }
+
+  const handleAddCampaign = () => {}
 
   const ongoingCampaigns = []
   const expiredCampaigns = []
@@ -65,6 +68,11 @@ export default function CampaignDashboard({ data }) {
             <Tab label="Expired Campaigns" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
+        <Link href={"/admin/campaigns/create"}>
+          <Button variant="contained" className={styles.button}>
+            Add campaign
+          </Button>
+        </Link>
         <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
