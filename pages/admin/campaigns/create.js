@@ -218,7 +218,7 @@ export default function VoucherForm({ charities }) {
                     require
                     label="Number of vouchers"
                     fullWidth
-                    inputProps={{ min: 0 }}
+                    inputProps={{ min: 1 }}
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -239,7 +239,7 @@ export default function VoucherForm({ charities }) {
                     type="number"
                     label="Value of each voucher"
                     fullWidth
-                    inputProps={{ min: 0 }}
+                    inputProps={{ min: 1 }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">$</InputAdornment>
