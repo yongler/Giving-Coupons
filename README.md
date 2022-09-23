@@ -14,7 +14,7 @@ URL of application: https://giving-coupons.vercel.app/
   - (Milestone 8) CSS methodolody write up
   - (Milestone 9) HTTPS setup and redirecting HTTP to HTTPS for secure browsing
   - (Milestone 10) PWA setup and UIUX testing on mobile end
-  - (Milestone 10) Setup offline functionalities
+  - (Milestone 10) Offline functionalities
   - (Milestone 12) MUI integration for better and uniform styling
   - (Milestone 12) Mobile site design principles
   - (Milestone 14) Google analytics setup for page views and event tracking

@@ -210,6 +210,7 @@ export default function VoucherForm() {
                       <FormControlLabel
                         control={
                           <Checkbox
+                            margin={3}
                             checked={!!value}
                             onChange={(event, item) => {
                               onChange(item)
