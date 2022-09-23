@@ -142,6 +142,13 @@ export default function CampaignDashboard() {
 function TabPanel(props) {
   const { children, value, index, campaigns, ...other } = props
 
+  function toGMT8(utc_string) {
+    let date = new Date(utc_string)
+    date.setTime(date.getTime() + 8 * 60 * 60 * 1000)
+    const correctTime = date.toUTCString()
+    return correctTime.split("GMT")[0]
+  }
+
   return (
     <div
       role="tabpanel"
@@ -159,6 +166,7 @@ function TabPanel(props) {
                   <TableCell>ID</TableCell>
                   <TableCell align="right">Name</TableCell>
                   <TableCell align="right">Donor</TableCell>
+                  <TableCell align="right">End Date</TableCell>
                   <TableCell />
                 </TableRow>
               </TableHead>
@@ -176,6 +184,9 @@ function TabPanel(props) {
                       <TableCell>{campaign.id}</TableCell>
                       <TableCell align="right">{campaign.name}</TableCell>
                       <TableCell align="right">{campaign.donor}</TableCell>
+                      <TableCell align="right">
+                        {toGMT8(campaign.endDate)}
+                      </TableCell>
                       <TableCell align="right">
                         <Link href={`/admin/campaigns/${campaign.id}`}>
                           <IconButton aria-label="info" size="small">
