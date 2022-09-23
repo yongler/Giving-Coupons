@@ -1,35 +1,36 @@
-import * as React from "react";
-import Paper from "@mui/material/Paper";
-import styles from "../../../styles/CampaignDashboard.module.css";
-import Typography from "@mui/material/Typography";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableContainer from "@mui/material/TableContainer";
-import IconButton from "@mui/material/IconButton";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Link } from "@mui/material";
-import Box from "@mui/material/Box";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import SwipeableViews from "react-swipeable-views";
-import { useTheme } from "@mui/material/styles";
-import { auth } from "../../../firebase/firebaseApp";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/router";
-import Loading from "../../../components/Loading";
+import * as React from "react"
+import Paper from "@mui/material/Paper"
+import styles from "../../../styles/CampaignDashboard.module.css"
+import Typography from "@mui/material/Typography"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
+import TableContainer from "@mui/material/TableContainer"
+import IconButton from "@mui/material/IconButton"
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
+import { Link } from "@mui/material"
+import Box from "@mui/material/Box"
+import AppBar from "@mui/material/AppBar"
+import Tabs from "@mui/material/Tabs"
+import Tab from "@mui/material/Tab"
+import SwipeableViews from "react-swipeable-views"
+import { useTheme } from "@mui/material/styles"
+import { auth } from "../../../firebase/firebaseApp"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { useRouter } from "next/router"
+import Loading from "../../../components/Loading"
+import { Fab } from "@mui/material"
 
 export default function CampaignDashboard() {
-  const [data, setData] = React.useState([]);
-  const [user] = useAuthState(auth);
-  const router = useRouter();
+  const [data, setData] = React.useState([])
+  const [user] = useAuthState(auth)
+  const router = useRouter()
 
   React.useEffect(() => {
     if (!user) {
-      router.push("/admin/login");
+      router.push("/admin/login")
     }
 
     user?.getIdToken().then((jwt) => {
@@ -41,13 +42,13 @@ export default function CampaignDashboard() {
       })
         .then((res) => res.json())
         .then((data) => {
-          setData(data);
-        });
-    });
-  }, []);
+          setData(data)
+        })
+    })
+  }, [])
 
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const theme = useTheme()
+  const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -56,6 +57,8 @@ export default function CampaignDashboard() {
   const handleChangeIndex = (index) => {
     setValue(index)
   }
+
+  const handleAddCampaign = () => {}
 
   const ongoingCampaigns = []
   const expiredCampaigns = []
@@ -79,7 +82,11 @@ export default function CampaignDashboard() {
             Campaigns Dashboard
           </Typography>
           <Box
-            sx={{ bgcolor: "background.paper", width: "95vw", marginLeft: "2.5vw" }}
+            sx={{
+              bgcolor: "background.paper",
+              width: "95vw",
+              marginLeft: "2.5vw",
+            }}
           >
             <AppBar className={styles.tabs} position="static">
               <Tabs
@@ -94,6 +101,11 @@ export default function CampaignDashboard() {
                 <Tab label="Expired Campaigns" {...a11yProps(1)} />
               </Tabs>
             </AppBar>
+            <Link href={"/admin/campaigns/create"}>
+              <Fab variant="extended" className={styles.button}>
+                Add campaign
+              </Fab>
+            </Link>
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
               index={value}
@@ -113,7 +125,8 @@ export default function CampaignDashboard() {
               ></TabPanel>
             </SwipeableViews>
           </Box>
-        </div>)}
+        </div>
+      )}
     </>
   )
 }

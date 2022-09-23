@@ -18,6 +18,7 @@ import { useRouter } from "next/router"
 import { auth } from "../../firebase/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { initialCoupon } from "../../util/constants/initialObjects"
+import * as ga from "../../lib/ga"
 
 export default function VoucherForm() {
   const { id } = useRouter().query
@@ -90,6 +91,15 @@ export default function VoucherForm() {
     })
   }
 
+  const handleCharityClick = (name) => {
+    ga.event({
+      action: "selected charity in donate form",
+      params: {
+        selectedCharity: name,
+      },
+    })
+  }
+
   return (
     <Grid container className={styles.formpage} justifyContent="center">
       <Grid item xs={12} md={8}>
@@ -136,6 +146,7 @@ export default function VoucherForm() {
                           value={charity.id}
                           control={<Radio />}
                           label={charity.name}
+                          onClick={() => handleCharityClick(charity.name)}
                         />
                       )
                     })}
