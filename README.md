@@ -7,7 +7,7 @@ Admin page: https://giving-coupons.vercel.app/admin
 Please refer to submission file for credentials.
 
 # List of group members:
-
+- Bryann Yeap Kok Keong A0217687N
 - Lee Yong Ler (A0219859J)
 - Stuart Long Chay Boon (A0217528B)
 - Tee Weile Wayne (A0149290B)
