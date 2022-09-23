@@ -8,19 +8,12 @@ import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import TableContainer from "@mui/material/TableContainer"
-import { unredeemed } from "../../../../util/constants/voucherStatus"
-import IconButton from "@mui/material/IconButton"
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
-import Collapse from "@mui/material/Collapse"
-import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import { useRouter } from "next/router"
 import { auth } from "../../../../firebase/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { initialCampaign } from "../../../../util/constants/initialObjects"
 import Loading from "../../../../components/Loading"
-import { DataGrid } from "@mui/x-data-grid"
 import EnhancedTable from "../../../../components/VoucherTable"
 import Link from "@mui/material/Link"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
@@ -58,6 +51,19 @@ export default function Campaign() {
   for (let i = 0; i < campaign.charitiesChosenByDonor.length; i++) {
     charityMappings[campaign.charitiesChosenByDonor[i].id] =
       campaign.charitiesChosenByDonor[i].name
+  }
+
+  const amountPerCharityMappings = {}
+  for (let i = 0; i < campaign.vouchers.length; i++) {
+    if (campaign.vouchers[i].charityId) {
+      if (amountPerCharityMappings[campaign.vouchers[i].charityId]) {
+        amountPerCharityMappings[campaign.vouchers[i].charityId] +=
+          campaign.voucherAmount
+      } else {
+        amountPerCharityMappings[campaign.vouchers[i].charityId] =
+          campaign.voucherAmount
+      }
+    }
   }
 
   function toGMT8(utc_string) {
@@ -136,6 +142,12 @@ export default function Campaign() {
                 </Typography>
                 <TableContainer className={styles.table} component={Paper}>
                   <Table className={styles.table} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right">Amount Chosen ($)</TableCell>
+                      </TableRow>
+                    </TableHead>
                     <TableBody>
                       {campaign.charitiesChosenByDonor.map((charity) => (
                         <TableRow
@@ -144,7 +156,12 @@ export default function Campaign() {
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
-                          <TableCell align="center">{charity.name}</TableCell>
+                          <TableCell align="left">{charity.name}</TableCell>
+                          <TableCell align="right">{`${
+                            amountPerCharityMappings[charity.id]
+                              ? amountPerCharityMappings[charity.id]
+                              : 0
+                          }`}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

@@ -28,7 +28,7 @@ export default function VoucherForm() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/admin")
+      router.push("/admin/login")
     }
 
     user?.getIdToken().then((jwt) => {
@@ -212,13 +212,6 @@ export default function VoucherForm() {
                     {errors.selectedCharity?.message}
                   </p>
                 )}
-                <Typography className={styles.question}>
-                  Please indicate the number of vouchers you would like to
-                  generate and the value of each. The total amount of funds will
-                  be auto-generated and shown below. Any additional funds will
-                  be donated directly to the charities at the end of the
-                  campaign.
-                </Typography>
                 <Controller
                   name="numberOfVouchers"
                   control={control}
@@ -235,8 +228,6 @@ export default function VoucherForm() {
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      // value={numberOfVouchers}
-                      // onChange={handleNumberOfVouchersChange}
                     />
                   )}
                 />
@@ -258,15 +249,9 @@ export default function VoucherForm() {
                           <InputAdornment position="start">$</InputAdornment>
                         ),
                       }}
-                      // value={voucherValue}
-                      // onChange={handleVoucherValueChange}
                     />
                   )}
                 />
-                {/* <Typography className={styles.question}>
-              <b>Total funds needed: ${voucherValue * numberOfVouchers}</b>
-            </Typography> */}
-
                 {submitted ? (
                   <Typography variant="h6" className={styles.submitText}>
                     Thank you for submitting this form.
